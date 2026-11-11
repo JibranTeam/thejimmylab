@@ -32,6 +32,7 @@ export default function ServicePage({ service }: { service: Service }) {
           </a>
         </div>
       </header>
+      <main>
 
       <section className="relative overflow-hidden py-20 md:py-28">
         <div
@@ -44,7 +45,7 @@ export default function ServicePage({ service }: { service: Service }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="flex items-center gap-2 text-sm text-white/45 mb-8"
+            className="flex items-center gap-2 text-sm text-white/60 mb-8"
           >
             <a href="/" className="hover:text-white transition-colors">Home</a>
             <span>/</span>
@@ -304,6 +305,7 @@ export default function ServicePage({ service }: { service: Service }) {
         </div>
       </section>
 
+      </main>
       <footer className="border-t border-white/10 py-8">
         <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
@@ -314,7 +316,7 @@ export default function ServicePage({ service }: { service: Service }) {
               THE JIMMY LAB<span className="text-[#ff3c2f]">.</span>
             </span>
           </div>
-          <p className="text-white/40 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
+          <p className="text-white/60 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
         </div>
       </footer>
     </div>

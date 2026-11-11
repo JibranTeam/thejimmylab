@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,15 +7,16 @@ import {
   Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy
 } from 'lucide-react';
 import { cn } from './utils/cn';
+import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
 import { navigateTo, navigateHomeToSection, normalizePath, scrollToSectionWithRetry } from './utils/navigation';
-import ServicePage from './pages/ServicePage';
-import JournalPostPage from './pages/JournalPostPage';
+const ServicePage = lazy(() => import('./pages/ServicePage'));
+const JournalPostPage = lazy(() => import('./pages/JournalPostPage'));
 import ComingSoonToast from './components/ComingSoonToast';
 import { JOURNAL_POSTS, getJournalPostById } from './data/journal';
-import TeamPage from './pages/TeamPage';
-import ComingSoonPage from './pages/ComingSoonPage';
+const TeamPage = lazy(() => import('./pages/TeamPage'));
+const ComingSoonPage = lazy(() => import('./pages/ComingSoonPage'));
 import { PageTransition, RouteCurtain } from './components/PageTransition';
 import { CornerTicks } from './components/CornerTicks';
 import { services as serviceData, getServiceBySlug } from './data/services';
@@ -55,7 +56,7 @@ const Navigation = () => {
           ))}
           <a href="#connect" onClick={(e) => { e.preventDefault(); goToConnect(); }} className="btn-primary">Start Project <ArrowUpRight className="w-3.5 h-3.5" /></a>
         </div>
-        <button className="md:hidden text-white p-2" onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}</button>
+        <button className="md:hidden text-white p-2" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? 'Close menu' : 'Open menu'} aria-expanded={isOpen}>{isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}</button>
       </div>
       <AnimatePresence>
         {isOpen && (
@@ -149,7 +150,7 @@ const HeroPrompt = () => {
           {idle && (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 flex items-center font-mono text-[11.5px] uppercase tracking-[0.1em] text-white/45 truncate"
+              className="pointer-events-none absolute inset-0 flex items-center font-mono text-[11.5px] uppercase tracking-[0.1em] text-white/60 truncate"
             >
               {typed}
               <span className="caret-blink ml-px inline-block w-[6px] translate-y-[1px] border-b border-white/60" />
@@ -254,7 +255,7 @@ const HeroSection = () => {
           ].map((stat, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + i * 0.08 }} className="bg-[#05070a]/70 px-5 py-7">
               <div className="text-3xl md:text-[2.6rem] font-extralight tracking-[-0.02em] text-white leading-none">{stat.value}</div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 mt-3">{stat.label}</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/60 mt-3">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -270,16 +271,19 @@ const Words = ({
   className,
   baseDelay = 0,
   outlineLast = false,
+  as: Tag = 'p',
 }: {
   text: string;
   aria: string;
   className?: string;
   baseDelay?: number;
   outlineLast?: boolean;
+  as?: 'p' | 'h2';
 }) => {
   const words = text.split(' ');
   return (
-    <p aria-label={aria} className={className}>
+    <Tag className={className}>
+      <span className="sr-only">{aria}</span>
       {words.map((w, i) => {
         const last = i === words.length - 1;
         return (
@@ -297,7 +301,7 @@ const Words = ({
           </span>
         );
       })}
-    </p>
+    </Tag>
   );
 };
 
@@ -399,6 +403,7 @@ const ModesSection = () => {
       
       <div className="relative z-[2] mx-auto w-full max-w-4xl px-4 text-center mb-8 md:mb-10">
         <Words
+          as="h2"
           aria="Design. Build. Consult. Learn."
           text="Design. Build. Consult. Learn."
           outlineLast
@@ -448,7 +453,7 @@ const ModesSection = () => {
           </div>
           <div className="flex items-center gap-2 mt-4 z-20">
             {modes.map((m, i) => (
-              <button key={'dot-' + m.n} onClick={() => setActive(i)} aria-label={'Go to ' + m.title} className="h-[3px] transition-all duration-300" style={{ width: i === active ? 30 : 18, background: i === active ? m.color : 'rgba(255,255,255,0.18)' }} />
+              <button key={'dot-' + m.n} onClick={() => setActive(i)} aria-label={'Go to ' + m.title} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: i === active ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: i === active ? m.color : 'rgba(255,255,255,0.18)' }} /></button>
             ))}
           </div>
           <div className="flex gap-6 mt-6 z-20 justify-center items-center">
@@ -585,7 +590,7 @@ const CollaborationBandsSection = () => {
         <div key={stack.name + '-' + index} className="flex items-center gap-10">
           <div className="flex items-center gap-3 group/client cursor-pointer">
             <span className="font-['Syne'] font-bold text-xl md:text-[26px] text-white/50 group-hover/client:text-white transition-all duration-500 transform group-hover/client:scale-[1.05] whitespace-nowrap tracking-tight">{stack.name}</span>
-            <span className="text-[10px] font-mono text-white/25 uppercase tracking-[0.18em] hidden sm:inline group-hover/client:text-[#ff6b35]/80 transition-colors duration-500 px-2.5 py-1 rounded-full border border-white/10 group-hover/client:border-[#ff6b35]/30 bg-white/5 group-hover/client:bg-[#ff6b35]/10">{stack.type}</span>
+            <span className="text-[10px] font-mono text-white/60 uppercase tracking-[0.18em] hidden sm:inline group-hover/client:text-[#ff6b35]/80 transition-colors duration-500 px-2.5 py-1 rounded-full border border-white/10 group-hover/client:border-[#ff6b35]/30 bg-white/5 group-hover/client:bg-[#ff6b35]/10">{stack.type}</span>
           </div>
           <span className="text-[#ff6b35]/40 font-mono text-[10px] scale-90" aria-hidden="true">✦</span>
         </div>
@@ -598,7 +603,7 @@ const CollaborationBandsSection = () => {
       <section className="bg-[#070f1a] border-y border-white/[0.04] py-12 overflow-hidden relative z-10 select-none">
         <div className="max-w-7xl mx-auto px-4 mb-8" aria-hidden="true">
           <p className="text-xs sm:text-sm font-mono uppercase tracking-[0.24em] text-white/60 text-center font-semibold">Our Tech Stack • Technologies We Master</p>
-          <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-white/30 text-center mt-2 hidden sm:block">Trusted by modern frameworks & cloud platforms</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-white/60 text-center mt-2 hidden sm:block">Trusted by modern frameworks & cloud platforms</p>
         </div>
         <div className="w-full flex gap-12 overflow-hidden relative group/collab">
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#070f1a] to-transparent z-10 pointer-events-none" />
@@ -653,7 +658,7 @@ const ServicesSection = () => {
           <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {servicePage + 1} of {totalServicePages}</span>
           <div className="flex items-center gap-2">
             {Array.from({ length: totalServicePages }).map((_, d) => (
-              <button key={d} type="button" onClick={() => goToServicePage(d)} aria-label={'Go to services page ' + (d + 1)} className="h-[3px] transition-all duration-300" style={{ width: d === servicePage ? 30 : 18, background: d === servicePage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} />
+              <button key={d} type="button" onClick={() => goToServicePage(d)} aria-label={'Go to services page ' + (d + 1)} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: d === servicePage ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: d === servicePage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} /></button>
             ))}
           </div>
           <button type="button" onClick={() => goToServicePage(servicePage - 1)} disabled={servicePage === 0} aria-label="Previous services page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
@@ -763,7 +768,7 @@ const PortfolioSection = () => {
           ].map((p) => (
             <div key={p.title} onClick={() => navigateTo('/coming-soon')} className="portfolio-card group relative bg-[#0f1c2e] rounded-2xl overflow-hidden cursor-pointer shadow-[0_12px_40px_rgba(0,0,0,0.45)] border border-white/5 flex flex-col">
               <div className="relative h-[260px] overflow-hidden shrink-0">
-                <img alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={p.img} loading="lazy" />
+                <img alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={p.img} srcSet={unsplashSrcSet(p.img)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0f1c2e] via-[#0f1c2e]/10 to-transparent"></div>
               </div>
               <div className="p-6 flex flex-col flex-1 bg-[#0f1c2e]">
@@ -800,7 +805,7 @@ const OurProcessSection = () => {
       <div className="relative z-10">
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 mb-10 lg:mb-14">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Process</div>
-          <h2 id="approach-heading" className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.05]">Architect<span className="text-white/30">.</span> Build<span className="text-white/30">.</span> <span className="gradient-text">Accelerate.</span></h2>
+          <h2 id="approach-heading" className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.05]">Architect<span className="text-white/60">.</span> Build<span className="text-white/60">.</span> <span className="gradient-text">Accelerate.</span></h2>
           <p className="mt-4 max-w-2xl text-white/55 text-lg leading-relaxed">A proven three-phase system that takes you from idea to launch — without chaos, delays, or guesswork.</p>
         </div>
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-8 xl:gap-10">
@@ -811,7 +816,7 @@ const OurProcessSection = () => {
                 <motion.button key={phase.num} type="button" role="tab" layout id={'approach-tab-' + phase.num} aria-selected={isActive} aria-controls={'approach-panel-' + phase.num} tabIndex={isActive ? 0 : -1} onClick={() => setActive(idx)} whileHover={{ scale: isActive ? 1 : 1.015 }} whileTap={{ scale: 0.98 }} transition={{ layout: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }} className={cn('flex w-full cursor-pointer items-center gap-4 rounded-2xl border px-5 py-5 text-left sm:px-6 sm:py-6 will-change-transform', isActive ? 'bg-white/[0.06] border-[#ff6b35]/30 shadow-[0_8px_32px_rgba(0,0,0,0.3)]' : 'glass hover:bg-white/[0.05] hover:border-white/10')}>
                   <span className={cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-extrabold transition-colors', 'bg-white/10 text-white border border-white/10')} aria-hidden="true">{phase.num}</span>
                   <span className="min-w-0">
-                    <span className={cn('block text-[10px] font-bold uppercase tracking-[0.16em]', isActive ? 'text-white/60' : 'text-white/40')}>{phase.label}</span>
+                    <span className={cn('block text-[10px] font-bold uppercase tracking-[0.16em]', isActive ? 'text-white/60' : 'text-white/60')}>{phase.label}</span>
                     <span className={cn('mt-0.5 block text-xl font-extrabold tracking-[-0.02em] sm:text-[1.35rem]', 'text-white')}>{phase.name}</span>
                   </span>
                 </motion.button>
@@ -826,7 +831,7 @@ const OurProcessSection = () => {
                 <p className="mt-5 max-w-[52ch] text-[17px] leading-[1.65] text-white/70">{current.desc}</p>
                 <div className="mt-auto border-t border-white/10 pt-6 sm:pt-8">
                   <div className="flex flex-wrap items-center justify-between gap-4">
-                    <p className="m-0 text-sm text-white/40">{active + 1} of {phases.length} · {current.name}</p>
+                    <p className="m-0 text-sm text-white/60">{active + 1} of {phases.length} · {current.name}</p>
                     <button type="button" onClick={() => setActive((active + 1) % phases.length)} className="btn-primary inline-flex items-center gap-2 px-5 py-2.5 text-sm cursor-pointer" aria-label="Next phase">Next phase <ArrowRight className="w-4 h-4" /></button>
                   </div>
                 </div>
@@ -878,7 +883,7 @@ const TestimonialsSection = () => {
             </AnimatePresence>
             <div className="flex items-center justify-center gap-3 mt-8">
               <button onClick={prev} className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/60 hover:text-white transition-all cursor-pointer" aria-label="Previous testimonial"><ChevronLeft className="w-5 h-5" /></button>
-              <div className="flex gap-2 items-center">{testimonials.map((_, i) => (<button key={i} onClick={() => setActive(i)} className={cn('h-1.5 rounded-full transition-all duration-300 cursor-pointer', i === active ? 'w-8 bg-[#ff6b35]' : 'w-1.5 bg-white/20 hover:bg-white/40')} aria-label={'Go to testimonial ' + (i + 1)} />))}</div>
+              <div className="flex gap-2 items-center">{testimonials.map((_, i) => (<button key={i} onClick={() => setActive(i)} className="flex h-6 w-6 items-center justify-center cursor-pointer" aria-label={'Go to testimonial ' + (i + 1)}><span className={cn('block h-1.5 rounded-full transition-all duration-300', i === active ? 'w-8 bg-[#ff6b35]' : 'w-1.5 bg-white/20')} /></button>))}</div>
               <button onClick={next} className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/60 hover:text-white transition-all cursor-pointer" aria-label="Next testimonial"><ChevronRight className="w-5 h-5" /></button>
             </div>
           </div>
@@ -951,13 +956,13 @@ const JournalSection = () => {
           <a href="#journal" className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/70 hover:text-[#ff6b35] transition-colors duration-300 shrink-0 group">Read All Articles<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" /></a>
         </div>
         <div className="md:hidden mb-2">
-          <div className="flex items-center justify-between gap-4 mb-6"><span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">Swipe to explore</span><div className="flex items-center gap-1.5">{articles.map((_, i) => (<span key={i} className={cn('w-2 h-2 rounded-full transition-all duration-300', i === 0 ? 'bg-[#ff6b35] w-5' : 'bg-white/15')} />))}</div></div>
+          <div className="flex items-center justify-between gap-4 mb-6"><span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">Swipe to explore</span><div className="flex items-center gap-1.5">{articles.map((_, i) => (<span key={i} className={cn('w-2 h-2 rounded-full transition-all duration-300', i === 0 ? 'bg-[#ff6b35] w-5' : 'bg-white/15')} />))}</div></div>
           <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
             {articles.map((post) => (
               <article key={'m-' + post.id} className="snap-start shrink-0 w-[calc(100vw-2.5rem)] max-w-sm group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 rounded-2xl p-5 border border-white/10">
                 <div>
-                  <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]">{post.featured && (<span className="absolute top-3 left-3 z-10 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-md border border-white/10">Featured</span>)}<img src={post.image} alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" /></div>
-                  <div className="flex items-center gap-2 mb-4 text-[11px] font-mono"><span className="text-[9px] uppercase tracking-wider text-[#ff6b35] border border-[#ff6b35]/30 bg-[#ff6b35]/10 px-2 py-0.5 rounded-md">{post.category}</span><span className="text-white/20">•</span><span className="text-white/40">{post.date}</span><span className="text-white/20">•</span><span className="text-white/40">{post.read}</span></div>
+                  <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]">{post.featured && (<span className="absolute top-3 left-3 z-10 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-md border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
+                  <div className="flex items-center gap-2 mb-4 text-[11px] font-mono"><span className="text-[9px] uppercase tracking-wider text-[#ff6b35] border border-[#ff6b35]/30 bg-[#ff6b35]/10 px-2 py-0.5 rounded-md">{post.category}</span><span className="text-white/20">•</span><span className="text-white/60">{post.date}</span><span className="text-white/20">•</span><span className="text-white/60">{post.read}</span></div>
                   <h3 className="font-['Syne'] text-[18px] font-bold mb-3 leading-snug text-white group-hover:text-[#ff6b35] transition-colors"><a href={'/journal/' + post.id}>{post.title}</a></h3>
                   <p className="text-[13px] text-white/60 leading-relaxed mb-6">{post.excerpt}</p>
                 </div>
@@ -970,8 +975,8 @@ const JournalSection = () => {
           {articles.map((post) => (
             <article key={post.id} className="group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 hover:shadow-[12px_12px_0_rgba(0,0,0,0.35),24px_24px_0_rgba(0,0,0,0.22),30px_30px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1.5 rounded-2xl p-5 border border-white/10 hover:border-[#ff6b35]/30 transition-all duration-500">
               <div>
-                <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]"><div className="absolute inset-0 bg-gradient-to-tr from-[#ff6b35]/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />{post.featured && (<span className="absolute top-3 left-3 z-20 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-lg border border-white/10">Featured</span>)}<img src={post.image} alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" /></div>
-                <div className="flex items-center gap-2.5 mb-4 text-[11px] font-mono"><span className="text-[9px] uppercase tracking-wider text-[#ff6b35] border border-[#ff6b35]/25 bg-[#ff6b35]/10 px-2 py-0.5 rounded-md group-hover:bg-[#ff6b35] group-hover:text-white transition-colors duration-300">{post.category}</span><span className="text-white/20">•</span><span className="text-white/40">{post.date}</span><span className="text-white/20">•</span><span className="text-white/40">{post.read}</span></div>
+                <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]"><div className="absolute inset-0 bg-gradient-to-tr from-[#ff6b35]/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />{post.featured && (<span className="absolute top-3 left-3 z-20 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-lg border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
+                <div className="flex items-center gap-2.5 mb-4 text-[11px] font-mono"><span className="text-[9px] uppercase tracking-wider text-[#ff6b35] border border-[#ff6b35]/25 bg-[#ff6b35]/10 px-2 py-0.5 rounded-md group-hover:bg-[#ff6b35] group-hover:text-white transition-colors duration-300">{post.category}</span><span className="text-white/20">•</span><span className="text-white/60">{post.date}</span><span className="text-white/20">•</span><span className="text-white/60">{post.read}</span></div>
                 <h3 className="font-['Syne'] text-[20px] font-bold mb-3 leading-snug text-white group-hover:text-[#ff6b35] transition-colors duration-300"><a href={'/journal/' + post.id} className="focus-visible:outline-none">{post.title}</a></h3>
                 <p className="text-[13px] text-white/60 leading-relaxed mb-6">{post.excerpt}</p>
               </div>
@@ -1142,13 +1147,13 @@ const ConnectSection = () => {
           <div className="flex flex-col">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-[#ff6b35] mb-5">Connect</p>
             <h2 className="font-['Syne'] font-bold text-white leading-[0.98] tracking-tight text-[clamp(3rem,5.5vw,4.75rem)]">Let's start<br />something<br /><span className="gradient-text block">remarkable.</span></h2>
-            <p className="text-white/45 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project that needs a motion-first digital experience? Send us an email or use the form.</p>
+            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project that needs a motion-first digital experience? Send us an email or use the form.</p>
             <div className="mt-7 self-start inline-flex items-center gap-2.5 rounded-full border border-[#ff6b35]/30 bg-[#ff6b35]/[0.07] px-4 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b35] animate-pulse shrink-0" />
               <span className="font-mono text-[12px] text-[#ff6b35] tracking-tight whitespace-nowrap">Accepting projects</span>
             </div>
             <div className="mt-10">
-              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/30 mb-3.5">Send an email</p>
+              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/60 mb-3.5">Send an email</p>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
                 <a href={'mailto:' + email} className="btn-ghost" style={{ textTransform: 'none', letterSpacing: '0.05em' }}><span>{displayEmail}</span><ArrowUpRight className="w-4 h-4" /></a>
                 <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-md border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 font-mono text-[11px] text-white/70 hover:text-white hover:border-white/25 hover:bg-white/[0.1] transition-all shrink-0"><Copy className="w-3.5 h-3.5" />{copied ? 'Copied!' : 'Copy Email'}</button>
@@ -1156,14 +1161,14 @@ const ConnectSection = () => {
               <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-ghost" style={{ textTransform: 'none', letterSpacing: '0.05em' }}><span>contact@thejimmylab.com</span><ArrowUpRight className="w-4 h-4" /></a></div>
             </div>
             <div className="mt-9">
-              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/30 mb-4">Follow us</p>
+              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/60 mb-4">Follow us</p>
               <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
-                {['GitHub', 'LinkedIn', 'X / Twitter', 'Dribbble'].map((s) => (<a key={s} href="/coming-soon" className="font-mono text-[13.5px] text-white/45 hover:text-[#ff6b35] transition-colors">{s}</a>))}
+                {['GitHub', 'LinkedIn', 'X / Twitter', 'Dribbble'].map((s) => (<a key={s} href="/coming-soon" className="font-mono text-[13.5px] text-white/60 hover:text-[#ff6b35] transition-colors">{s}</a>))}
               </div>
             </div>
             <div className="w-full mt-12 p-6 rounded-2xl bg-white/5 border border-white/15 relative overflow-hidden group select-none">
               <div className="absolute right-6 top-6 flex items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#ff6b35]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#ff6b35] shadow-[0_0_10px_rgba(255,107,53,0.6)]"></span></div>
-              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/40 block mb-2">Office Location</span>
+              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Office Location</span>
               <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Islamabad, Pakistan</h3>
               <p className="text-xs text-white/70 leading-relaxed font-light">Working globally with modern asynchronous processes.</p>
             </div>
@@ -1179,9 +1184,9 @@ const ConnectSection = () => {
                 <div className="flex flex-col"><label className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 mb-2.5">Project Type</label><div className="relative"><select value={projectType} onChange={(e) => setProjectType(e.target.value)} aria-label="Project Type" style={{ colorScheme: 'dark' }} className="w-full h-[48px] rounded-md bg-[#1a1a1a] border border-white/25 pl-4 pr-10 text-[14px] text-white focus:border-[#ff6b35] focus:outline-none transition-colors appearance-none cursor-pointer"><option value="" disabled>Select a project type</option><option>Animation & Creative Development</option><option>Web Design & UI/UX</option><option>Website Redesign</option><option>Graphic Design</option><option>Logo Design</option><option>Branding & Visual Identity</option><option>Frontend Development</option><option>Backend Development</option><option>Full-Stack Development</option><option>Web Application / SaaS Development</option><option>E-Commerce Development</option><option>3D & Interactive Experiences</option><option>Product Configurators</option><option>Mobile App Development</option><option>Integration & Automation</option><option>SEO & Website Optimization</option><option>Website / Application Upgrade</option><option>Legacy Technology / Stack Migration</option><option>Maintenance & Technical Support</option><option>Code Review & Technical Audit</option><option>1:1 Consultation / Strategy</option><option>1:1 Learning / Training</option><option>Not Sure — Help Me Choose</option><option>Other</option></select><ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-white" /></div></div>
                 <div className="flex flex-col"><label className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 mb-2.5">Estimated Budget</label><div className="relative"><select value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Estimated Budget" style={{ colorScheme: 'dark' }} className="w-full h-[48px] rounded-md bg-[#1a1a1a] border border-white/25 pl-4 pr-10 text-[14px] text-white focus:border-[#ff6b35] focus:outline-none transition-colors appearance-none cursor-pointer"><option value="" disabled>Select a budget range</option><option>Under $5k</option><option>$5k – $10k</option><option>$10k – $25k</option><option>$25k – $50k</option><option>$50k – $100k</option><option>$100k+</option></select><ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-white" /></div></div>
               </div>
-              <div className="flex flex-col"><label className="text-[13.5px] font-semibold text-white mb-2.5">Tell us about the project <span className="text-[#ff5a4e]">*</span></label><div className="rounded-md border border-white/[0.08] bg-[#1a1a1a] px-4 py-3.5 focus-within:border-[#ff6b35]/60 transition-colors"><textarea ref={briefRef} value={brief} onChange={(e) => setBrief(e.target.value)} rows={5} required maxLength={2500} placeholder="Project overview, goals, timelines, etc..." className="w-full bg-transparent border-0 px-0 py-0 text-[14px] text-white placeholder-white/25 focus:outline-none resize-y min-h-[140px] leading-relaxed" /><div className="mt-1.5 text-right font-mono text-[11px] text-white/40">{brief.length}/2500</div><div className="flex flex-wrap gap-2 mt-3">{projectSuggestions.map((suggestion) => (<button key={suggestion} type="button" onClick={() => insertSuggestion(suggestion)} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[12px] text-white/70 hover:text-white hover:border-[#ff6b35]/60 hover:bg-[#ff6b35]/10 transition-all">{suggestion}</button>))}</div><div className="relative mt-2 pt-2.5 border-t border-white/[0.06] flex items-center gap-2"><button type="button" onClick={() => setShowEmojiPicker((v) => !v)} aria-label="Add emoji" className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[16px] text-white/60 hover:text-white hover:bg-white/10 transition-all">😊</button><button type="button" onClick={() => fileInputRef.current?.click()} aria-label="Attach a file" className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[16px] text-white/60 hover:text-white hover:bg-white/10 transition-all">📎</button><input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />{showEmojiPicker && (<div className="absolute bottom-full left-0 mb-2 z-20 grid grid-cols-8 gap-1 rounded-lg border border-white/15 bg-[#3A373E] p-2 shadow-xl">{emojiList.map((emoji) => (<button key={emoji} type="button" onClick={() => insertEmoji(emoji)} className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[18px] hover:bg-white/10 transition-all">{emoji}</button>))}</div>)}</div>{attachments.length > 0 && (<div className="mt-2.5 flex flex-wrap gap-2">{attachments.map((file, i) => (<span key={file.name + i} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12px] text-white/70">{file.name} ({(file.size / 1024).toFixed(0)} KB)<button type="button" onClick={() => setAttachments((prev) => prev.filter((_, j) => j !== i))} aria-label={'Remove ' + file.name} className="text-white/50 hover:text-white">×</button></span>))}</div>)}{attachError && (<p className="mt-2 text-[12px] text-[#ff5a4e]">{attachError}</p>)}</div></div>
+              <div className="flex flex-col"><label className="text-[13.5px] font-semibold text-white mb-2.5">Tell us about the project <span className="text-[#ff5a4e]">*</span></label><div className="rounded-md border border-white/[0.08] bg-[#1a1a1a] px-4 py-3.5 focus-within:border-[#ff6b35]/60 transition-colors"><textarea ref={briefRef} value={brief} onChange={(e) => setBrief(e.target.value)} rows={5} required maxLength={2500} placeholder="Project overview, goals, timelines, etc..." className="w-full bg-transparent border-0 px-0 py-0 text-[14px] text-white placeholder-white/25 focus:outline-none resize-y min-h-[140px] leading-relaxed" /><div className="mt-1.5 text-right font-mono text-[11px] text-white/60">{brief.length}/2500</div><div className="flex flex-wrap gap-2 mt-3">{projectSuggestions.map((suggestion) => (<button key={suggestion} type="button" onClick={() => insertSuggestion(suggestion)} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[12px] text-white/70 hover:text-white hover:border-[#ff6b35]/60 hover:bg-[#ff6b35]/10 transition-all">{suggestion}</button>))}</div><div className="relative mt-2 pt-2.5 border-t border-white/[0.06] flex items-center gap-2"><button type="button" onClick={() => setShowEmojiPicker((v) => !v)} aria-label="Add emoji" className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[16px] text-white/60 hover:text-white hover:bg-white/10 transition-all">😊</button><button type="button" onClick={() => fileInputRef.current?.click()} aria-label="Attach a file" className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[16px] text-white/60 hover:text-white hover:bg-white/10 transition-all">📎</button><input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />{showEmojiPicker && (<div className="absolute bottom-full left-0 mb-2 z-20 grid grid-cols-8 gap-1 rounded-lg border border-white/15 bg-[#3A373E] p-2 shadow-xl">{emojiList.map((emoji) => (<button key={emoji} type="button" onClick={() => insertEmoji(emoji)} className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[18px] hover:bg-white/10 transition-all">{emoji}</button>))}</div>)}</div>{attachments.length > 0 && (<div className="mt-2.5 flex flex-wrap gap-2">{attachments.map((file, i) => (<span key={file.name + i} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12px] text-white/70">{file.name} ({(file.size / 1024).toFixed(0)} KB)<button type="button" onClick={() => setAttachments((prev) => prev.filter((_, j) => j !== i))} aria-label={'Remove ' + file.name} className="text-white/50 hover:text-white">×</button></span>))}</div>)}{attachError && (<p className="mt-2 text-[12px] text-[#ff5a4e]">{attachError}</p>)}</div></div>
               <button type="submit" disabled={sending} className="w-full h-[52px] mt-2 rounded-md bg-[#ff6b35] text-[15px] font-semibold text-white hover:bg-[#ff8552] transition-all shadow-[0_0_28px_rgba(255,107,53,0.28)] hover:shadow-[0_0_40px_rgba(255,107,53,0.42)] disabled:opacity-60">{sending ? 'Sending…' : 'Send an Inquiry →'}</button>
-              <p className="text-white/40 text-[13px] leading-relaxed">Sends directly to us — no email app needed.</p>
+              <p className="text-white/60 text-[13px] leading-relaxed">Sends directly to us — no email app needed.</p>
               {sent && (
                 <div className="rounded-md border border-white/10 bg-white/5 p-4">
                   <p className="text-white text-[14px] font-semibold">Inquiry sent successfully.</p>
@@ -1256,8 +1261,8 @@ const Footer = () => (
         </div>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-white/40 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
-        <div className="flex gap-6 text-sm"><a href="/coming-soon" className="text-white/40 hover:text-white transition-colors">Privacy Policy</a><a href="/coming-soon" className="text-white/40 hover:text-white transition-colors">Terms of Service</a></div>
+        <p className="text-white/60 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
+        <div className="flex gap-6 text-sm"><a href="/coming-soon" className="text-white/60 hover:text-white transition-colors">Privacy Policy</a><a href="/coming-soon" className="text-white/60 hover:text-white transition-colors">Terms of Service</a></div>
       </div>
     </div>
   </footer>
@@ -1269,6 +1274,7 @@ const HomePage = () => (
     <div className="rule-grid" aria-hidden="true" />
     <div className="relative z-[1]">
       <Navigation />
+      <main>
       <HeroSection />
       <ModesSection />
       <PartnersSection />
@@ -1281,6 +1287,7 @@ const HomePage = () => (
       <FAQSection />
       <JournalSection />
       <ConnectSection />
+      </main>
       <Footer />
     </div>
   </div>
@@ -1288,12 +1295,12 @@ const HomePage = () => (
 
 function NotFoundPage() {
   return (
-    <div className="min-h-screen bg-[#070f1a] text-white flex flex-col items-center justify-center px-6 text-center">
-      <p className="font-mono text-sm tracking-widest text-white/40 mb-4">404 — PAGE NOT FOUND</p>
+    <main className="min-h-screen bg-[#070f1a] text-white flex flex-col items-center justify-center px-6 text-center">
+      <p className="font-mono text-sm tracking-widest text-white/60 mb-4">404 — PAGE NOT FOUND</p>
       <h1 className="text-4xl md:text-6xl font-bold mb-4">This page doesn&apos;t exist.</h1>
       <p className="text-white/60 max-w-md mb-8">The link you followed may be outdated, or the address may have a typo. The home page and all services are still here.</p>
       <button onClick={() => navigateTo('/')} className="px-6 py-3 border border-white/35 hover:bg-white hover:text-black transition-colors font-mono text-sm tracking-wider">BACK TO HOME</button>
-    </div>
+    </main>
   );
 }
 
@@ -1464,7 +1471,7 @@ function App() {
       <Analytics />
       <AnimatePresence mode="wait">
         <PageTransition key={routeKey}>
-          {service ? <ServicePage service={service} /> : journalPost ? <JournalPostPage post={journalPost} /> : isTeamPage ? <TeamPage /> : isComingSoonPage ? <ComingSoonPage /> : isNotFound ? <NotFoundPage /> : <HomePage />}
+          {service ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><JournalPostPage post={journalPost} /></Suspense> : isTeamPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TeamPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
         </PageTransition>
       </AnimatePresence>
     </>
