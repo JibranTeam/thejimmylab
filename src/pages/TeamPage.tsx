@@ -69,6 +69,7 @@ export default function TeamPage() {
           </a>
         </div>
       </header>
+      <main>
 
       {/* ---------- hero ---------- */}
       <section className="relative py-20 md:py-24 overflow-hidden border-b-2 border-[#ff6b35]/30">
@@ -112,7 +113,7 @@ export default function TeamPage() {
                 </div>
                 <h3 className="font-['Syne'] text-lg font-bold tracking-tight text-white">{member.name}</h3>
                 <p className="text-xs text-[#ffd700] mt-1.5 font-bold uppercase tracking-[0.12em] leading-relaxed">{member.role}</p>
-                <span aria-disabled="true" title="LinkedIn links disabled for now" className="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white/40 bg-white/5 border border-white/10 px-3 py-2 rounded-full self-start cursor-not-allowed">LinkedIn</span>
+                <span aria-disabled="true" title="LinkedIn links disabled for now" className="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white/60 bg-white/5 border border-white/10 px-3 py-2 rounded-full self-start cursor-not-allowed">LinkedIn</span>
               </motion.div>
             ))}
           </div>
@@ -167,6 +168,7 @@ export default function TeamPage() {
       </section>
 
       {/* ---------- footer bar ---------- */}
+      </main>
       <footer className="border-t border-white/10 py-8">
         <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
@@ -177,7 +179,7 @@ export default function TeamPage() {
               THE JIMMY LAB<span className="text-[#ff3c2f]">.</span>
             </span>
           </div>
-          <p className="text-white/40 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
+          <p className="text-white/60 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
         </div>
       </footer>
     </div>
