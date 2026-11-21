@@ -39,13 +39,13 @@ export function getSavedScrollPosition(key: string): number | undefined {
   return savedScroll.get(key);
 }
 
-export function scrollToSectionWithRetry(sectionId: string, behavior: ScrollBehavior = 'auto') {
+export function scrollToSectionWithRetry(sectionId: string, behavior: ScrollBehavior = 'auto', fallbackToTop = true, windowMs = 1500) {
   const startedAt = Date.now();
   const tryScroll = () => {
     const el = document.getElementById(sectionId);
     if (el) el.scrollIntoView({ behavior, block: 'start' });
-    else if (Date.now() - startedAt < 1500) window.setTimeout(tryScroll, 100);
-    else window.scrollTo(0, 0);
+    else if (Date.now() - startedAt < windowMs) window.setTimeout(tryScroll, 100);
+    else if (fallbackToTop) window.scrollTo(0, 0);
   };
   window.setTimeout(tryScroll, 80);
 }

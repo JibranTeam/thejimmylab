@@ -1412,7 +1412,10 @@ function App() {
     pendingRestoreRef.current = null;
     if (!restore) return;
     if (restore.section) {
-      scrollToSectionWithRetry(restore.section);
+      // No fallback to the top here: if the section is not in the DOM yet
+      // (the new page mounts after the exit animation), keep retrying —
+      // dropping to the hero would be the wrong landing.
+      scrollToSectionWithRetry(restore.section, 'auto', false, 3000);
       return;
     }
     if (typeof restore.y === 'number') {
@@ -1437,15 +1440,18 @@ function App() {
       if (next === route) return;
       setShowCurtain(true);
       if (e.isTrusted) {
-        // Real Back/Forward: return to the section the user came from, not
-        // the top. The logo is always there for Home — Back means back.
+        // Real Back/Forward: return to the exact place the user came from,
+        // not the top. The saved scroll position is the most precise record
+        // of it, so it wins over the section hash; the hash is only a
+        // fallback for entries with no saved position. The logo is always
+        // there for Home — Back means back.
         const key = window.location.pathname + window.location.hash;
         const savedY = getSavedScrollPosition(key);
         const hash = window.location.hash.slice(1);
-        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top'].includes(hash)) {
-          pendingRestoreRef.current = { section: hash };
-        } else if (typeof savedY === 'number') {
+        if (typeof savedY === 'number') {
           pendingRestoreRef.current = { y: savedY };
+        } else if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top'].includes(hash)) {
+          pendingRestoreRef.current = { section: hash };
         } else {
           pendingRestoreRef.current = { y: 0 };
         }
