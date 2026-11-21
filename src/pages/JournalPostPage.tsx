@@ -2,11 +2,13 @@ import { unsplashSrcSet } from '../utils/images';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Code2 } from 'lucide-react';
 import { JOURNAL_POSTS, type JournalPost } from '../data/journal';
+import { getServiceBySlug } from '../data/services';
 import { goToConnect } from '../utils/goToConnect';
 
 export default function JournalPostPage({ post }: { post: JournalPost }) {
   const others = JOURNAL_POSTS.filter((p) => p.id !== post.id).slice(0, 3);
   const year = new Date().getFullYear();
+  const relatedService = post.relatedService ? getServiceBySlug(post.relatedService) : undefined;
 
   return (
     <div className="min-h-screen relative">
@@ -86,6 +88,22 @@ export default function JournalPostPage({ post }: { post: JournalPost }) {
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#ff6b35] mb-3">Takeaway</p>
               <p className="text-[15px] text-white/80 leading-relaxed">{post.takeaway}</p>
             </div>
+            {relatedService && (
+              <a
+                href={'/services/' + relatedService.slug}
+                className="group flex items-center gap-5 rounded-2xl border border-white/10 bg-[#3A373E] p-6 transition-all hover:border-white/25 hover:-translate-y-0.5"
+              >
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${relatedService.color}1f` }}>
+                  <relatedService.icon className="w-6 h-6" style={{ color: relatedService.color }} />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1">Related service</p>
+                  <p className="font-['Syne'] text-lg font-bold text-white group-hover:text-[#ff6b35] transition-colors">{relatedService.title}</p>
+                  <p className="text-sm text-white/55 leading-relaxed">{relatedService.desc}</p>
+                </div>
+                <ArrowRight className="w-5 h-5 shrink-0 text-white/40 transition-transform group-hover:translate-x-1 group-hover:text-[#ff6b35]" />
+              </a>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-4 mt-12">

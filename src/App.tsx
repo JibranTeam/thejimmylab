@@ -17,9 +17,12 @@ import ComingSoonToast from './components/ComingSoonToast';
 import { JOURNAL_POSTS, getJournalPostById } from './data/journal';
 const TeamPage = lazy(() => import('./pages/TeamPage'));
 const ComingSoonPage = lazy(() => import('./pages/ComingSoonPage'));
+const TopicPage = lazy(() => import('./pages/TopicPage'));
 import { PageTransition, RouteCurtain } from './components/PageTransition';
 import { CornerTicks } from './components/CornerTicks';
 import { services as serviceData, getServiceBySlug } from './data/services';
+import { locations, getLocationBySlug } from './data/locations';
+import { industries, getIndustryBySlug } from './data/industries';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -652,7 +655,7 @@ const ServicesSection = () => {
         <div className="service-title text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Services</div>
           <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-4">Solutions for Every <span className="gradient-text">Digital Need</span></h2>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe and the Gulf — that drive results.</p>
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada — that drive results.</p>
         </div>
         <div className="flex items-center justify-end gap-3 mb-6">
           <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {servicePage + 1} of {totalServicePages}</span>
@@ -1168,9 +1171,9 @@ const ConnectSection = () => {
             </div>
             <div className="w-full mt-12 p-6 rounded-2xl bg-white/5 border border-white/15 relative overflow-hidden group select-none">
               <div className="absolute right-6 top-6 flex items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#ff6b35]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#ff6b35] shadow-[0_0_10px_rgba(255,107,53,0.6)]"></span></div>
-              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Office Location</span>
-              <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Islamabad, Pakistan</h3>
-              <p className="text-xs text-white/70 leading-relaxed font-light">Working globally — USA, UK, Europe and the Gulf — with modern asynchronous processes.</p>
+              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Working worldwide</span>
+              <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Global Remote Team</h3>
+              <p className="text-xs text-white/70 leading-relaxed font-light">Working globally — USA, UK, Europe, the Gulf, Australia and Canada — with modern asynchronous processes.</p>
             </div>
           </div>
           <div className="rounded-2xl bg-[#3A373E]/40 backdrop-blur-xl border border-white/[0.08] p-8 sm:p-10">
@@ -1259,6 +1262,18 @@ const Footer = () => (
             ))}
           </ul>
         </div>
+      </div>
+      <div className="pt-8 border-t border-white/10 mb-8">
+        <p className="text-white/60 text-sm leading-relaxed">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mr-3">Where we work</span>
+          Serving clients worldwide —{' '}
+          {locations.map((l, i) => (
+            <span key={l.slug}>
+              {i > 0 && <span className="text-white/30"> · </span>}
+              <a href={'/locations/' + l.slug} className="text-white/60 hover:text-[#ff6b35] transition-colors">{({ usa: 'USA', uk: 'UK', uae: 'UAE', australia: 'Australia', canada: 'Canada' } as Record<string, string>)[l.slug] || l.slug}</a>
+            </span>
+          ))}
+        </p>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-white/60 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
@@ -1408,15 +1423,20 @@ function App() {
   const service = serviceMatch ? getServiceBySlug(serviceMatch[1]) : undefined;
   const journalMatch = route.match(/^\/journal\/([^/?]+)/);
   const journalPost = journalMatch ? getJournalPostById(journalMatch[1]) : undefined;
+  const locationMatch = route.match(/^\/locations\/([^/?]+)/);
+  const location = locationMatch ? getLocationBySlug(locationMatch[1]) : undefined;
+  const industryMatch = route.match(/^\/industries\/([^/?]+)/);
+  const industry = industryMatch ? getIndustryBySlug(industryMatch[1]) : undefined;
+  const topic = location || industry;
   const isTeamPage = /^\/team$/.test(route);
   const isComingSoonPage = route === '/coming-soon';
-  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage;
+  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry;
   // Per-page title + canonical + description + structured data.
   useEffect(() => {
-    document.title = service ? service.title + ' Services | THE JIMMY LAB' : journalPost ? journalPost.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB — Web Development & Design Agency';
+    document.title = service ? service.title + ' Services | THE JIMMY LAB' : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB — Web Development & Design Agency';
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route));
-    const description = service ? service.tagline + ' | THE JIMMY LAB — web development and design agency in Pakistan, serving clients in the USA, UK, Europe and the Gulf.' : journalPost ? journalPost.excerpt : isTeamPage ? 'Meet the team behind THE JIMMY LAB — six operators covering design, engineering, SEO and automation, based in Islamabad, Pakistan, working with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Web development and design agency in Pakistan, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
+    const description = service ? service.tagline + ' | THE JIMMY LAB — a global remote web development and design agency, serving clients in the USA, UK, Europe and the Gulf.' : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB — six operators covering design, engineering, SEO and automation, working remotely with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Global remote web development and design agency, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
     const robotsMeta = document.querySelector('meta[name="robots"]');
     if (isComingSoonPage) { if (!robotsMeta) { const m = document.createElement('meta'); m.setAttribute('name', 'robots'); m.setAttribute('content', 'noindex'); document.head.appendChild(m); } else robotsMeta.setAttribute('content', 'noindex'); } else if (robotsMeta) robotsMeta.remove();
     const meta = document.querySelector('meta[name="description"]');
@@ -1429,6 +1449,17 @@ function App() {
         { '@type': 'Service', name: service.title, description: service.tagline, url: 'https://thejimmylab.vercel.app/services/' + service.slug, provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
         { '@type': 'FAQPage', mainEntity: service.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
       ] };
+    } else if (topic) {
+      const topicUrl = 'https://thejimmylab.vercel.app/' + (topic.kind === 'location' ? 'locations/' : 'industries/') + topic.slug;
+      ld = { '@context': 'https://schema.org', '@graph': [
+        { '@type': 'Service', name: topic.title, description: topic.description, url: topicUrl, provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
+        { '@type': 'FAQPage', mainEntity: topic.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+      ] };
+    } else if (journalPost) {
+      const months: Record<string, string> = { January: '01', February: '02', March: '03', April: '04', May: '05', June: '06', July: '07', August: '08', September: '09', October: '10', November: '11', December: '12' };
+      const parts = journalPost.date.replace(',', '').split(' ');
+      const iso = parts.length === 3 && months[parts[0]] ? parts[2] + '-' + months[parts[0]] + '-' + parts[1].padStart(2, '0') : undefined;
+      ld = { '@context': 'https://schema.org', '@type': 'Article', headline: journalPost.title, description: journalPost.excerpt, url: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, author: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' }, ...(iso ? { datePublished: iso } : {}) };
     } else if (!isTeamPage && !isComingSoonPage && !isNotFound) {
       // Home FAQPage schema — keep in sync with the HomePage faqs array.
       ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
@@ -1438,11 +1469,6 @@ function App() {
         { '@type': 'Question', name: 'What is your pricing structure?', acceptedAnswer: { '@type': 'Answer', text: 'We offer both project-based pricing and retainer models. Every project is unique, so we provide custom quotes based on your specific requirements, timeline, and scope of work.' } },
         { '@type': 'Question', name: 'Can you help with existing websites?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely! We offer website redesigns, performance optimization, feature additions, and migration services for existing websites. We can work with most modern web technologies.' } },
       ] };
-    } else if (journalPost) {
-      const months: Record<string, string> = { January: '01', February: '02', March: '03', April: '04', May: '05', June: '06', July: '07', August: '08', September: '09', October: '10', November: '11', December: '12' };
-      const parts = journalPost.date.replace(',', '').split(' ');
-      const iso = parts.length === 3 && months[parts[0]] ? parts[2] + '-' + months[parts[0]] + '-' + parts[1].padStart(2, '0') : undefined;
-      ld = { '@context': 'https://schema.org', '@type': 'Article', headline: journalPost.title, description: journalPost.excerpt, url: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, author: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' }, ...(iso ? { datePublished: iso } : {}) };
     }
     if (ld) {
       const script = document.createElement('script');
@@ -1451,7 +1477,7 @@ function App() {
       script.text = JSON.stringify(ld);
       document.head.appendChild(script);
     }
-  }, [route, service, journalPost, isTeamPage, isComingSoonPage, isNotFound]);
+  }, [route, service, journalPost, topic, isTeamPage, isComingSoonPage, isNotFound]);
   // GA4 (optional): set VITE_GA_MEASUREMENT_ID in Vercel env vars to activate.
   // No tracking code ships at all until that ID is set.
   useEffect(() => {
@@ -1472,7 +1498,7 @@ function App() {
     if (g) g('event', 'page_view', { page_path: route });
   }, [route]);
 
-  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : isTeamPage ? 'team' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
+  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
       <AnimatePresence>{showCurtain && <RouteCurtain key="curtain" />}</AnimatePresence>
@@ -1480,7 +1506,7 @@ function App() {
       <Analytics />
       <AnimatePresence mode="wait">
         <PageTransition key={routeKey}>
-          {service ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><JournalPostPage post={journalPost} /></Suspense> : isTeamPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TeamPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
+          {service ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TeamPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
         </PageTransition>
       </AnimatePresence>
     </>
