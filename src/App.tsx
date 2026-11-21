@@ -242,7 +242,7 @@ const HeroSection = () => {
                 <HeroPrompt />
               </div>
               <a
-                href="https://cal.com/uxkunal/15min"
+                href="https://cal.com/thejimmylab/15min"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex shrink-0 items-center gap-1.5 whitespace-nowrap text-xs text-white/70 transition-colors hover:text-white sm:mb-[18px]"
