@@ -1,14 +1,33 @@
+import { useState } from 'react';
 import { unsplashSrcSet } from '../utils/images';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Code2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Code2, Link2, MessageCircle } from 'lucide-react';
 import { JOURNAL_POSTS, type JournalPost } from '../data/journal';
 import { getServiceBySlug } from '../data/services';
 import { goToConnect } from '../utils/goToConnect';
 
 export default function JournalPostPage({ post }: { post: JournalPost }) {
-  const others = JOURNAL_POSTS.filter((p) => p.id !== post.id).slice(0, 3);
+  // Newest first, so previous/next follow the calendar, not the file order.
+  const sorted = [...JOURNAL_POSTS].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const currentIndex = sorted.findIndex((p) => p.id === post.id);
+  const newerPost = currentIndex > 0 ? sorted[currentIndex - 1] : undefined;
+  const olderPost = currentIndex >= 0 && currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : undefined;
+  // Same category first, then the rest — never the post itself.
+  const others = [
+    ...JOURNAL_POSTS.filter((p) => p.id !== post.id && p.category === post.category),
+    ...JOURNAL_POSTS.filter((p) => p.id !== post.id && p.category !== post.category),
+  ].slice(0, 3);
   const year = new Date().getFullYear();
   const relatedService = post.relatedService ? getServiceBySlug(post.relatedService) : undefined;
+  const postUrl = 'https://thejimmylab.vercel.app/journal/' + post.id;
+  const shareText = encodeURIComponent(post.title);
+  const shareUrl = encodeURIComponent(postUrl);
+  const [copied, setCopied] = useState(false);
+  const copyLink = async () => {
+    try { await navigator.clipboard.writeText(postUrl); } catch { /* clipboard may be blocked */ }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="min-h-screen relative">
@@ -63,8 +82,23 @@ export default function JournalPostPage({ post }: { post: JournalPost }) {
               <span className="text-white/60">{post.read}</span>
             </div>
             <h1 className="font-['Syne'] text-3xl md:text-5xl font-bold leading-[1.1] tracking-tight text-white mb-5">{post.title}</h1>
-            <p className="text-lg text-white/60 leading-relaxed mb-10">{post.excerpt}</p>
+            <p className="text-lg text-white/60 leading-relaxed mb-8">{post.excerpt}</p>
           </motion.div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-10 pb-8 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 bg-[#ff6b35] rounded-lg flex items-center justify-center shrink-0"><Code2 className="w-5 h-5 text-white" /></div>
+              <div className="text-sm"><span className="text-white/50">By </span><span className="font-semibold text-white">THE JIMMY LAB</span></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-white/40 mr-1">Share</span>
+              <a href={'https://twitter.com/intent/tweet?text=' + shareText + '&url=' + shareUrl} target="_blank" rel="noreferrer" aria-label="Share on X" className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-[13px] font-bold text-white/70 hover:border-[#ff6b35] hover:text-[#ff6b35] transition-colors">X</a>
+              <a href={'https://www.facebook.com/sharer/sharer.php?u=' + shareUrl} target="_blank" rel="noreferrer" aria-label="Share on Facebook" className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-[13px] font-bold text-white/70 hover:border-[#ff6b35] hover:text-[#ff6b35] transition-colors">f</a>
+              <a href={'https://www.linkedin.com/sharing/share-offsite/?url=' + shareUrl} target="_blank" rel="noreferrer" aria-label="Share on LinkedIn" className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-[12px] font-bold text-white/70 hover:border-[#ff6b35] hover:text-[#ff6b35] transition-colors">in</a>
+              <a href={'https://wa.me/?text=' + shareText + '%20' + shareUrl} target="_blank" rel="noreferrer" aria-label="Share on WhatsApp" className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 hover:border-[#ff6b35] hover:text-[#ff6b35] transition-colors"><MessageCircle className="w-4 h-4" /></a>
+              <button type="button" onClick={copyLink} aria-label="Copy post link" className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 hover:border-[#ff6b35] hover:text-[#ff6b35] transition-colors cursor-pointer">{copied ? <Check className="w-4 h-4 text-[#ff6b35]" /> : <Link2 className="w-4 h-4" />}</button>
+            </div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -114,6 +148,23 @@ export default function JournalPostPage({ post }: { post: JournalPost }) {
               Start a project <ArrowRight className="w-4 h-4" />
             </a>
           </div>
+
+          {(newerPost || olderPost) && (
+            <div className="grid sm:grid-cols-2 gap-4 mt-8">
+              {newerPost ? (
+                <a href={'/journal/' + newerPost.id} className="group rounded-2xl border border-white/10 bg-[#070f1a] p-5 hover:border-[#ff6b35]/30 transition-all">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mb-2">← Newer post</p>
+                  <p className="font-['Syne'] font-bold text-white group-hover:text-[#ff6b35] transition-colors leading-snug">{newerPost.title}</p>
+                </a>
+              ) : <div />}
+              {olderPost ? (
+                <a href={'/journal/' + olderPost.id} className="group rounded-2xl border border-white/10 bg-[#070f1a] p-5 sm:text-right hover:border-[#ff6b35]/30 transition-all">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mb-2">Older post →</p>
+                  <p className="font-['Syne'] font-bold text-white group-hover:text-[#ff6b35] transition-colors leading-snug">{olderPost.title}</p>
+                </a>
+              ) : <div />}
+            </div>
+          )}
         </div>
       </section>
 
