@@ -910,10 +910,6 @@ const TestimonialsSection = () => {
             </button>
           ))}
         </div>
-        <div className="text-center mt-10">
-          <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-[#ff6b35] transition-colors">4.8 ★ from 39 reviews on Fiverr — read them all <ArrowUpRight className="w-4 h-4" /></a>
-        </div>
-      </div>
     </section>
   );
 };
