@@ -910,6 +910,7 @@ const TestimonialsSection = () => {
             </button>
           ))}
         </div>
+      </div>
     </section>
   );
 };
