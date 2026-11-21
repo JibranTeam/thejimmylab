@@ -943,6 +943,11 @@ const FAQSection = () => {
 /* ================= Journal ================= */
 const JournalSection = () => {
   const articles = JOURNAL_POSTS;
+  const ARTICLES_PER_PAGE = 3;
+  const [journalPage, setJournalPage] = useState(0);
+  const totalJournalPages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
+  const pageArticles = articles.slice(journalPage * ARTICLES_PER_PAGE, journalPage * ARTICLES_PER_PAGE + ARTICLES_PER_PAGE);
+  const goToJournalPage = (page: number) => { if (page < 0 || page >= totalJournalPages || page === journalPage) return; setJournalPage(page); };
   return (
     <section id="journal" className="relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -958,10 +963,20 @@ const JournalSection = () => {
           </div>
           <a href="#journal" className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/70 hover:text-[#ff6b35] transition-colors duration-300 shrink-0 group">Read All Articles<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" /></a>
         </div>
+        <div className="flex items-center justify-end gap-3 mb-6">
+          <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {journalPage + 1} of {totalJournalPages}</span>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalJournalPages }).map((_, d) => (
+              <button key={d} type="button" onClick={() => goToJournalPage(d)} aria-label={'Go to journal page ' + (d + 1)} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: d === journalPage ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: d === journalPage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} /></button>
+            ))}
+          </div>
+          <button type="button" onClick={() => goToJournalPage(journalPage - 1)} disabled={journalPage === 0} aria-label="Previous journal page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
+          <button type="button" onClick={() => goToJournalPage(journalPage + 1)} disabled={journalPage === totalJournalPages - 1} aria-label="Next journal page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
+        </div>
         <div className="md:hidden mb-2">
-          <div className="flex items-center justify-between gap-4 mb-6"><span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">Swipe to explore</span><div className="flex items-center gap-1.5">{articles.map((_, i) => (<span key={i} className={cn('w-2 h-2 rounded-full transition-all duration-300', i === 0 ? 'bg-[#ff6b35] w-5' : 'bg-white/15')} />))}</div></div>
+          <div className="flex items-center justify-between gap-4 mb-6"><span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">Swipe to explore</span><div className="flex items-center gap-1.5">{pageArticles.map((_, i) => (<span key={i} className={cn('w-2 h-2 rounded-full transition-all duration-300', i === 0 ? 'bg-[#ff6b35] w-5' : 'bg-white/15')} />))}</div></div>
           <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
-            {articles.map((post) => (
+            {pageArticles.map((post) => (
               <article key={'m-' + post.id} className="snap-start shrink-0 w-[calc(100vw-2.5rem)] max-w-sm group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 rounded-2xl p-5 border border-white/10">
                 <div>
                   <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]">{post.featured && (<span className="absolute top-3 left-3 z-10 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-md border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
@@ -975,7 +990,7 @@ const JournalSection = () => {
           </div>
         </div>
         <div className="hidden md:grid grid-cols-3 gap-6 lg:gap-8">
-          {articles.map((post) => (
+          {pageArticles.map((post) => (
             <article key={post.id} className="group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 hover:shadow-[12px_12px_0_rgba(0,0,0,0.35),24px_24px_0_rgba(0,0,0,0.22),30px_30px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1.5 rounded-2xl p-5 border border-white/10 hover:border-[#ff6b35]/30 transition-all duration-500">
               <div>
                 <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]"><div className="absolute inset-0 bg-gradient-to-tr from-[#ff6b35]/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />{post.featured && (<span className="absolute top-3 left-3 z-20 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-lg border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
