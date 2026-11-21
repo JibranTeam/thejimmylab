@@ -235,10 +235,6 @@ const HeroSection = () => {
               <span>Explore the core</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
-            <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr min-w-[230px] shrink-0">
-              <span>Hire on Fiverr</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
           </div>
           <div className="flex-1 max-w-[640px]">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
@@ -859,12 +855,14 @@ const OurProcessSection = () => {
 const TestimonialsSection = () => {
   const [active, setActive] = useState(0);
   const testimonials = [
-    { name: 'Sarah Chen', role: 'CTO at TechVenture Inc.', initials: 'SC', gradient: 'from-blue-500 to-indigo-500', quote: 'THE JIMMY LAB transformed our entire digital infrastructure. Their team delivered a platform that handles 10x our previous traffic with half the latency. Absolutely exceptional work — they think like partners, not vendors.' },
-    { name: 'Marcus Rivera', role: 'Founder & CEO, GrowthStack', initials: 'MR', gradient: 'from-emerald-500 to-teal-500', quote: 'Working with THE JIMMY LAB was a game-changer for our e-commerce business. They rebuilt our entire storefront and we saw a 60% increase in conversions within the first month. The attention to detail is unmatched.' },
-    { name: 'Emily Watson', role: 'Product Director, HealthSync', initials: 'EW', gradient: 'from-rose-500 to-pink-500', quote: 'From the initial wireframes to the final deployment, every step was handled with incredible professionalism. The telemedicine platform they built serves over 100K patients daily without a single hiccup.' },
-    { name: 'David Kim', role: 'CTO, FinanceHub', initials: 'DK', gradient: 'from-orange-500 to-amber-500', quote: 'The fintech dashboard THE JIMMY LAB built for us is blazing fast and beautiful. They understood complex trading workflows better than our own team. A true extension of our product org.' },
-    { name: 'Priya Patel', role: 'Head of Engineering, EduTech', initials: 'PP', gradient: 'from-violet-500 to-purple-500', quote: 'We needed to scale our learning platform to millions of students overnight. THE JIMMY LAB delivered a resilient architecture that has not gone down once in 18 months. Incredible reliability.' },
-    { name: 'James Wilson', role: 'CEO, RetailFlow', initials: 'JW', gradient: 'from-cyan-500 to-blue-500', quote: 'Our retail analytics suite is now the envy of the industry. The 2.5D cardboard interactions they designed made complex data feel tactile and joyful. Customers love it.' },
+    { name: 'anamichele', role: 'United States — Lottie & Web Animation', initials: 'AN', gradient: 'from-blue-500 to-indigo-500', quote: 'Jimmy was incredible! He is very communicative — alway online to answer any questions. He took the time to make a special guide for me to modify the files on my own. He really went over the top. He is skilled and gets the job done. I could not recommend him more!' },
+    { name: 'lazerlogistics', role: 'United States — Full Stack Web Applications', initials: 'LL', gradient: 'from-amber-500 to-red-500', quote: 'Jimmy did an exceptional job on the project, demonstrating professionalism, attention to detail, and exceeding all expectations. His language fluency and proactive communication made working with him a seamless experience. Highly recommended for any software development needs!' },
+    { name: 'sergiodellatti', role: 'Italy — Full Stack Web Applications', initials: 'SE', gradient: 'from-emerald-500 to-teal-500', quote: 'Jimmy is a guarantee, you can entrust your projects to him and you will have a professional collaborator at your side.' },
+    { name: 'designlust_co', role: 'United Kingdom — Lottie & Web Animation', initials: 'DL', gradient: 'from-rose-500 to-pink-500', quote: 'FANTASTIC communication, super responsive, and great work. Thoroughly recommend. Thanks!!' },
+    { name: 'samuel5140', role: 'United States — Full Stack Web Applications', initials: 'SA', gradient: 'from-orange-500 to-amber-500', quote: 'Jimmy was absolutely amazing to work with. Very responsive to my requests and very professional and polite. He did a great job. 10/10 seller.' },
+    { name: 'instagram_max', role: 'Germany — Lottie & Web Animation', initials: 'IM', gradient: 'from-violet-500 to-purple-500', quote: 'I have worked with many on fiverr. But I really liked the way jimmy approaches the tasks and always remains solution-oriented, even with problems. The result was perfect as expected but the way to the result was a lot of fun. I am very much looking forward to working with him again.' },
+    { name: 'vincentkwan', role: 'Canada — Vector Tracing', initials: 'VK', gradient: 'from-cyan-500 to-blue-500', quote: 'Jimmy was great to work with. I have him a very complex assignment and he was honest about the time it took to as well as the difficulty of work. Communication was fast and the work was done perfectly.' },
+    { name: 'lightpress', role: 'United States — Lottie & Web Animation', initials: 'LI', gradient: 'from-teal-500 to-cyan-500', quote: 'Jimmy accomplished something I was not able to figure out on my own, and helped solve a major issue for one of my most important clients. Fast, professional, and easy to work with!' },
   ];
   const next = () => setActive((p) => (p + 1) % testimonials.length);
   const prev = () => setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
@@ -877,13 +875,13 @@ const TestimonialsSection = () => {
         <div className="text-center mb-16 lg:mb-20">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Testimonials</div>
           <h2 className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-5">Good Work <span className="gradient-text">Speaks for Itself.</span></h2>
-          <p className="max-w-2xl mx-auto text-lg text-white/60 leading-relaxed">Don't just take our word for it — hear from the founders, CTOs, and product leaders who've trusted us with their vision.</p>
+          <p className="max-w-2xl mx-auto text-lg text-white/60 leading-relaxed">Real words from real Fiverr buyers — quoted exactly as written, unedited.</p>
         </div>
         <div className="max-w-4xl mx-auto mb-16">
           <div className="relative p-8 sm:p-12 rounded-3xl glass overflow-hidden">
             <Quote className="w-10 h-10 text-white/10 absolute top-6 left-8 pointer-events-none" />
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35, ease: 'easeOut' }} className="text-center">
+              <motion.div key={active} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35, ease: 'easeOut' }} className="text-center flex flex-col justify-center min-h-[420px] sm:min-h-[360px] lg:min-h-[320px]">
                 <div className="flex justify-center mb-5">{[...Array(5)].map((_, i) => (<Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />))}</div>
                 <p className="text-lg sm:text-xl text-white leading-relaxed mb-8 max-w-3xl mx-auto">"{testimonials[active].quote}"</p>
                 <div className="flex items-center justify-center gap-4">
