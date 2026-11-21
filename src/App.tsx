@@ -17,9 +17,12 @@ import ComingSoonToast from './components/ComingSoonToast';
 import { JOURNAL_POSTS, getJournalPostById } from './data/journal';
 const TeamPage = lazy(() => import('./pages/TeamPage'));
 const ComingSoonPage = lazy(() => import('./pages/ComingSoonPage'));
+const TopicPage = lazy(() => import('./pages/TopicPage'));
 import { PageTransition, RouteCurtain } from './components/PageTransition';
 import { CornerTicks } from './components/CornerTicks';
 import { services as serviceData, getServiceBySlug } from './data/services';
+import { locations, getLocationBySlug } from './data/locations';
+import { industries, getIndustryBySlug } from './data/industries';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,6 +58,7 @@ const Navigation = () => {
             <a key={item.name} href={item.href} className="text-[15px] text-white/75 hover:text-white transition-colors">{item.name}</a>
           ))}
           <a href="#connect" onClick={(e) => { e.preventDefault(); goToConnect(); }} className="btn-primary">Start Project <ArrowUpRight className="w-3.5 h-3.5" /></a>
+          <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr justify-center px-[1.6rem] py-[0.85rem] text-[0.78rem] tracking-[0.06em]"><span>Hire on Fiverr</span> <ArrowUpRight className="w-3.5 h-3.5" /></a>
         </div>
         <button className="md:hidden text-white p-2" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? 'Close menu' : 'Open menu'} aria-expanded={isOpen}>{isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}</button>
       </div>
@@ -65,6 +69,7 @@ const Navigation = () => {
               {navItems.map((item) => (
                 <a key={item.name} href={item.href} className="block text-white/80 hover:text-[#ff6b35] transition-colors py-2" onClick={() => setIsOpen(false)}>{item.name}</a>
               ))}
+              <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="block font-semibold text-[#1dbf73] hover:text-white transition-colors py-2" onClick={() => setIsOpen(false)}>Hire on Fiverr</a>
             </div>
           </motion.div>
         )}
@@ -225,10 +230,16 @@ const HeroSection = () => {
           <br className="hidden sm:block" /> interfaces and systems that move brands forward.
         </p>
         <div className="hero-cta flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-10">
-          <a href="#services" className="btn-ghost min-w-[230px] shrink-0">
-            <span>Explore the core</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
+          <div className="flex flex-col gap-3 shrink-0">
+            <a href="#services" className="btn-ghost min-w-[230px] shrink-0">
+              <span>Explore the core</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr min-w-[230px] shrink-0">
+              <span>Hire on Fiverr</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
           <div className="flex-1 max-w-[640px]">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
               <div className="min-w-0 flex-1">
@@ -652,7 +663,7 @@ const ServicesSection = () => {
         <div className="service-title text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Services</div>
           <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-4">Solutions for Every <span className="gradient-text">Digital Need</span></h2>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe and the Gulf — that drive results.</p>
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada — that drive results.</p>
         </div>
         <div className="flex items-center justify-end gap-3 mb-6">
           <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {servicePage + 1} of {totalServicePages}</span>
@@ -940,6 +951,11 @@ const FAQSection = () => {
 /* ================= Journal ================= */
 const JournalSection = () => {
   const articles = JOURNAL_POSTS;
+  const ARTICLES_PER_PAGE = 3;
+  const [journalPage, setJournalPage] = useState(0);
+  const totalJournalPages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
+  const journalPages = Array.from({ length: totalJournalPages }, (_, pg) => articles.slice(pg * ARTICLES_PER_PAGE, pg * ARTICLES_PER_PAGE + ARTICLES_PER_PAGE));
+  const goToJournalPage = (page: number) => { if (page < 0 || page >= totalJournalPages || page === journalPage) return; setJournalPage(page); };
   return (
     <section id="journal" className="relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -955,11 +971,23 @@ const JournalSection = () => {
           </div>
           <a href="#journal" className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/70 hover:text-[#ff6b35] transition-colors duration-300 shrink-0 group">Read All Articles<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" /></a>
         </div>
-        <div className="md:hidden mb-2">
-          <div className="flex items-center justify-between gap-4 mb-6"><span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">Swipe to explore</span><div className="flex items-center gap-1.5">{articles.map((_, i) => (<span key={i} className={cn('w-2 h-2 rounded-full transition-all duration-300', i === 0 ? 'bg-[#ff6b35] w-5' : 'bg-white/15')} />))}</div></div>
-          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
-            {articles.map((post) => (
-              <article key={'m-' + post.id} className="snap-start shrink-0 w-[calc(100vw-2.5rem)] max-w-sm group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 rounded-2xl p-5 border border-white/10">
+        <div className="flex items-center justify-end gap-3 mb-6">
+          <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {journalPage + 1} of {totalJournalPages}</span>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalJournalPages }).map((_, d) => (
+              <button key={d} type="button" onClick={() => goToJournalPage(d)} aria-label={'Go to journal page ' + (d + 1)} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: d === journalPage ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: d === journalPage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} /></button>
+            ))}
+          </div>
+          <button type="button" onClick={() => goToJournalPage(journalPage - 1)} disabled={journalPage === 0} aria-label="Previous journal page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
+          <button type="button" onClick={() => goToJournalPage(journalPage + 1)} disabled={journalPage === totalJournalPages - 1} aria-label="Next journal page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
+        </div>
+        <div className="overflow-hidden">
+          <div className="flex will-change-transform" style={{ transform: 'translateX(-' + journalPage * 100 + '%)', transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+            {journalPages.map((pagePosts, pg) => (
+              <div key={pg} className="w-full shrink-0">
+                <div className="md:hidden flex flex-col gap-4">
+                  {pagePosts.map((post) => (
+              <article key={'m-' + post.id} className="group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 rounded-2xl p-5 border border-white/10">
                 <div>
                   <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]">{post.featured && (<span className="absolute top-3 left-3 z-10 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-md border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
                   <div className="flex items-center gap-2 mb-4 text-[11px] font-mono"><span className="text-[9px] uppercase tracking-wider text-[#ff6b35] border border-[#ff6b35]/30 bg-[#ff6b35]/10 px-2 py-0.5 rounded-md">{post.category}</span><span className="text-white/20">•</span><span className="text-white/60">{post.date}</span><span className="text-white/20">•</span><span className="text-white/60">{post.read}</span></div>
@@ -968,11 +996,10 @@ const JournalSection = () => {
                 </div>
                 <div className="pt-4 border-t border-white/[0.06]"><a href={'/journal/' + post.id} className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#ff6b35]">Read Post <span aria-hidden="true">→</span></a></div>
               </article>
-            ))}
-          </div>
-        </div>
-        <div className="hidden md:grid grid-cols-3 gap-6 lg:gap-8">
-          {articles.map((post) => (
+                  ))}
+                </div>
+                <div className="hidden md:grid grid-cols-3 gap-6 lg:gap-8">
+                  {pagePosts.map((post) => (
             <article key={post.id} className="group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 hover:shadow-[12px_12px_0_rgba(0,0,0,0.35),24px_24px_0_rgba(0,0,0,0.22),30px_30px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1.5 rounded-2xl p-5 border border-white/10 hover:border-[#ff6b35]/30 transition-all duration-500">
               <div>
                 <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]"><div className="absolute inset-0 bg-gradient-to-tr from-[#ff6b35]/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />{post.featured && (<span className="absolute top-3 left-3 z-20 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-lg border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
@@ -983,6 +1010,10 @@ const JournalSection = () => {
               <div className="pt-4 border-t border-white/[0.06]"><a href={'/journal/' + post.id} className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#ff6b35] group-hover:gap-3 transition-all">Read Post <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span></a></div>
             </article>
           ))}
+        </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1147,7 +1178,7 @@ const ConnectSection = () => {
           <div className="flex flex-col">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-[#ff6b35] mb-5">Connect</p>
             <h2 className="font-['Syne'] font-bold text-white leading-[0.98] tracking-tight text-[clamp(3rem,5.5vw,4.75rem)]">Let's start<br />something<br /><span className="gradient-text block">remarkable.</span></h2>
-            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Hire our web development team — we work with clients in the USA, UK, Europe and the Gulf. Send us an email or use the form.</p>
+            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Hire our web development team — we work with clients in the USA, UK, Europe and the Gulf. Send us an email, hire us on Fiverr, or use the form.</p>
             <div className="mt-7 self-start inline-flex items-center gap-2.5 rounded-full border border-[#ff6b35]/30 bg-[#ff6b35]/[0.07] px-4 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b35] animate-pulse shrink-0" />
               <span className="font-mono text-[12px] text-[#ff6b35] tracking-tight whitespace-nowrap">Accepting projects</span>
@@ -1158,7 +1189,7 @@ const ConnectSection = () => {
                 <a href={'mailto:' + email} className="btn-ghost" style={{ textTransform: 'none', letterSpacing: '0.05em' }}><span>{displayEmail}</span><ArrowUpRight className="w-4 h-4" /></a>
                 <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-md border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 font-mono text-[11px] text-white/70 hover:text-white hover:border-white/25 hover:bg-white/[0.1] transition-all shrink-0"><Copy className="w-3.5 h-3.5" />{copied ? 'Copied!' : 'Copy Email'}</button>
               </div>
-              <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-ghost" style={{ textTransform: 'none', letterSpacing: '0.05em' }}><span>contact@thejimmylab.com</span><ArrowUpRight className="w-4 h-4" /></a></div>
+              <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr"><span>Hire on Fiverr</span><ArrowUpRight className="w-4 h-4" /></a></div>
             </div>
             <div className="mt-9">
               <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/60 mb-4">Follow us</p>
@@ -1168,9 +1199,9 @@ const ConnectSection = () => {
             </div>
             <div className="w-full mt-12 p-6 rounded-2xl bg-white/5 border border-white/15 relative overflow-hidden group select-none">
               <div className="absolute right-6 top-6 flex items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#ff6b35]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#ff6b35] shadow-[0_0_10px_rgba(255,107,53,0.6)]"></span></div>
-              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Office Location</span>
-              <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Islamabad, Pakistan</h3>
-              <p className="text-xs text-white/70 leading-relaxed font-light">Working globally — USA, UK, Europe and the Gulf — with modern asynchronous processes.</p>
+              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Working worldwide</span>
+              <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Global Remote Team</h3>
+              <p className="text-xs text-white/70 leading-relaxed font-light">Working globally — USA, UK, Europe, the Gulf, Australia and Canada — with modern asynchronous processes.</p>
             </div>
           </div>
           <div className="rounded-2xl bg-[#3A373E]/40 backdrop-blur-xl border border-white/[0.08] p-8 sm:p-10">
@@ -1259,6 +1290,18 @@ const Footer = () => (
             ))}
           </ul>
         </div>
+      </div>
+      <div className="pt-8 border-t border-white/10 mb-8">
+        <p className="text-white/60 text-sm leading-relaxed">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mr-3">Where we work</span>
+          Serving clients worldwide —{' '}
+          {locations.map((l, i) => (
+            <span key={l.slug}>
+              {i > 0 && <span className="text-white/30"> · </span>}
+              <a href={'/locations/' + l.slug} className="text-white/60 hover:text-[#ff6b35] transition-colors">{({ usa: 'USA', uk: 'UK', uae: 'UAE', australia: 'Australia', canada: 'Canada' } as Record<string, string>)[l.slug] || l.slug}</a>
+            </span>
+          ))}
+        </p>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-white/60 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
@@ -1408,15 +1451,20 @@ function App() {
   const service = serviceMatch ? getServiceBySlug(serviceMatch[1]) : undefined;
   const journalMatch = route.match(/^\/journal\/([^/?]+)/);
   const journalPost = journalMatch ? getJournalPostById(journalMatch[1]) : undefined;
+  const locationMatch = route.match(/^\/locations\/([^/?]+)/);
+  const location = locationMatch ? getLocationBySlug(locationMatch[1]) : undefined;
+  const industryMatch = route.match(/^\/industries\/([^/?]+)/);
+  const industry = industryMatch ? getIndustryBySlug(industryMatch[1]) : undefined;
+  const topic = location || industry;
   const isTeamPage = /^\/team$/.test(route);
   const isComingSoonPage = route === '/coming-soon';
-  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage;
+  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry;
   // Per-page title + canonical + description + structured data.
   useEffect(() => {
-    document.title = service ? service.title + ' Services | THE JIMMY LAB' : journalPost ? journalPost.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB — Web Development & Design Agency';
+    document.title = service ? service.title + ' Services | THE JIMMY LAB' : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB — Web Development & Design Agency';
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route));
-    const description = service ? service.tagline + ' | THE JIMMY LAB — web development and design agency in Pakistan, serving clients in the USA, UK, Europe and the Gulf.' : journalPost ? journalPost.excerpt : isTeamPage ? 'Meet the team behind THE JIMMY LAB — six operators covering design, engineering, SEO and automation, based in Islamabad, Pakistan, working with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Web development and design agency in Pakistan, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
+    const description = service ? service.tagline + ' | THE JIMMY LAB — a global remote web development and design agency, serving clients in the USA, UK, Europe and the Gulf.' : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB — six operators covering design, engineering, SEO and automation, working remotely with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Global remote web development and design agency, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
     const robotsMeta = document.querySelector('meta[name="robots"]');
     if (isComingSoonPage) { if (!robotsMeta) { const m = document.createElement('meta'); m.setAttribute('name', 'robots'); m.setAttribute('content', 'noindex'); document.head.appendChild(m); } else robotsMeta.setAttribute('content', 'noindex'); } else if (robotsMeta) robotsMeta.remove();
     const meta = document.querySelector('meta[name="description"]');
@@ -1429,6 +1477,17 @@ function App() {
         { '@type': 'Service', name: service.title, description: service.tagline, url: 'https://thejimmylab.vercel.app/services/' + service.slug, provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
         { '@type': 'FAQPage', mainEntity: service.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
       ] };
+    } else if (topic) {
+      const topicUrl = 'https://thejimmylab.vercel.app/' + (topic.kind === 'location' ? 'locations/' : 'industries/') + topic.slug;
+      ld = { '@context': 'https://schema.org', '@graph': [
+        { '@type': 'Service', name: topic.title, description: topic.description, url: topicUrl, provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
+        { '@type': 'FAQPage', mainEntity: topic.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+      ] };
+    } else if (journalPost) {
+      const months: Record<string, string> = { January: '01', February: '02', March: '03', April: '04', May: '05', June: '06', July: '07', August: '08', September: '09', October: '10', November: '11', December: '12' };
+      const parts = journalPost.date.replace(',', '').split(' ');
+      const iso = parts.length === 3 && months[parts[0]] ? parts[2] + '-' + months[parts[0]] + '-' + parts[1].padStart(2, '0') : undefined;
+      ld = { '@context': 'https://schema.org', '@type': 'Article', headline: journalPost.title, description: journalPost.excerpt, url: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, author: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' }, ...(iso ? { datePublished: iso } : {}) };
     } else if (!isTeamPage && !isComingSoonPage && !isNotFound) {
       // Home FAQPage schema — keep in sync with the HomePage faqs array.
       ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
@@ -1438,11 +1497,6 @@ function App() {
         { '@type': 'Question', name: 'What is your pricing structure?', acceptedAnswer: { '@type': 'Answer', text: 'We offer both project-based pricing and retainer models. Every project is unique, so we provide custom quotes based on your specific requirements, timeline, and scope of work.' } },
         { '@type': 'Question', name: 'Can you help with existing websites?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely! We offer website redesigns, performance optimization, feature additions, and migration services for existing websites. We can work with most modern web technologies.' } },
       ] };
-    } else if (journalPost) {
-      const months: Record<string, string> = { January: '01', February: '02', March: '03', April: '04', May: '05', June: '06', July: '07', August: '08', September: '09', October: '10', November: '11', December: '12' };
-      const parts = journalPost.date.replace(',', '').split(' ');
-      const iso = parts.length === 3 && months[parts[0]] ? parts[2] + '-' + months[parts[0]] + '-' + parts[1].padStart(2, '0') : undefined;
-      ld = { '@context': 'https://schema.org', '@type': 'Article', headline: journalPost.title, description: journalPost.excerpt, url: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, author: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' }, ...(iso ? { datePublished: iso } : {}) };
     }
     if (ld) {
       const script = document.createElement('script');
@@ -1451,7 +1505,7 @@ function App() {
       script.text = JSON.stringify(ld);
       document.head.appendChild(script);
     }
-  }, [route, service, journalPost, isTeamPage, isComingSoonPage, isNotFound]);
+  }, [route, service, journalPost, topic, isTeamPage, isComingSoonPage, isNotFound]);
   // GA4 (optional): set VITE_GA_MEASUREMENT_ID in Vercel env vars to activate.
   // No tracking code ships at all until that ID is set.
   useEffect(() => {
@@ -1472,7 +1526,7 @@ function App() {
     if (g) g('event', 'page_view', { page_path: route });
   }, [route]);
 
-  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : isTeamPage ? 'team' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
+  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
       <AnimatePresence>{showCurtain && <RouteCurtain key="curtain" />}</AnimatePresence>
@@ -1480,7 +1534,7 @@ function App() {
       <Analytics />
       <AnimatePresence mode="wait">
         <PageTransition key={routeKey}>
-          {service ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><JournalPostPage post={journalPost} /></Suspense> : isTeamPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TeamPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
+          {service ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TeamPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
         </PageTransition>
       </AnimatePresence>
     </>

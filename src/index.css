@@ -169,6 +169,52 @@ select option:disabled {
     transform: scaleY(1);
   }
 
+  /* ── Fiverr CTA — same rising-fill hover as btn-ghost, in Fiverr green ── */
+  .btn-fiverr {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 1.05rem 1.35rem;
+    border: 1px solid rgba(29, 191, 115, 0.6);
+    border-radius: 0;
+    color: #1dbf73;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.35s ease, color 0.35s ease;
+  }
+  .btn-fiverr::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #1dbf73;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+    z-index: 0;
+  }
+  .btn-fiverr > * {
+    position: relative;
+    z-index: 1;
+  }
+  .btn-fiverr:hover {
+    border-color: #1dbf73;
+    color: #ffffff;
+  }
+  .btn-fiverr:hover::before {
+    transform: scaleY(1);
+  }
+  .btn-fiverr:active {
+    transform: translateY(1px);
+  }
+
   /* ── hairline tokens (hero prompt) ── */
   .border-hairline {
     border: 1px solid rgba(255, 255, 255, 0.12);

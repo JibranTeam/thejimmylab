@@ -14,6 +14,8 @@ export interface JournalPost {
   image: string;
   sections: JournalSection[];
   takeaway: string;
+  /** Slug of the service this post links to (rendered as a related-service card). */
+  relatedService?: string;
 }
 
 export const JOURNAL_POSTS: JournalPost[] = [
@@ -220,6 +222,216 @@ export const JOURNAL_POSTS: JournalPost[] = [
       },
     ],
     takeaway: 'Interactive 3D works when it has a job, a budget and a fallback. Give it all three, and it stays an experience instead of becoming a cost.',
+  },
+  {
+    id: 'how-much-nextjs-website-costs',
+    featured: true,
+    category: 'Guides',
+    date: 'Nov 21, 2026',
+    read: '5 min read',
+    title: 'How Much Does a Next.js Website Cost?',
+    excerpt: 'There is no single price for a Next.js website — but there is a short list of things that decide it. Here is what drives the cost, and what to ask before you get a quote.',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop&q=80',
+    relatedService: 'nextjs-development',
+    sections: [
+      {
+        heading: 'There is no single price — and that is honest',
+        paragraphs: [
+          'A Next.js website can be a five-page marketing site or a full web application with accounts, payments and a content team behind it. Those two things share a framework and almost nothing else, so any agency quoting one flat price for "a Next.js website" is either guessing or selling you the simple one at the complex price.',
+          'What you can do instead is learn the drivers. Once you know what moves the price, you can read any quote — including ours — and tell whether it matches the job.',
+        ],
+      },
+      {
+        heading: 'The five things that decide the cost',
+        paragraphs: [
+          'First, pages and content: a five-page site costs less than a fifty-page one, and content you supply costs less than content the agency has to write. Second, design: a custom design costs more than a template, and it should — it is the part your visitors actually judge. Third, integrations: payments, bookings, a CRM, a CMS, analytics — each one is real work, and each one adds to the quote.',
+          'Fourth, the application behind the site: logins, dashboards, search, and anything with state cost more than pages that just show information. Fifth, timeline: a normal schedule costs less than a rush job, because rush work means overtime and dropped priorities elsewhere.',
+        ],
+      },
+      {
+        heading: 'How we price it',
+        paragraphs: [
+          'We price Next.js work per project, with a custom quote after a short scoping call. That is not a way to avoid giving a number — it is the only honest way to give one, because the scope is the price. Tell us the pages, the design, the integrations and the deadline, and we will quote it plainly, with what is included and what would cost extra.',
+          'One thing to ask any agency, including us: what happens after launch. Hosting, updates and support are either in the quote or they are not, and finding out afterwards is the most expensive way to learn.',
+        ],
+      },
+    ],
+    takeaway: 'A Next.js website costs what its scope costs. Learn the five drivers, get a quote against a written scope, and check what happens after launch before you sign.',
+  },
+  {
+    id: 'website-redesign-cost-2026',
+    featured: false,
+    category: 'Guides',
+    date: 'Nov 20, 2026',
+    read: '5 min read',
+    title: 'Website Redesign Cost in 2026: What Actually Drives the Price',
+    excerpt: 'A redesign is not one job — it is design, rebuild, migration and SEO protection bundled together. Here is where the money actually goes.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80',
+    relatedService: 'website-redesign-migration',
+    sections: [
+      {
+        heading: 'A redesign is four jobs, not one',
+        paragraphs: [
+          'When people ask what a redesign costs, they are usually picturing the visible part: a new design. But a proper redesign is four jobs bundled together — new design, rebuild on a modern stack, migration of everything the old site had, and protection of the search rankings the old site earned.',
+          'Skip any one of those and the price drops — and so does the result. A cheap redesign that loses your Google rankings is the most expensive kind there is.',
+        ],
+      },
+      {
+        heading: 'Where the money goes',
+        paragraphs: [
+          'Design is the largest share for most redesigns: research, wireframes, visual design and a design system your team can keep using. The rebuild follows: pages recreated on a modern stack, faster and easier to maintain than what they replace.',
+          'Migration is the quiet cost people forget: every page, post, product, image and form moved intact, with a redirect map so old links keep working. And SEO protection — checks before, during and after launch — is what keeps the traffic you already have.',
+        ],
+      },
+      {
+        heading: 'What to ask before you pay',
+        paragraphs: [
+          'Ask whether redirects are included, and whether anyone checks rankings after launch. Ask who owns the design files and the code. Ask what happens to the old site — is it archived, or just switched off?',
+          'And ask for the quote against a written scope: page count, platform move or not, content migration included or not. Two quotes for "a redesign" are not comparable until the scopes match.',
+        ],
+      },
+    ],
+    takeaway: 'A redesign costs what its four parts cost: design, rebuild, migration and SEO protection. The cheapest quote is usually the one that skipped the last two.',
+  },
+  {
+    id: 'how-long-website-redesign-takes',
+    featured: false,
+    category: 'Guides',
+    date: 'Nov 19, 2026',
+    read: '4 min read',
+    title: 'How Long Does a Website Redesign Take?',
+    excerpt: 'Most redesigns take 3–6 weeks. Here is what fills those weeks, and what usually makes them longer.',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=500&fit=crop&q=80',
+    relatedService: 'website-redesign-migration',
+    sections: [
+      {
+        heading: 'The short answer: 3–6 weeks for most sites',
+        paragraphs: [
+          'A typical redesign — new design, rebuild, content migration and launch — takes 3–6 weeks for a small to medium site. A five-page marketing site can be faster; a large site with a platform move, an online store or a lot of content will take longer.',
+          'Those weeks are not all building. Roughly a third is design and decisions, a third is the build, and a third is content, migration and checks. The build is rarely the slow part.',
+        ],
+      },
+      {
+        heading: 'What makes it take longer',
+        paragraphs: [
+          'Content is the usual delay. If the new copy, photos and product details are not ready, the build waits — a designed page with placeholder text is not a finished page. Decisions are the second delay: every round of "let me check with the team" adds days, and redesigns have many decisions.',
+          'The third is scope discovered late: pages nobody mentioned in the first meeting, integrations the old site had that nobody remembered, and a platform move that turns out to be bigger than it looked. A short audit before the quote catches most of this.',
+        ],
+      },
+      {
+        heading: 'How to keep it on schedule',
+        paragraphs: [
+          'Fix the page list before design starts, and freeze it. Appoint one decision-maker, not a committee. And get the content ready while the design is being drawn, not after the build is finished.',
+          'A good agency will give you a firm timeline after a short review of your current site — not before. If someone quotes a date without looking at the site, that date is a guess.',
+        ],
+      },
+    ],
+    takeaway: 'Plan on 3–6 weeks for a typical redesign. Content, decisions and late-discovered scope are what stretch it — fix the page list early and appoint one decision-maker.',
+  },
+  {
+    id: 'nextjs-vs-wordpress',
+    featured: false,
+    category: 'Engineering',
+    date: 'Nov 18, 2026',
+    read: '6 min read',
+    title: 'Next.js vs WordPress for a Business Website',
+    excerpt: 'WordPress is the safe default and Next.js is the fast one — but the right choice depends on who updates the site and what it has to do.',
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop&q=80',
+    relatedService: 'nextjs-development',
+    sections: [
+      {
+        heading: 'The honest summary',
+        paragraphs: [
+          'WordPress powers a huge share of the web for good reasons: anyone can update it, plugins exist for almost everything, and finding someone to maintain it is easy. Next.js is the newer choice: faster pages, better security by default, and a codebase a developer can reason about — but it needs a developer to change things.',
+          'Neither is wrong. The wrong choice is picking one for the wrong reason — WordPress because it is familiar, or Next.js because it is fashionable.',
+        ],
+      },
+      {
+        heading: 'Choose WordPress when',
+        paragraphs: [
+          'Choose WordPress when your team updates content often and nobody on the team writes code. A blog, a news section, or a site where marketing edits pages weekly will be happier in WordPress, where the editor is the interface.',
+          'It is also the right call when the budget is small and the site is mostly pages: WordPress gets a good-looking site live quickly, and the plugin ecosystem covers bookings, forms, shops and SEO without custom work.',
+        ],
+      },
+      {
+        heading: 'Choose Next.js when',
+        paragraphs: [
+          'Choose Next.js when speed and custom behaviour matter more than self-service editing: a marketing site that has to load instantly, a product with logins and dashboards, a storefront with custom flows, or anything where performance is part of the product.',
+          'Next.js also wins on security and maintenance: no plugin updates to chase, no login page for bots to hammer, and pages that are server-rendered, so Google sees your content immediately. The trade-off is real — changes go through a developer — so weigh it honestly against who will run the site day to day.',
+        ],
+      },
+    ],
+    takeaway: 'WordPress wins when your team edits content themselves; Next.js wins when speed, security and custom behaviour matter more. Pick by who runs the site, not by fashion.',
+  },
+  {
+    id: 'migrate-to-nextjs',
+    featured: false,
+    category: 'Engineering',
+    date: 'Nov 17, 2026',
+    read: '6 min read',
+    title: 'How to Migrate Your Website to Next.js',
+    excerpt: 'Moving to Next.js is a migration, not a rewrite. Done in the right order, your visitors never notice — and your rankings hold.',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=500&fit=crop&q=80',
+    relatedService: 'nextjs-development',
+    sections: [
+      {
+        heading: 'Start with an inventory, not with code',
+        paragraphs: [
+          'Before anything is rebuilt, list everything the current site has: pages, posts, products, images, forms, integrations and the URLs they live at. The inventory is the migration — everything after it is execution.',
+          'The inventory also decides the order. Migrate the pages that earn traffic first, and the pages nobody visits last. If a page has no traffic and no links, consider dropping it instead of migrating it.',
+        ],
+      },
+      {
+        heading: 'Keep the URLs, or map them',
+        paragraphs: [
+          'The single most important rule: a URL that exists today must still work after the move, either at the same address or through a redirect to the new one. Every old URL gets a line in a redirect map, and every redirect gets checked after launch.',
+          'This is also the moment to fix the URL structure if it is a mess — but only with redirects in place. A clean structure is worth it; a broken one costs rankings for months.',
+        ],
+      },
+      {
+        heading: 'Launch in slices, verify everything',
+        paragraphs: [
+          'Do not switch everything over in one night. Migrate in slices — a section at a time — and verify each slice: pages load, forms work, analytics fires, and the redirect map holds. Staging first, then production, then a post-launch check for broken links and speed.',
+          'After launch, watch Search Console for a few weeks. A small dip is normal while Google re-crawls; a sustained drop means a redirect was missed, and the map tells you exactly where to look.',
+        ],
+      },
+    ],
+    takeaway: 'Migrate in the right order: inventory first, URLs preserved or mapped, launch in slices, verify after. Your visitors should never notice the move happened.',
+  },
+  {
+    id: 'website-maintenance-checklist',
+    featured: false,
+    category: 'Guides',
+    date: 'Nov 16, 2026',
+    read: '4 min read',
+    title: 'Website Maintenance Checklist: What to Check Every Month',
+    excerpt: 'Websites break quietly. A monthly checklist — updates, backups, speed, links and security — is the difference between a small fix and a lost week.',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop&q=80',
+    relatedService: 'maintenance-support',
+    sections: [
+      {
+        heading: 'Why monthly, and why written down',
+        paragraphs: [
+          'Websites break quietly: a plugin goes out of date, a certificate expires, a form stops sending, a page gets slow. None of these announce themselves. A monthly checklist turns "we should check the site" into a job with a list and a date.',
+          'Write the list down and keep it in one place. The checklist below is the one we use — it takes about an hour a month for a typical site, and it catches almost everything before it becomes a problem.',
+        ],
+      },
+      {
+        heading: 'The monthly checks',
+        paragraphs: [
+          'Updates first: core, plugins, dependencies and the framework itself — tested on staging before they go live, never blindly. Then backups: confirm a recent backup exists and that it can actually be restored, not just that the backup job ran.',
+          'Then the visitor-facing checks: load the homepage and two key pages on a phone, submit the contact form, click the main links, and check the site still loads fast. Broken forms and dead links are the most common silent failures we find.',
+        ],
+      },
+      {
+        heading: 'The quarterly checks',
+        paragraphs: [
+          'Every quarter, go deeper: review analytics for pages that lost traffic, check Search Console for errors and coverage problems, renew or confirm the domain and certificate dates, and review who has access to what — old contractor accounts are a security hole that costs nothing to close.',
+          'And once a year, step back: is the content still accurate, are the prices and team pages current, and does the site still describe the business you actually run? A site that drifts from the business quietly loses enquiries.',
+        ],
+      },
+    ],
+    takeaway: 'An hour a month: updates, backups, forms, links and speed. Quarterly: analytics, Search Console, access and dates. Small checks, done regularly, beat a big rescue.',
   },
 ];
 

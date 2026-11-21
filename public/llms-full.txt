@@ -1,6 +1,6 @@
 # THE JIMMY LAB
 
-THE JIMMY LAB is a digital agency crafting immersive websites, web applications and interactive experiences. Based in Islamabad, Pakistan. Founded in 2013. Serving clients in the USA, UK, Europe and the Gulf.
+THE JIMMY LAB is a digital agency crafting immersive websites, web applications and interactive experiences. A global remote team. Founded in 2013. Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
 
 ## Services
 
@@ -18,6 +18,26 @@ THE JIMMY LAB is a digital agency crafting immersive websites, web applications 
 - [Integration & Automation](https://thejimmylab.vercel.app/services/integration-automation): Less copy-paste, fewer dropped leads, more time for real work.
 - [Website Redesign & Migration](https://thejimmylab.vercel.app/services/website-redesign-migration): New design, same traffic — a relaunch done properly.
 - [Code Review & Technical Audit](https://thejimmylab.vercel.app/services/code-review-technical-audit): Know exactly where your code stands — before it becomes a problem.
+- [Next.js Development](https://thejimmylab.vercel.app/services/nextjs-development): Next.js builds for growing businesses: fast pages, clean code, and a launch in weeks, not months.
+- [React Website Redesign](https://thejimmylab.vercel.app/services/react-website-redesign): A React redesign for your SaaS product — new design, same traffic, better conversions.
+- [AI Chatbot Integration](https://thejimmylab.vercel.app/services/ai-chatbot-integration): A chatbot that knows your business — answers grounded in your own content, live on your site.
+- [Three.js & Interactive 3D](https://thejimmylab.vercel.app/services/threejs-3d-websites): 3D on the web that earns its place — interactive, on-brand, and fast enough for a phone.
+
+## Locations
+
+Remote web development from a global team — no local office is claimed in any market.
+
+- [Web Development for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
+- [Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
+- [Web Development for UAE Businesses](https://thejimmylab.vercel.app/locations/uae): A global remote team, working Gulf hours.
+- [Web Development for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): A global remote team, handing over work every day.
+- [Web Development for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): A global remote team, working on Canadian hours.
+
+## Industries
+
+- [Website Redesign for SaaS Companies](https://thejimmylab.vercel.app/industries/saas): A SaaS website that explains the product faster — and converts more trials.
+- [E-commerce Websites for Fashion Brands](https://thejimmylab.vercel.app/industries/ecommerce-fashion): A fashion storefront that looks like the brand — and sells like it means it.
+- [Websites for Restaurants](https://thejimmylab.vercel.app/industries/restaurants): A restaurant website that fills tables — menu, bookings and directions in one tap.
 
 ## Journal
 
@@ -27,6 +47,12 @@ THE JIMMY LAB is a digital agency crafting immersive websites, web applications 
 - [AI-Assisted Development in 2026: Speed Without Losing Craft](https://thejimmylab.vercel.app/journal/ai-assisted-development-2026) (AI): AI tools now write a large share of first drafts. The craft has moved from typing code to reviewing it, and that changes how a good team works.
 - [Core Web Vitals in 2026: What Actually Moves the Score](https://thejimmylab.vercel.app/journal/core-web-vitals-2026) (Performance): Most sites fail the same few checks for the same few reasons. Here is the short list of fixes that move the score, in order.
 - [Interactive 3D on the Web Without Killing Performance](https://thejimmylab.vercel.app/journal/interactive-3d-without-slowing-down) (Interactive): 3D on a website grabs attention, but it is also the fastest way to drain a phone battery. Here is how to keep the wow and lose the cost.
+- [How Much Does a Next.js Website Cost?](https://thejimmylab.vercel.app/journal/how-much-nextjs-website-costs) (Guides): There is no single price for a Next.js website — but there is a short list of things that decide it. Here is what drives the cost, and what to ask before you get a quote.
+- [Website Redesign Cost in 2026: What Actually Drives the Price](https://thejimmylab.vercel.app/journal/website-redesign-cost-2026) (Guides): A redesign is not one job — it is design, rebuild, migration and SEO protection bundled together. Here is where the money actually goes.
+- [How Long Does a Website Redesign Take?](https://thejimmylab.vercel.app/journal/how-long-website-redesign-takes) (Guides): Most redesigns take 3–6 weeks. Here is what fills those weeks, and what usually makes them longer.
+- [Next.js vs WordPress for a Business Website](https://thejimmylab.vercel.app/journal/nextjs-vs-wordpress) (Engineering): WordPress is the safe default and Next.js is the fast one — but the right choice depends on who updates the site and what it has to do.
+- [How to Migrate Your Website to Next.js](https://thejimmylab.vercel.app/journal/migrate-to-nextjs) (Engineering): Moving to Next.js is a migration, not a rewrite. Done in the right order, your visitors never notice — and your rankings hold.
+- [Website Maintenance Checklist: What to Check Every Month](https://thejimmylab.vercel.app/journal/website-maintenance-checklist) (Guides): Websites break quietly. A monthly checklist — updates, backups, speed, links and security — is the difference between a small fix and a lost week.
 
 ## Team
 
@@ -222,3 +248,55 @@ A: Yes — read-only repository access is enough, under NDA if you need one.
 
 Q: Can you fix what you find?
 A: Yes — fixes can be quoted as a follow-up project, or your team can work from the report directly.
+
+### Next.js Development — https://thejimmylab.vercel.app/services/nextjs-development
+
+Next.js websites and web apps — fast, server-rendered and built to scale from day one.
+
+Q: How much does a Next.js website cost?
+A: It depends on scope — pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly.
+
+Q: Do you work with startups in the USA and UK?
+A: Yes — we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time.
+
+Q: Can you rebuild our existing site in Next.js?
+A: Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact — see our redesign and migration service.
+
+### React Website Redesign — https://thejimmylab.vercel.app/services/react-website-redesign
+
+React redesigns for SaaS companies — a faster, clearer product site without losing traffic or users.
+
+Q: Will a redesign hurt our search rankings?
+A: No — redirect mapping and SEO preservation are built in, with checks after launch. A redesign done properly keeps your rankings and usually improves them as speed rises.
+
+Q: How long does a SaaS website redesign take?
+A: Most redesigns take 3–6 weeks depending on page count. We give a firm timeline after a short review of your current site.
+
+Q: Can you redesign only parts of the site?
+A: Yes — pricing pages, onboarding flows or the homepage alone are common starting points, with the rest following in phases.
+
+### AI Chatbot Integration — https://thejimmylab.vercel.app/services/ai-chatbot-integration
+
+AI chatbots on your website that answer from your own content — trained on your docs, not on guesswork.
+
+Q: Will the chatbot make things up?
+A: It is built to answer only from your content, and to say when it does not know. We review early conversations to catch and fix anything it gets wrong.
+
+Q: Can it take bookings or capture leads?
+A: Yes — it can collect details, book calls and pass leads to your CRM or inbox, with a human notified immediately.
+
+Q: What content does it need from us?
+A: Your existing pages, FAQs and docs are usually enough to start. Gaps become a short list of pages to write, not a big project.
+
+### Three.js & Interactive 3D — https://thejimmylab.vercel.app/services/threejs-3d-websites
+
+Interactive 3D websites with Three.js — product configurators and scenes that stay fast on a phone.
+
+Q: Will 3D slow my website down?
+A: Not if it is budgeted. Scenes load only when needed, frame rates are capped, and weaker devices get a static image instead — the page stays fast either way.
+
+Q: What can visitors actually do in 3D?
+A: Rotate and inspect a product, change colours or options, and explore a scene — configurators and showcases are the most common uses.
+
+Q: Do you model the 3D assets too?
+A: Yes — modelling, texturing and rendering are in-house, delivered as optimized web-ready models.
