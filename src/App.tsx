@@ -1290,7 +1290,7 @@ const Footer = () => (
           </ul>
         </div>
       </div>
-      <div className="pt-8 border-t border-white/10 mb-8">
+      <div id="locations" className="pt-8 border-t border-white/10 mb-8">
         <p className="text-white/60 text-sm leading-relaxed">
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mr-3">Where we work</span>
           Serving clients worldwide —{' '}
@@ -1359,7 +1359,7 @@ function App() {
       setRoute(path);
     } else if (hash) {
       const section = hash.slice(1);
-      if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top'].includes(section)) {
+      if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
         try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
         setRoute('/');
       }
@@ -1383,7 +1383,7 @@ function App() {
       }
       if (hash) {
         const section = hash.slice(1);
-        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top'].includes(section) && normalizePath(window.location.pathname) !== '/') {
+        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
           try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
           setRoute('/');
         }
@@ -1419,13 +1419,18 @@ function App() {
       return;
     }
     if (typeof restore.y === 'number') {
-      // Retry briefly: images and fonts can shift the layout after render.
-      const startedAt = Date.now();
-      const tryScroll = () => {
-        window.scrollTo(0, restore.y);
-        if (Date.now() - startedAt < 1000) window.setTimeout(tryScroll, 150);
-      };
-      window.setTimeout(tryScroll, 50);
+      // One smooth glide, not a stuttering retry loop: re-issuing the scroll
+      // every 150ms restarts the smooth animation each time, so the page
+      // creeps instead of gliding. Wait for the new page to mount after the
+      // exit animation, glide once, then correct once if layout shifts
+      // (images loading) moved the target.
+      const target = restore.y;
+      window.setTimeout(() => {
+        window.scrollTo({ top: target, behavior: 'smooth' });
+        window.setTimeout(() => {
+          if (Math.abs(window.scrollY - target) > 4) window.scrollTo({ top: target, behavior: 'smooth' });
+        }, 550);
+      }, 450);
     }
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
@@ -1450,7 +1455,7 @@ function App() {
         const hash = window.location.hash.slice(1);
         if (typeof savedY === 'number') {
           pendingRestoreRef.current = { y: savedY };
-        } else if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top'].includes(hash)) {
+        } else if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
           pendingRestoreRef.current = { section: hash };
         } else {
           pendingRestoreRef.current = { y: 0 };
@@ -1484,7 +1489,7 @@ function App() {
       }
       if (href.startsWith('#')) {
         const section = href.slice(1);
-        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top'].includes(section) && normalizePath(window.location.pathname) !== '/') {
+        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
           e.preventDefault();
           navigateHomeToSection(section);
         }

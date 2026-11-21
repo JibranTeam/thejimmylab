@@ -64,8 +64,8 @@ export default function TeamPage() {
               THE JIMMY LAB<span className="text-[#ff3c2f]">.</span>
             </span>
           </a>
-          <a href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-[#ff6b35] transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Back to home
+          <a href="#about" className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-[#ff6b35] transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Back to About
           </a>
         </div>
       </header>
@@ -162,7 +162,7 @@ export default function TeamPage() {
           <p className="mt-5 text-white/60 text-lg max-w-2xl mx-auto">Tell us what you're building and we'll match you with the right operators within one business day.</p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
             <a href="#connect" onClick={(e) => { e.preventDefault(); goToConnect(); }} className="btn-primary">Start a project <ArrowRight className="w-4 h-4" /></a>
-            <a href="/" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-white/15 rounded-lg text-white hover:border-[#ff6b35] hover:text-[#ff6b35] transition-all">Back to home</a>
+            <a href="#about" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-white/15 rounded-lg text-white hover:border-[#ff6b35] hover:text-[#ff6b35] transition-all">Back to About</a>
           </div>
         </div>
       </section>

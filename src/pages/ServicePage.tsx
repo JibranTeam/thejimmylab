@@ -25,10 +25,10 @@ export default function ServicePage({ service }: { service: Service }) {
             </span>
           </a>
           <a
-            href="/"
+            href="#services"
             className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-[#ff6b35] transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to home
+            <ArrowLeft className="w-4 h-4" /> Back to Services
           </a>
         </div>
       </header>
@@ -260,7 +260,7 @@ export default function ServicePage({ service }: { service: Service }) {
               <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#ff6b35]">Explore</span>
               <h2 className="font-['Syne'] text-3xl md:text-4xl font-bold text-white mt-3">Other services</h2>
             </div>
-            <a href="/" className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-[#ff6b35] transition-colors">
+            <a href="#services" className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-[#ff6b35] transition-colors">
               All services <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -298,8 +298,8 @@ export default function ServicePage({ service }: { service: Service }) {
             <a href="mailto:thejimmylab@gmail.com" className="btn-primary">
               Get a free consultation <ArrowRight className="w-4 h-4" />
             </a>
-            <a href="/" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-white/15 rounded-lg text-white hover:border-[#ff6b35] hover:text-[#ff6b35] transition-all">
-              Back to home
+            <a href="#services" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-white/15 rounded-lg text-white hover:border-[#ff6b35] hover:text-[#ff6b35] transition-all">
+              Back to Services
             </a>
           </div>
         </div>
