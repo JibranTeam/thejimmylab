@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { navigateTo, navigateHomeToSection, normalizePath, scrollToSectionWithRetry } from './utils/navigation';
+import { getSavedScrollPosition, navigateTo, navigateHomeToSection, normalizePath, scrollToSectionWithRetry } from './utils/navigation';
 const ServicePage = lazy(() => import('./pages/ServicePage'));
 const JournalPostPage = lazy(() => import('./pages/JournalPostPage'));
 import ComingSoonToast from './components/ComingSoonToast';
@@ -1392,38 +1392,69 @@ function App() {
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
-  // After landing on home with a pending section (from another page, or a
-  // legacy hash link), scroll to it once it is in the DOM.
+  // After landing on a page, apply the pending scroll. An explicit section
+  // (nav link from another page, or a legacy hash link) wins; otherwise the
+  // Back/forward restore applies — the section, or the exact scroll position
+  // the user was at when they left that page.
+  const pendingRestoreRef = useRef<{ y?: number; section?: string } | null>(null);
   useEffect(() => {
-    if (route !== '/') return;
-    let pending: string | null = null;
-    try { pending = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-    if (pending) {
-      try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-      scrollToSectionWithRetry(pending);
+    if (route === '/') {
+      let pending: string | null = null;
+      try { pending = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+      if (pending) {
+        try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+        pendingRestoreRef.current = null;
+        scrollToSectionWithRetry(pending);
+        return;
+      }
+    }
+    const restore = pendingRestoreRef.current;
+    pendingRestoreRef.current = null;
+    if (!restore) return;
+    if (restore.section) {
+      scrollToSectionWithRetry(restore.section);
+      return;
+    }
+    if (typeof restore.y === 'number') {
+      // Retry briefly: images and fonts can shift the layout after render.
+      const startedAt = Date.now();
+      const tryScroll = () => {
+        window.scrollTo(0, restore.y);
+        if (Date.now() - startedAt < 1000) window.setTimeout(tryScroll, 150);
+      };
+      window.setTimeout(tryScroll, 50);
     }
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
-  // lands mid-page (the section the user left) and fights the app's scroll
-  // to the top — on a phone the restore wins and Back lands at the section
-  // instead of the hero. Manual restore means the app decides every time.
+  // is unreliable in this SPA (it fights the app's own scroll and lands in
+  // the wrong place on phones), so the app restores it deliberately.
   useEffect(() => {
     try { window.history.scrollRestoration = 'manual'; } catch { /* unsupported */ }
   }, []);
   useEffect(() => {
-    const onPopState = () => {
+    const onPopState = (e: PopStateEvent) => {
       const next = normalizePath(window.location.pathname);
       if (next === route) return;
       setShowCurtain(true);
-      // Scroll now, while the curtain covers the screen, so Back lands at
-      // the top (hero) with no visible jump — then again once the new page
-      // is in, so nothing can pull it back down mid-page.
-      window.scrollTo(0, 0);
+      if (e.isTrusted) {
+        // Real Back/Forward: return to the section the user came from, not
+        // the top. The logo is always there for Home — Back means back.
+        const key = window.location.pathname + window.location.hash;
+        const savedY = getSavedScrollPosition(key);
+        const hash = window.location.hash.slice(1);
+        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top'].includes(hash)) {
+          pendingRestoreRef.current = { section: hash };
+        } else if (typeof savedY === 'number') {
+          pendingRestoreRef.current = { y: savedY };
+        } else {
+          pendingRestoreRef.current = { y: 0 };
+        }
+      } else {
+        // Forward navigation (a link click): top of the new page.
+        pendingRestoreRef.current = { y: 0 };
+      }
       window.setTimeout(() => {
         setRoute(next);
-        let pending: string | null = null;
-        try { pending = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-        if (!pending) window.scrollTo(0, 0);
       }, 320);
       window.setTimeout(() => setShowCurtain(false), 1000);
     };
@@ -1440,7 +1471,7 @@ function App() {
       if (!anchor) return;
       const href = anchor.getAttribute('href');
       if (!href) return;
-      if (href.startsWith('/services/') || href.startsWith('/journal/') || href === '/team' || href === '/coming-soon' || href === '/') {
+      if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/') {
         e.preventDefault();
         navigateTo(href);
         return;

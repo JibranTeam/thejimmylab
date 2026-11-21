@@ -17,8 +17,26 @@ export function navigateTo(path: string) {
     window.scrollTo(0, 0);
     return;
   }
+  rememberScrollPosition();
   window.history.pushState(null, '', target);
   window.dispatchEvent(new PopStateEvent('popstate'));
+}
+
+// Scroll memory: where the user was on each URL, so Back can return them
+// to the exact section they came from instead of the top of the page.
+// The logo is always there for Home — Back means back to the section.
+const savedScroll = new Map<string, number>();
+
+export function scrollKey(): string {
+  return window.location.pathname + window.location.hash;
+}
+
+export function rememberScrollPosition() {
+  try { savedScroll.set(scrollKey(), window.scrollY); } catch { /* ignore */ }
+}
+
+export function getSavedScrollPosition(key: string): number | undefined {
+  return savedScroll.get(key);
 }
 
 export function scrollToSectionWithRetry(sectionId: string, behavior: ScrollBehavior = 'auto') {
