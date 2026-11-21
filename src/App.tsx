@@ -58,6 +58,7 @@ const Navigation = () => {
             <a key={item.name} href={item.href} className="text-[15px] text-white/75 hover:text-white transition-colors">{item.name}</a>
           ))}
           <a href="#connect" onClick={(e) => { e.preventDefault(); goToConnect(); }} className="btn-primary">Start Project <ArrowUpRight className="w-3.5 h-3.5" /></a>
+          <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-none border border-[#1dbf73]/60 bg-[#1dbf73]/10 px-4 py-2 font-mono text-[0.78rem] font-medium text-[#1dbf73] transition-all hover:bg-[#1dbf73] hover:text-white">Hire on Fiverr <ArrowUpRight className="w-3.5 h-3.5" /></a>
         </div>
         <button className="md:hidden text-white p-2" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? 'Close menu' : 'Open menu'} aria-expanded={isOpen}>{isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}</button>
       </div>
@@ -68,6 +69,7 @@ const Navigation = () => {
               {navItems.map((item) => (
                 <a key={item.name} href={item.href} className="block text-white/80 hover:text-[#ff6b35] transition-colors py-2" onClick={() => setIsOpen(false)}>{item.name}</a>
               ))}
+              <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="block font-semibold text-[#1dbf73] hover:text-white transition-colors py-2" onClick={() => setIsOpen(false)}>Hire on Fiverr</a>
             </div>
           </motion.div>
         )}
@@ -228,10 +230,16 @@ const HeroSection = () => {
           <br className="hidden sm:block" /> interfaces and systems that move brands forward.
         </p>
         <div className="hero-cta flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-10">
-          <a href="#services" className="btn-ghost min-w-[230px] shrink-0">
-            <span>Explore the core</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
+          <div className="flex flex-col gap-3 shrink-0">
+            <a href="#services" className="btn-ghost min-w-[230px] shrink-0">
+              <span>Explore the core</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="inline-flex min-w-[230px] items-center justify-between gap-2.5 border border-[#1dbf73]/60 px-[1.35rem] py-[1.05rem] font-mono text-[0.72rem] font-medium text-[#1dbf73] transition-all hover:bg-[#1dbf73]/10">
+              <span>Hire on Fiverr</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
           <div className="flex-1 max-w-[640px]">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
               <div className="min-w-0 flex-1">
@@ -1170,7 +1178,7 @@ const ConnectSection = () => {
           <div className="flex flex-col">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-[#ff6b35] mb-5">Connect</p>
             <h2 className="font-['Syne'] font-bold text-white leading-[0.98] tracking-tight text-[clamp(3rem,5.5vw,4.75rem)]">Let's start<br />something<br /><span className="gradient-text block">remarkable.</span></h2>
-            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Hire our web development team — we work with clients in the USA, UK, Europe and the Gulf. Send us an email or use the form.</p>
+            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Hire our web development team — we work with clients in the USA, UK, Europe and the Gulf. Send us an email, hire us on Fiverr, or use the form.</p>
             <div className="mt-7 self-start inline-flex items-center gap-2.5 rounded-full border border-[#ff6b35]/30 bg-[#ff6b35]/[0.07] px-4 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b35] animate-pulse shrink-0" />
               <span className="font-mono text-[12px] text-[#ff6b35] tracking-tight whitespace-nowrap">Accepting projects</span>
@@ -1181,7 +1189,7 @@ const ConnectSection = () => {
                 <a href={'mailto:' + email} className="btn-ghost" style={{ textTransform: 'none', letterSpacing: '0.05em' }}><span>{displayEmail}</span><ArrowUpRight className="w-4 h-4" /></a>
                 <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-md border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 font-mono text-[11px] text-white/70 hover:text-white hover:border-white/25 hover:bg-white/[0.1] transition-all shrink-0"><Copy className="w-3.5 h-3.5" />{copied ? 'Copied!' : 'Copy Email'}</button>
               </div>
-              <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-ghost" style={{ textTransform: 'none', letterSpacing: '0.05em' }}><span>contact@thejimmylab.com</span><ArrowUpRight className="w-4 h-4" /></a></div>
+              <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-none bg-[#1dbf73] px-4 py-2 text-[14px] font-semibold text-white transition-all hover:bg-[#17a864]"><span>Hire on Fiverr</span><ArrowUpRight className="w-4 h-4" /></a></div>
             </div>
             <div className="mt-9">
               <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/60 mb-4">Follow us</p>
