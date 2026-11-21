@@ -946,7 +946,7 @@ const JournalSection = () => {
   const ARTICLES_PER_PAGE = 3;
   const [journalPage, setJournalPage] = useState(0);
   const totalJournalPages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
-  const pageArticles = articles.slice(journalPage * ARTICLES_PER_PAGE, journalPage * ARTICLES_PER_PAGE + ARTICLES_PER_PAGE);
+  const journalPages = Array.from({ length: totalJournalPages }, (_, pg) => articles.slice(pg * ARTICLES_PER_PAGE, pg * ARTICLES_PER_PAGE + ARTICLES_PER_PAGE));
   const goToJournalPage = (page: number) => { if (page < 0 || page >= totalJournalPages || page === journalPage) return; setJournalPage(page); };
   return (
     <section id="journal" className="relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
@@ -973,11 +973,13 @@ const JournalSection = () => {
           <button type="button" onClick={() => goToJournalPage(journalPage - 1)} disabled={journalPage === 0} aria-label="Previous journal page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
           <button type="button" onClick={() => goToJournalPage(journalPage + 1)} disabled={journalPage === totalJournalPages - 1} aria-label="Next journal page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
         </div>
-        <div className="md:hidden mb-2">
-          <div className="flex items-center justify-between gap-4 mb-6"><span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">Swipe to explore</span><div className="flex items-center gap-1.5">{pageArticles.map((_, i) => (<span key={i} className={cn('w-2 h-2 rounded-full transition-all duration-300', i === 0 ? 'bg-[#ff6b35] w-5' : 'bg-white/15')} />))}</div></div>
-          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
-            {pageArticles.map((post) => (
-              <article key={'m-' + post.id} className="snap-start shrink-0 w-[calc(100vw-2.5rem)] max-w-sm group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 rounded-2xl p-5 border border-white/10">
+        <div className="overflow-hidden">
+          <div className="flex will-change-transform" style={{ transform: 'translateX(-' + journalPage * 100 + '%)', transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+            {journalPages.map((pagePosts, pg) => (
+              <div key={pg} className="w-full shrink-0">
+                <div className="md:hidden flex flex-col gap-4">
+                  {pagePosts.map((post) => (
+              <article key={'m-' + post.id} className="group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 rounded-2xl p-5 border border-white/10">
                 <div>
                   <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]">{post.featured && (<span className="absolute top-3 left-3 z-10 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-md border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
                   <div className="flex items-center gap-2 mb-4 text-[11px] font-mono"><span className="text-[9px] uppercase tracking-wider text-[#ff6b35] border border-[#ff6b35]/30 bg-[#ff6b35]/10 px-2 py-0.5 rounded-md">{post.category}</span><span className="text-white/20">•</span><span className="text-white/60">{post.date}</span><span className="text-white/20">•</span><span className="text-white/60">{post.read}</span></div>
@@ -986,11 +988,10 @@ const JournalSection = () => {
                 </div>
                 <div className="pt-4 border-t border-white/[0.06]"><a href={'/journal/' + post.id} className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#ff6b35]">Read Post <span aria-hidden="true">→</span></a></div>
               </article>
-            ))}
-          </div>
-        </div>
-        <div className="hidden md:grid grid-cols-3 gap-6 lg:gap-8">
-          {pageArticles.map((post) => (
+                  ))}
+                </div>
+                <div className="hidden md:grid grid-cols-3 gap-6 lg:gap-8">
+                  {pagePosts.map((post) => (
             <article key={post.id} className="group flex flex-col justify-between bg-[#070f1a] cardboard-cutout shadow-layer-2 hover:shadow-[12px_12px_0_rgba(0,0,0,0.35),24px_24px_0_rgba(0,0,0,0.22),30px_30px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1.5 rounded-2xl p-5 border border-white/10 hover:border-[#ff6b35]/30 transition-all duration-500">
               <div>
                 <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-5 bg-[#3A373E] border border-white/[0.06]"><div className="absolute inset-0 bg-gradient-to-tr from-[#ff6b35]/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />{post.featured && (<span className="absolute top-3 left-3 z-20 text-[9px] font-bold tracking-[0.18em] uppercase bg-[#ff6b35] text-white px-2.5 py-1 rounded-full shadow-lg border border-white/10">Featured</span>)}<img src={post.image} srcSet={unsplashSrcSet(post.image)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={post.title} className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" /></div>
@@ -1001,6 +1002,10 @@ const JournalSection = () => {
               <div className="pt-4 border-t border-white/[0.06]"><a href={'/journal/' + post.id} className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#ff6b35] group-hover:gap-3 transition-all">Read Post <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span></a></div>
             </article>
           ))}
+        </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
