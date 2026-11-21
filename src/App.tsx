@@ -58,7 +58,7 @@ const Navigation = () => {
             <a key={item.name} href={item.href} className="text-[15px] text-white/75 hover:text-white transition-colors">{item.name}</a>
           ))}
           <a href="#connect" onClick={(e) => { e.preventDefault(); goToConnect(); }} className="btn-primary">Start Project <ArrowUpRight className="w-3.5 h-3.5" /></a>
-          <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-none border border-[#1dbf73]/60 bg-[#1dbf73]/10 px-4 py-2 font-mono text-[0.78rem] font-medium text-[#1dbf73] transition-all hover:bg-[#1dbf73] hover:text-white">Hire on Fiverr <ArrowUpRight className="w-3.5 h-3.5" /></a>
+          <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr justify-center px-[1.6rem] py-[0.85rem] text-[0.78rem] tracking-[0.06em]"><span>Hire on Fiverr</span> <ArrowUpRight className="w-3.5 h-3.5" /></a>
         </div>
         <button className="md:hidden text-white p-2" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? 'Close menu' : 'Open menu'} aria-expanded={isOpen}>{isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}</button>
       </div>
@@ -235,7 +235,7 @@ const HeroSection = () => {
               <span>Explore the core</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
-            <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="inline-flex min-w-[230px] items-center justify-between gap-2.5 border border-[#1dbf73]/60 px-[1.35rem] py-[1.05rem] font-mono text-[0.72rem] font-medium text-[#1dbf73] transition-all hover:bg-[#1dbf73]/10">
+            <a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr min-w-[230px] shrink-0">
               <span>Hire on Fiverr</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
@@ -1189,7 +1189,7 @@ const ConnectSection = () => {
                 <a href={'mailto:' + email} className="btn-ghost" style={{ textTransform: 'none', letterSpacing: '0.05em' }}><span>{displayEmail}</span><ArrowUpRight className="w-4 h-4" /></a>
                 <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-md border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 font-mono text-[11px] text-white/70 hover:text-white hover:border-white/25 hover:bg-white/[0.1] transition-all shrink-0"><Copy className="w-3.5 h-3.5" />{copied ? 'Copied!' : 'Copy Email'}</button>
               </div>
-              <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-none bg-[#1dbf73] px-4 py-2 text-[14px] font-semibold text-white transition-all hover:bg-[#17a864]"><span>Hire on Fiverr</span><ArrowUpRight className="w-4 h-4" /></a></div>
+              <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr"><span>Hire on Fiverr</span><ArrowUpRight className="w-4 h-4" /></a></div>
             </div>
             <div className="mt-9">
               <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/60 mb-4">Follow us</p>
