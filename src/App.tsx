@@ -46,7 +46,7 @@ gsap.registerPlugin(ScrollTrigger);
 // play once per browser session. The home page unmounts when a
 // service/journal page opens and remounts on return; the entrance tweens
 // are created on mount, so without this every return replays them from
-// opacity 0 while the scroll is landing — the flick. HomePage sets the flag
+// opacity 0 while the scroll is landing - the flick. HomePage sets the flag
 // after its first mount (parent effects run after children), so the first
 // visit still plays everything. A full reload resets it, so a fresh visit
 // gets the intro again.
@@ -178,7 +178,7 @@ const HeroPrompt = () => {
         className="btn-field group"
       >
         <span className="relative flex-1 min-w-0">
-          {/* animated ghost line — sits under the real input */}
+          {/* animated ghost line - sits under the real input */}
           {idle && (
             <span
               aria-hidden="true"
@@ -248,7 +248,7 @@ const HeroSection = () => {
       <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 sm:px-10 lg:px-14 pt-32 pb-20">
         <p className="eyebrow normal-case mb-7 flex items-center gap-3 text-white/55">
           <span className="hidden sm:inline-block h-px w-10 bg-white/25" aria-hidden="true" />
-          <span>( Digital Experience Studio — Est. 2013 )</span>
+          <span>( Digital Experience Studio - Est. 2013 )</span>
         </p>
         <h1 className="hero-title text-white mb-9">
           <span className="display-thin block text-[clamp(2.6rem,9.2vw,8.4rem)]">We Architect</span>
@@ -446,8 +446,8 @@ const ModesSection = () => {
           className="text-white [font-size:clamp(2.4rem,7vw,5.6rem)] leading-[0.98] tracking-[-0.02em] font-extrabold uppercase"
         />
         <Words
-          aria="Four ways we work — one partner across the whole journey, from first sketch to shipped product, and hands-on guidance after launch."
-          text="Four ways we work — one partner across the whole journey, from first sketch to shipped product, and hands-on guidance after launch."
+          aria="Four ways we work, one partner across the whole journey, from first sketch to shipped product, and hands-on guidance after launch."
+          text="Four ways we work, one partner across the whole journey, from first sketch to shipped product, and hands-on guidance after launch."
           baseDelay={0.35}
           className="mx-auto mt-7 max-w-[58ch] font-mono text-[12px] sm:text-[13px] font-light leading-[1.9] tracking-[0.08em] uppercase text-white/50"
         />
@@ -585,7 +585,7 @@ const AboutSection = () => {
               <div className="flex -space-x-3">{[1, 2, 3, 4].map((i) => (<div key={i} className="w-12 h-12 rounded-full bg-gradient-to-br from-[#d4a574] to-[#b88a5e] border-2 border-[#3A373E] flex items-center justify-center text-[#3A373E] font-bold text-sm">{String.fromCharCode(64 + i)}</div>))}</div>
               <div>
                 <div className="text-white font-semibold flex items-center gap-2 group-hover:text-[#ff6b35] transition-colors">Meet our team <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" /></div>
-                <div className="text-white/60 text-sm">creative professionals — view the operators page</div>
+                <div className="text-white/60 text-sm">creative professionals, view the operators page</div>
               </div>
             </a>
           </div>
@@ -690,7 +690,7 @@ const ServicesSection = () => {
         <div className="service-title text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Services</div>
           <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-4">Solutions for Every <span className="gradient-text">Digital Need</span></h2>
-          <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada — that drive results.</p>
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada that drive results.</p>
         </div>
         <div className="flex items-center justify-end gap-3 mb-6">
           <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {servicePage + 1} of {totalServicePages}</span>
@@ -832,7 +832,7 @@ const OurProcessSection = () => {
   const [active, setActive] = useState(0);
   const phases = [
     { num: '01', label: 'PHASE ONE', name: 'Architect', title: 'Architect.', desc: 'Every project begins with our architecture phase. We take time to understand your current system, challenges, goals, and requirements, then create a detailed blueprint that defines the scope, timeline, priorities, and path forward.' },
-    { num: '02', label: 'PHASE TWO', name: 'Build', title: 'Build.', desc: 'We bring the blueprint to life — writing clean, scalable code, crafting refined interfaces, and integrating every system. Weekly demos, staging links, and transparent sprints mean zero surprises, just steady progress.' },
+    { num: '02', label: 'PHASE TWO', name: 'Build', title: 'Build.', desc: 'We bring the blueprint to life, writing clean, scalable code, crafting refined interfaces, and integrating every system. Weekly demos, staging links, and transparent sprints mean zero surprises, just steady progress.' },
     { num: '03', label: 'PHASE THREE', name: 'Accelerate', title: 'Accelerate.', desc: 'Launch is day one. We stress-test, harden security, optimize Core Web Vitals to 95+, and ship growth loops so your product accelerates from the first click and scales without friction.' },
   ];
   const current = phases[active];
@@ -845,7 +845,7 @@ const OurProcessSection = () => {
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 mb-10 lg:mb-14">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Process</div>
           <h2 id="approach-heading" className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.05]">Architect<span className="text-white/60">.</span> Build<span className="text-white/60">.</span> <span className="gradient-text">Accelerate.</span></h2>
-          <p className="mt-4 max-w-2xl text-white/55 text-lg leading-relaxed">A proven three-phase system that takes you from idea to launch — without chaos, delays, or guesswork.</p>
+          <p className="mt-4 max-w-2xl text-white/55 text-lg leading-relaxed">A proven three-phase system that takes you from idea to launch, without chaos, delays, or guesswork.</p>
         </div>
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-8 xl:gap-10">
           <div className="flex flex-col gap-3" role="tablist" aria-label="Approach phases">
@@ -887,14 +887,14 @@ const OurProcessSection = () => {
 const TestimonialsSection = () => {
   const [active, setActive] = useState(0);
   const testimonials = [
-    { name: 'anamichele', role: 'United States — Lottie & Web Animation', initials: 'AN', gradient: 'from-blue-500 to-indigo-500', quote: 'Jimmy was incredible! He is very communicative — alway online to answer any questions. He took the time to make a special guide for me to modify the files on my own. He really went over the top. He is skilled and gets the job done. I could not recommend him more!' },
-    { name: 'lazerlogistics', role: 'United States — Full Stack Web Applications', initials: 'LL', gradient: 'from-amber-500 to-red-500', quote: 'Jimmy did an exceptional job on the project, demonstrating professionalism, attention to detail, and exceeding all expectations. His language fluency and proactive communication made working with him a seamless experience. Highly recommended for any software development needs!' },
-    { name: 'sergiodellatti', role: 'Italy — Full Stack Web Applications', initials: 'SE', gradient: 'from-emerald-500 to-teal-500', quote: 'Jimmy is a guarantee, you can entrust your projects to him and you will have a professional collaborator at your side.' },
-    { name: 'designlust_co', role: 'United Kingdom — Lottie & Web Animation', initials: 'DL', gradient: 'from-rose-500 to-pink-500', quote: 'FANTASTIC communication, super responsive, and great work. Thoroughly recommend. Thanks!!' },
-    { name: 'samuel5140', role: 'United States — Full Stack Web Applications', initials: 'SA', gradient: 'from-orange-500 to-amber-500', quote: 'Jimmy was absolutely amazing to work with. Very responsive to my requests and very professional and polite. He did a great job. 10/10 seller.' },
-    { name: 'instagram_max', role: 'Germany — Lottie & Web Animation', initials: 'IM', gradient: 'from-violet-500 to-purple-500', quote: 'I have worked with many on fiverr. But I really liked the way jimmy approaches the tasks and always remains solution-oriented, even with problems. The result was perfect as expected but the way to the result was a lot of fun. I am very much looking forward to working with him again.' },
-    { name: 'vincentkwan', role: 'Canada — Vector Tracing', initials: 'VK', gradient: 'from-cyan-500 to-blue-500', quote: 'Jimmy was great to work with. I have him a very complex assignment and he was honest about the time it took to as well as the difficulty of work. Communication was fast and the work was done perfectly.' },
-    { name: 'lightpress', role: 'United States — Lottie & Web Animation', initials: 'LI', gradient: 'from-teal-500 to-cyan-500', quote: 'Jimmy accomplished something I was not able to figure out on my own, and helped solve a major issue for one of my most important clients. Fast, professional, and easy to work with!' },
+    { name: 'anamichele', role: 'United States - Lottie & Web Animation', initials: 'AN', gradient: 'from-blue-500 to-indigo-500', quote: 'Jimmy was incredible! He is very communicative — alway online to answer any questions. He took the time to make a special guide for me to modify the files on my own. He really went over the top. He is skilled and gets the job done. I could not recommend him more!' },
+    { name: 'lazerlogistics', role: 'United States - Full Stack Web Applications', initials: 'LL', gradient: 'from-amber-500 to-red-500', quote: 'Jimmy did an exceptional job on the project, demonstrating professionalism, attention to detail, and exceeding all expectations. His language fluency and proactive communication made working with him a seamless experience. Highly recommended for any software development needs!' },
+    { name: 'sergiodellatti', role: 'Italy - Full Stack Web Applications', initials: 'SE', gradient: 'from-emerald-500 to-teal-500', quote: 'Jimmy is a guarantee, you can entrust your projects to him and you will have a professional collaborator at your side.' },
+    { name: 'designlust_co', role: 'United Kingdom - Lottie & Web Animation', initials: 'DL', gradient: 'from-rose-500 to-pink-500', quote: 'FANTASTIC communication, super responsive, and great work. Thoroughly recommend. Thanks!!' },
+    { name: 'samuel5140', role: 'United States - Full Stack Web Applications', initials: 'SA', gradient: 'from-orange-500 to-amber-500', quote: 'Jimmy was absolutely amazing to work with. Very responsive to my requests and very professional and polite. He did a great job. 10/10 seller.' },
+    { name: 'instagram_max', role: 'Germany - Lottie & Web Animation', initials: 'IM', gradient: 'from-violet-500 to-purple-500', quote: 'I have worked with many on fiverr. But I really liked the way jimmy approaches the tasks and always remains solution-oriented, even with problems. The result was perfect as expected but the way to the result was a lot of fun. I am very much looking forward to working with him again.' },
+    { name: 'vincentkwan', role: 'Canada - Vector Tracing', initials: 'VK', gradient: 'from-cyan-500 to-blue-500', quote: 'Jimmy was great to work with. I have him a very complex assignment and he was honest about the time it took to as well as the difficulty of work. Communication was fast and the work was done perfectly.' },
+    { name: 'lightpress', role: 'United States - Lottie & Web Animation', initials: 'LI', gradient: 'from-teal-500 to-cyan-500', quote: 'Jimmy accomplished something I was not able to figure out on my own, and helped solve a major issue for one of my most important clients. Fast, professional, and easy to work with!' },
   ];
   const next = () => setActive((p) => (p + 1) % testimonials.length);
   const prev = () => setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
@@ -907,7 +907,7 @@ const TestimonialsSection = () => {
         <div className="text-center mb-16 lg:mb-20">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Testimonials</div>
           <h2 className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-5">Good Work <span className="gradient-text">Speaks for Itself.</span></h2>
-          <p className="max-w-2xl mx-auto text-lg text-white/60 leading-relaxed">Real words from real Fiverr buyers — quoted exactly as written, unedited.</p>
+          <p className="max-w-2xl mx-auto text-lg text-white/60 leading-relaxed">Real words from real Fiverr buyers, quoted exactly as written, unedited.</p>
         </div>
         <div className="max-w-4xl mx-auto mb-16">
           <div className="relative p-8 sm:p-12 rounded-3xl glass overflow-hidden">
@@ -1151,7 +1151,7 @@ const ConnectSection = () => {
       formData.append('name', name.trim());
       formData.append('email', senderEmail.trim());
       formData.append('_replyto', senderEmail.trim());
-      formData.append('_subject', 'Project inquiry' + (projectType ? ': ' + projectType : '') + ' — ' + name.trim());
+      formData.append('_subject', 'Project inquiry' + (projectType ? ': ' + projectType : '') + ' - ' + name.trim());
       formData.append('projectType', projectType || 'Not specified');
       formData.append('budget', budget || 'Not specified');
       const messageText = attachments.length
@@ -1209,7 +1209,7 @@ const ConnectSection = () => {
           <div className="flex flex-col">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-[#ff6b35] mb-5">Connect</p>
             <h2 className="font-['Syne'] font-bold text-white leading-[0.98] tracking-tight text-[clamp(3rem,5.5vw,4.75rem)]">Let's start<br />something<br /><span className="gradient-text block">remarkable.</span></h2>
-            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Hire our web development team — we work with clients in the USA, UK, Europe and the Gulf. Send us an email, hire us on Fiverr, or use the form.</p>
+            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Hire our web development team. We work with clients in the USA, UK, Europe and the Gulf. Send us an email, hire us on Fiverr, or use the form.</p>
             <div className="mt-7 self-start inline-flex items-center gap-2.5 rounded-full border border-[#ff6b35]/30 bg-[#ff6b35]/[0.07] px-4 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b35] animate-pulse shrink-0" />
               <span className="font-mono text-[12px] text-[#ff6b35] tracking-tight whitespace-nowrap">Accepting projects</span>
@@ -1226,7 +1226,7 @@ const ConnectSection = () => {
               <div className="absolute right-6 top-6 flex items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#ff6b35]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#ff6b35] shadow-[0_0_10px_rgba(255,107,53,0.6)]"></span></div>
               <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Working worldwide</span>
               <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Global Remote Team</h3>
-              <p className="text-xs text-white/70 leading-relaxed font-light">Working globally — USA, UK, Europe, the Gulf, Australia and Canada — with modern asynchronous processes.</p>
+              <p className="text-xs text-white/70 leading-relaxed font-light">Working globally, USA, UK, Europe, the Gulf, Australia and Canada, with modern asynchronous processes.</p>
             </div>
           </div>
           <div className="rounded-2xl bg-[#3A373E]/40 backdrop-blur-xl border border-white/[0.08] p-8 sm:p-10">
@@ -1237,16 +1237,16 @@ const ConnectSection = () => {
                 <div className="flex flex-col"><label className="text-[13.5px] font-semibold text-white mb-2.5">Your Email <span className="text-[#ff5a4e]">*</span></label><input type="email" required value={senderEmail} onChange={(e) => setSenderEmail(e.target.value)} placeholder="john@example.com" className="w-full h-[48px] rounded-md bg-[#1a1a1a] border border-white/[0.08] px-4 text-[14px] text-white placeholder-white/25 focus:border-[#ff6b35]/60 focus:outline-none transition-colors" /></div>
               </div>
               <div className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
-                <div className="flex flex-col"><label className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 mb-2.5">Project Type</label><div className="relative"><select value={projectType} onChange={(e) => setProjectType(e.target.value)} aria-label="Project Type" style={{ colorScheme: 'dark' }} className="w-full h-[48px] rounded-md bg-[#1a1a1a] border border-white/25 pl-4 pr-10 text-[14px] text-white focus:border-[#ff6b35] focus:outline-none transition-colors appearance-none cursor-pointer"><option value="" disabled>Select a project type</option><option>Animation & Creative Development</option><option>Web Design & UI/UX</option><option>Website Redesign</option><option>Graphic Design</option><option>Logo Design</option><option>Branding & Visual Identity</option><option>Frontend Development</option><option>Backend Development</option><option>Full-Stack Development</option><option>Web Application / SaaS Development</option><option>E-Commerce Development</option><option>3D & Interactive Experiences</option><option>Product Configurators</option><option>Mobile App Development</option><option>Integration & Automation</option><option>SEO & Website Optimization</option><option>Website / Application Upgrade</option><option>Legacy Technology / Stack Migration</option><option>Maintenance & Technical Support</option><option>Code Review & Technical Audit</option><option>1:1 Consultation / Strategy</option><option>1:1 Learning / Training</option><option>Not Sure — Help Me Choose</option><option>Other</option></select><ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-white" /></div></div>
+                <div className="flex flex-col"><label className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 mb-2.5">Project Type</label><div className="relative"><select value={projectType} onChange={(e) => setProjectType(e.target.value)} aria-label="Project Type" style={{ colorScheme: 'dark' }} className="w-full h-[48px] rounded-md bg-[#1a1a1a] border border-white/25 pl-4 pr-10 text-[14px] text-white focus:border-[#ff6b35] focus:outline-none transition-colors appearance-none cursor-pointer"><option value="" disabled>Select a project type</option><option>Animation & Creative Development</option><option>Web Design & UI/UX</option><option>Website Redesign</option><option>Graphic Design</option><option>Logo Design</option><option>Branding & Visual Identity</option><option>Frontend Development</option><option>Backend Development</option><option>Full-Stack Development</option><option>Web Application / SaaS Development</option><option>E-Commerce Development</option><option>3D & Interactive Experiences</option><option>Product Configurators</option><option>Mobile App Development</option><option>Integration & Automation</option><option>SEO & Website Optimization</option><option>Website / Application Upgrade</option><option>Legacy Technology / Stack Migration</option><option>Maintenance & Technical Support</option><option>Code Review & Technical Audit</option><option>1:1 Consultation / Strategy</option><option>1:1 Learning / Training</option><option>Not Sure - Help Me Choose</option><option>Other</option></select><ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-white" /></div></div>
                 <div className="flex flex-col"><label className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white/70 mb-2.5">Estimated Budget</label><div className="relative"><select value={budget} onChange={(e) => setBudget(e.target.value)} aria-label="Estimated Budget" style={{ colorScheme: 'dark' }} className="w-full h-[48px] rounded-md bg-[#1a1a1a] border border-white/25 pl-4 pr-10 text-[14px] text-white focus:border-[#ff6b35] focus:outline-none transition-colors appearance-none cursor-pointer"><option value="" disabled>Select a budget range</option><option>Under $5k</option><option>$5k – $10k</option><option>$10k – $25k</option><option>$25k – $50k</option><option>$50k – $100k</option><option>$100k+</option></select><ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-white" /></div></div>
               </div>
               <div className="flex flex-col"><label className="text-[13.5px] font-semibold text-white mb-2.5">Tell us about the project <span className="text-[#ff5a4e]">*</span></label><div className="rounded-md border border-white/[0.08] bg-[#1a1a1a] px-4 py-3.5 focus-within:border-[#ff6b35]/60 transition-colors"><textarea ref={briefRef} value={brief} onChange={(e) => setBrief(e.target.value)} rows={5} required maxLength={2500} placeholder="Project overview, goals, timelines, etc..." className="w-full bg-transparent border-0 px-0 py-0 text-[14px] text-white placeholder-white/25 focus:outline-none resize-y min-h-[140px] leading-relaxed" /><div className="mt-1.5 text-right font-mono text-[11px] text-white/60">{brief.length}/2500</div><div className="flex flex-wrap gap-2 mt-3">{projectSuggestions.map((suggestion) => (<button key={suggestion} type="button" onClick={() => insertSuggestion(suggestion)} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[12px] text-white/70 hover:text-white hover:border-[#ff6b35]/60 hover:bg-[#ff6b35]/10 transition-all">{suggestion}</button>))}</div><div className="relative mt-2 pt-2.5 border-t border-white/[0.06] flex items-center gap-2"><button type="button" onClick={() => setShowEmojiPicker((v) => !v)} aria-label="Add emoji" className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[16px] text-white/60 hover:text-white hover:bg-white/10 transition-all">😊</button><button type="button" onClick={() => fileInputRef.current?.click()} aria-label="Attach a file" className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[16px] text-white/60 hover:text-white hover:bg-white/10 transition-all">📎</button><input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />{showEmojiPicker && (<div className="absolute bottom-full left-0 mb-2 z-20 grid grid-cols-8 gap-1 rounded-lg border border-white/15 bg-[#3A373E] p-2 shadow-xl">{emojiList.map((emoji) => (<button key={emoji} type="button" onClick={() => insertEmoji(emoji)} className="w-8 h-8 inline-flex items-center justify-center rounded-md text-[18px] hover:bg-white/10 transition-all">{emoji}</button>))}</div>)}</div>{attachments.length > 0 && (<div className="mt-2.5 flex flex-wrap gap-2">{attachments.map((file, i) => (<span key={file.name + i} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12px] text-white/70">{file.name} ({(file.size / 1024).toFixed(0)} KB)<button type="button" onClick={() => setAttachments((prev) => prev.filter((_, j) => j !== i))} aria-label={'Remove ' + file.name} className="text-white/50 hover:text-white">×</button></span>))}</div>)}{attachError && (<p className="mt-2 text-[12px] text-[#ff5a4e]">{attachError}</p>)}</div></div>
               <button type="submit" disabled={sending} className="w-full h-[52px] mt-2 rounded-md bg-[#ff6b35] text-[15px] font-semibold text-white hover:bg-[#ff8552] transition-all shadow-[0_0_28px_rgba(255,107,53,0.28)] hover:shadow-[0_0_40px_rgba(255,107,53,0.42)] disabled:opacity-60">{sending ? 'Sending…' : 'Send an Inquiry →'}</button>
-              <p className="text-white/60 text-[13px] leading-relaxed">Sends directly to us — no email app needed.</p>
+              <p className="text-white/60 text-[13px] leading-relaxed">Sends directly to us, no email app needed.</p>
               {sent && (
                 <div className="rounded-md border border-white/10 bg-white/5 p-4">
                   <p className="text-white text-[14px] font-semibold">Inquiry sent successfully.</p>
-                  <p className="text-white/60 text-[13px] leading-relaxed mt-1">Thank you — we will get back within one business day.</p>
+                  <p className="text-white/60 text-[13px] leading-relaxed mt-1">Thank you. We will get back within one business day.</p>
                 </div>
               )}
               {sendError && (
@@ -1318,7 +1318,7 @@ const Footer = () => (
       <div id="locations" className="pt-8 border-t border-white/10 mb-8">
         <p className="text-white/60 text-sm leading-relaxed">
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mr-3">Where we work</span>
-          Serving clients worldwide —{' '}
+          Serving clients worldwide,{' '}
           {locations.map((l, i) => (
             <span key={l.slug}>
               {i > 0 && <span className="text-white/30"> · </span>}
@@ -1377,7 +1377,7 @@ const HomePage = () => {
 function NotFoundPage() {
   return (
     <main className="min-h-screen bg-[#070f1a] text-white flex flex-col items-center justify-center px-6 text-center">
-      <p className="font-mono text-sm tracking-widest text-white/60 mb-4">404 — PAGE NOT FOUND</p>
+      <p className="font-mono text-sm tracking-widest text-white/60 mb-4">404 - PAGE NOT FOUND</p>
       <h1 className="text-4xl md:text-6xl font-bold mb-4">This page doesn&apos;t exist.</h1>
       <p className="text-white/60 max-w-md mb-8">The link you followed may be outdated, or the address may have a typo. The home page and all services are still here.</p>
       <button onClick={() => navigateTo('/')} className="px-6 py-3 border border-white/35 hover:bg-white hover:text-black transition-colors font-mono text-sm tracking-wider">BACK TO HOME</button>
@@ -1408,12 +1408,15 @@ const PageFallback = () => (
 function App() {
   const [route, setRoute] = useState<string>(() => normalizePath(window.location.pathname));
   const [showCurtain, setShowCurtain] = useState(false);
-  // Warm the lazy page chunks once the main thread is idle, so the first
-  // click on a service/journal/location card never waits on a cold chunk
-  // fetch. A cold chunk once left the screen black for 10+ seconds (the
-  // Suspense fallback was a bare dark div) until a reload. requestIdleCallback
-  // keeps this off the first paint; the 2s timeout is the fallback for
-  // browsers without it.
+  // Warm the lazy page chunks shortly after mount, so the first click on a
+  // service/journal/location card never waits on a cold chunk fetch. A cold
+  // chunk once left the screen black for 10+ seconds (the Suspense fallback
+  // was a bare dark div) until a reload, and on a fresh tab the first click
+  // still took ~2s to settle while a repeat click took ~0.5s. The warm used
+  // to wait for requestIdleCallback (up to 2s), so a quick first click was
+  // still cold; a 300ms timeout warms the chunks well before the user
+  // clicks, and the seven chunks are only ~12 kB each, so they do not
+  // contend with the first paint.
   useEffect(() => {
     const warm = () => {
       void import('./pages/ServicePage');
@@ -1424,10 +1427,6 @@ function App() {
       void import('./pages/PrivacyPage');
       void import('./pages/TermsPage');
     };
-    if (typeof window.requestIdleCallback === 'function') {
-      const id = window.requestIdleCallback(warm, { timeout: 2000 });
-      return () => window.cancelIdleCallback(id);
-    }
     const t = window.setTimeout(warm, 300);
     return () => window.clearTimeout(t);
   }, []);
@@ -1450,7 +1449,7 @@ function App() {
   }, []);
   // Fragment-only navigation (typing/pasting an old hash link, or using
   // back/forward, in a tab where the app is already loaded) does NOT reload
-  // the page and does NOT fire popstate — only hashchange. Without this
+  // the page and does NOT fire popstate - only hashchange. Without this
   // listener, a legacy hash link opened in an already-loaded tab would
   // silently stay on the current page instead of redirecting.
   useEffect(() => {
@@ -1476,11 +1475,11 @@ function App() {
   }, []);
   // After landing on a page, apply the pending scroll. An explicit section
   // (nav link from another page, or a legacy hash link) wins; otherwise the
-  // Back/forward restore applies — the section, or the exact scroll position
+  // Back/forward restore applies - the section, or the exact scroll position
   // the user was at when they left that page.
   //
   // The scroll is ONE instant set, started only after the page has mounted
-  // and laid out, and the curtain lifts only once the page is settled — so
+  // and laid out, and the curtain lifts only once the page is settled - so
   // the user never sees the page move. Instant is right here because the
   // curtain hides the movement; a smooth glide only kept the curtain up
   // longer (several seconds for a long trip to the footer) with no visible
@@ -1527,7 +1526,7 @@ function App() {
         return;
       }
       if (typeof restore.y === 'number') {
-        // Back to an exact position — trusted only while it still falls
+        // Back to an exact position - trusted only while it still falls
         // inside the section the user came from (see restoreToSavedY).
         await restoreToSavedY(restore.y, getLastHomeSection());
         if (cancelled) return;
@@ -1555,7 +1554,7 @@ function App() {
         // not the top. The saved scroll position is the most precise record
         // of it, so it wins over the section hash; the hash is only a
         // fallback for entries with no saved position. The logo is always
-        // there for Home — Back means back.
+        // there for Home - Back means back.
         const key = window.location.pathname + window.location.hash;
         const savedY = getSavedScrollPosition(key);
         const hash = window.location.hash.slice(1);
@@ -1573,7 +1572,7 @@ function App() {
       // No artificial delay: the route changes at once and the exit
       // animation (AnimatePresence) still plays. The old 320ms wait made
       // every click feel slow. The curtain is lifted by the restore effect
-      // once the new page is settled — never mid-glide.
+      // once the new page is settled - never mid-glide.
       setRoute(next);
     };
     window.addEventListener('popstate', onPopState);
@@ -1622,15 +1621,15 @@ function App() {
   const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry && !isPrivacyPage && !isTermsPage;
   // Per-page title + canonical + description + structured data.
   useEffect(() => {
-    document.title = service ? (service.seoTitle || service.title + ' Services | THE JIMMY LAB') : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isPrivacyPage ? 'Privacy Policy | THE JIMMY LAB' : isTermsPage ? 'Terms of Service | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB — Web Development & Design Agency';
+    document.title = service ? (service.seoTitle || service.title + ' Services | THE JIMMY LAB') : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isPrivacyPage ? 'Privacy Policy | THE JIMMY LAB' : isTermsPage ? 'Terms of Service | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB - Web Development & Design Agency';
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route));
-    const description = service ? (service.seoDescription || service.tagline + ' | THE JIMMY LAB — a global remote web development and design agency, serving clients in the USA, UK, Europe and the Gulf.') : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB — six operators covering design, engineering, SEO and automation, working remotely with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isPrivacyPage ? 'Privacy Policy for THE JIMMY LAB — what information this website collects and how it is used.' : isTermsPage ? 'Terms of Service for THE JIMMY LAB — the terms for working with the studio and using this website.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Global remote web development and design agency, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
+    const description = service ? (service.seoDescription || service.tagline + ' | THE JIMMY LAB - a global remote web development and design agency, serving clients in the USA, UK, Europe and the Gulf.') : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB, six operators covering design, engineering, SEO and automation, working remotely with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isPrivacyPage ? 'Privacy Policy for THE JIMMY LAB: what information this website collects and how it is used.' : isTermsPage ? 'Terms of Service for THE JIMMY LAB: the terms for working with the studio and using this website.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Global remote web development and design agency, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
     const robotsMeta = document.querySelector('meta[name="robots"]');
     if (isComingSoonPage) { if (!robotsMeta) { const m = document.createElement('meta'); m.setAttribute('name', 'robots'); m.setAttribute('content', 'noindex'); document.head.appendChild(m); } else robotsMeta.setAttribute('content', 'noindex'); } else if (robotsMeta) robotsMeta.remove();
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', description);
-    // Open Graph / Twitter cards must follow the page too — they stayed on
+    // Open Graph / Twitter cards must follow the page too - they stayed on
     // the home values on every route before this.
     const pageUrl = 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route);
     const setMetaContent = (sel: string, value: string) => { const el = document.querySelector(sel); if (el) el.setAttribute('content', value); };
@@ -1661,12 +1660,12 @@ function App() {
       const iso = parts.length === 3 && months[parts[0]] ? parts[2] + '-' + months[parts[0]] + '-' + parts[1].padStart(2, '0') : undefined;
       ld = { '@context': 'https://schema.org', '@type': 'Article', headline: journalPost.title, description: journalPost.excerpt, image: journalPost.image, url: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, mainEntityOfPage: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, author: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' }, publisher: { '@id': 'https://thejimmylab.vercel.app/#organization' }, ...(iso ? { datePublished: iso, dateModified: iso } : {}) };
     } else if (isTeamPage) {
-      // Person schema for the team — name and role only. The LinkedIn URLs
+      // Person schema for the team - name and role only. The LinkedIn URLs
       // in the team data look mismatched to the names, so no sameAs until
       // each is verified.
       ld = { '@context': 'https://schema.org', '@graph': team.map((m) => ({ '@type': 'Person', name: m.name, jobTitle: m.role, worksFor: { '@id': 'https://thejimmylab.vercel.app/#organization' } })) };
     } else if (!isTeamPage && !isComingSoonPage && !isNotFound) {
-      // Home FAQPage schema — keep in sync with the HomePage faqs array.
+      // Home FAQPage schema - keep in sync with the HomePage faqs array.
       ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
         { '@type': 'Question', name: 'What technologies do you use?', acceptedAnswer: { '@type': 'Answer', text: 'We specialize in modern web technologies including React, Next.js, TypeScript, Tailwind CSS, Node.js, and various CMS platforms. Our stack is always evolving to incorporate the best tools for each project.' } },
         { '@type': 'Question', name: 'How long does a typical project take?', acceptedAnswer: { '@type': 'Answer', text: 'Project timelines vary based on complexity. A simple website typically takes 2-4 weeks, while complex web applications can take 2-6 months. We provide detailed timelines during our initial consultation.' } },

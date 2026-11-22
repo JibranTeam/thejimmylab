@@ -71,7 +71,7 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "How long does a typical web project take?", a: "A marketing site typically takes 2–4 weeks, while a full web application can take 6–16 weeks depending on scope and complexity." },
-      { q: "Do you provide ongoing support?", a: "Yes — we offer maintenance and retainer packages covering updates, monitoring and new feature development." },
+      { q: "Do you provide ongoing support?", a: "Yes, we offer maintenance and retainer packages covering updates, monitoring and new feature development." },
       { q: "Can you work with our existing codebase?", a: "Absolutely. We regularly audit, refactor and extend existing React, Node.js and PHP codebases." },
     ],
   },
@@ -79,13 +79,13 @@ export const services: Service[] = [
     slug: "ui-ux-design",
     icon: Palette,
     title: "UI/UX Design",
-    seoDescription: "Interfaces that feel effortless — designed from research, not guesswork. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    seoDescription: "Interfaces that feel effortless, designed from research, not guesswork. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Pixel-perfect interfaces and design systems crafted around real user behaviour.",
     color: "#a855f7",
-    tagline: "Interfaces that feel effortless — designed from research, not guesswork.",
+    tagline: "Interfaces that feel effortless, designed from research, not guesswork.",
     overview: [
       "We design interfaces that are beautiful and functional, grounded in user research and behavioural insight. From wireframes and prototypes to complete design systems, we make products that people genuinely enjoy using.",
-      "Every screen is crafted with clear hierarchy, accessible contrast and a motion language that guides the eye — so your product feels premium and performs.",
+      "Every screen is crafted with clear hierarchy, accessible contrast and a motion language that guides the eye, so your product feels premium and performs.",
     ],
     features: [
       { title: "UX Research", desc: "User interviews, journeys and usability testing to inform every decision." },
@@ -107,7 +107,7 @@ export const services: Service[] = [
       { value: "5★", label: "Client satisfaction" },
     ],
     faq: [
-      { q: "Do you also implement the designs?", a: "Yes — our designers and engineers work side-by-side, so the shipped product matches the design pixel-for-pixel." },
+      { q: "Do you also implement the designs?", a: "Yes, our designers and engineers work side-by-side, so the shipped product matches the design pixel-for-pixel." },
       { q: "Can you redesign our existing product?", a: "Absolutely. We start with a UX audit, then redesign and improve without disrupting your current flow." },
       { q: "What tools do you use?", a: "Figma is our primary tool, with Framer for high-fidelity prototypes and After Effects for motion studies." },
     ],
@@ -123,10 +123,10 @@ export const services: Service[] = [
     tagline: "Mobile experiences that feel native, ship fast and scale with your users.",
     overview: [
       "We build polished mobile applications that run flawlessly on both iOS and Android. Using modern cross-platform tooling, we ship one codebase without sacrificing the native feel, performance or polish your users expect.",
-      "From MVP to app-store launch, we handle design, development, testing and release — so you can focus on your users.",
+      "From MVP to app-store launch, we handle design, development, testing and release, so you can focus on your users.",
     ],
     features: [
-      { title: "Cross-Platform", desc: "One codebase, two platforms — React Native and Flutter expertise." },
+      { title: "Cross-Platform", desc: "One codebase, two platforms: React Native and Flutter expertise." },
       { title: "Offline-First", desc: "Local data, sync and caching for a responsive, resilient experience." },
       { title: "App Store Ready", desc: "Full App Store and Play Store submission and compliance." },
       { title: "Push & Analytics", desc: "Push notifications, deep links and product analytics wired in." },
@@ -146,8 +146,8 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "Native or cross-platform?", a: "For most products, cross-platform (React Native/Flutter) gives the best speed-to-market and cost, while still feeling native." },
-      { q: "Can you take our app to the store?", a: "Yes — we handle the full submission process for both the App Store and Google Play." },
-      { q: "Do you build MVPs?", a: "Definitely. MVPs are our speciality — a lean, focused first release to validate your idea fast." },
+      { q: "Can you take our app to the store?", a: "Yes, we handle the full submission process for both the App Store and Google Play." },
+      { q: "Do you build MVPs?", a: "Definitely. MVPs are our speciality, a lean, focused first release to validate your idea fast." },
     ],
   },
   {
@@ -155,10 +155,10 @@ export const services: Service[] = [
     icon: ShoppingBag,
     title: "E-Commerce",
     seoTitle: "E-Commerce Website Development | THE JIMMY LAB",
-    seoDescription: "Storefronts built to convert — fast, flexible and beautiful at every step. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    seoDescription: "Storefronts built to convert, fast, flexible and beautiful at every step. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "High-converting storefronts and headless commerce builds that turn browsers into buyers.",
     color: "#00d4aa",
-    tagline: "Storefronts built to convert — fast, flexible and beautiful at every step.",
+    tagline: "Storefronts built to convert, fast, flexible and beautiful at every step.",
     overview: [
       "We design and build e-commerce experiences that reduce friction and maximise conversion. From custom Shopify themes to fully headless builds, we craft storefronts that load fast and sell harder.",
       "Every checkout is optimized, every product page is persuasive, and every build is wired for analytics, upsells and growth.",
@@ -184,7 +184,7 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "Shopify or custom?", a: "It depends on your needs. Shopify is great for speed-to-market; a headless build gives maximum flexibility and performance." },
-      { q: "Can you migrate our existing store?", a: "Yes — we migrate products, customers and orders with zero downtime and SEO preserved." },
+      { q: "Can you migrate our existing store?", a: "Yes, we migrate products, customers and orders with zero downtime and SEO preserved." },
       { q: "Do you handle payments?", a: "We integrate Stripe, PayPal, Apple Pay and local payment gateways, plus subscription billing." },
     ],
   },
@@ -198,7 +198,7 @@ export const services: Service[] = [
     color: "#ffd700",
     tagline: "Turn your data and workflows into intelligent, automated products.",
     overview: [
-      "We build practical AI-powered solutions — from chat assistants and content copilots to intelligent automation and document processing. We focus on real business outcomes, not hype.",
+      "We build practical AI-powered solutions, from chat assistants and content copilots to intelligent automation and document processing. We focus on real business outcomes, not hype.",
       "Whether it's integrating large language models, building custom pipelines, or automating operations, we ship AI that saves time, reduces cost and unlocks new capability.",
     ],
     features: [
@@ -221,9 +221,9 @@ export const services: Service[] = [
       { value: "24/7", label: "Always-on agents" },
     ],
     faq: [
-      { q: "What can AI actually do for my business?", a: "It depends on your data and workflows — but common wins are automating support, document processing, content and data analysis." },
+      { q: "What can AI actually do for my business?", a: "It depends on your data and workflows, but common wins are automating support, document processing, content and data analysis." },
       { q: "Is our data kept private?", a: "Yes. We can use private models, on-prem hosting and strict data isolation depending on your compliance needs." },
-      { q: "How do you measure success?", a: "We define clear metrics up front — time saved, cost reduced, or revenue generated — and report against them." },
+      { q: "How do you measure success?", a: "We define clear metrics up front, time saved, cost reduced, or revenue generated, and report against them." },
     ],
   },
   {
@@ -235,7 +235,7 @@ export const services: Service[] = [
     color: "#ec4899",
     tagline: "Motion that guides, delights and sets your brand apart.",
     overview: [
-      "We craft interactive, scroll-driven and 3D motion that turns static pages into memorable experiences. From micro-interactions to full product configurators, we use motion as a functional tool — not decoration.",
+      "We craft interactive, scroll-driven and 3D motion that turns static pages into memorable experiences. From micro-interactions to full product configurators, we use motion as a functional tool, not decoration.",
       "Every animation is optimized for 60fps, respects reduced-motion preferences and enhances usability rather than distracting from it.",
     ],
     features: [
@@ -258,9 +258,9 @@ export const services: Service[] = [
       { value: "2D & 3D", label: "Full range" },
     ],
     faq: [
-      { q: "Will animation slow my site down?", a: "No — we optimize every animation for performance and respect reduced-motion preferences for accessibility." },
+      { q: "Will animation slow my site down?", a: "No, we optimize every animation for performance and respect reduced-motion preferences for accessibility." },
       { q: "Can you animate an existing site?", a: "Yes. We can add scroll experiences, interactions and motion to your current product without a rebuild." },
-      { q: "Do you do 3D product configurators?", a: "Absolutely — interactive 3D configurators are one of our signature offerings." },
+      { q: "Do you do 3D product configurators?", a: "Absolutely, interactive 3D configurators are one of our signature offerings." },
     ],
   },
   {
@@ -272,7 +272,7 @@ export const services: Service[] = [
     color: "#f472b6",
     tagline: "A mark people remember, and a brand system that holds up everywhere it lands.",
     overview: [
-      "We design logos and brand identities from the ground up — research, strategy, sketching, refinement — until the mark captures exactly who you are. Then we build the system around it: colour, type, voice and usage rules.",
+      "We design logos and brand identities from the ground up, research, strategy, sketching, refinement, until the mark captures exactly who you are. Then we build the system around it: colour, type, voice and usage rules.",
       "You leave with a logo that works at 16px and at 16 metres, plus guidelines your whole team can apply without guessing.",
     ],
     features: [
@@ -296,7 +296,7 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "How many concepts do we get?", a: "We present two to three distinct strategic directions, then refine the chosen route together until it's right." },
-      { q: "Do you redesign existing logos?", a: "Yes — evolutionary refreshes that keep your equity while modernising the mark are a big part of our work." },
+      { q: "Do you redesign existing logos?", a: "Yes, evolutionary refreshes that keep your equity while modernising the mark are a big part of our work." },
       { q: "What files do we receive?", a: "Full vector and raster suites, plus favicon, app icons and a printable brand guidelines document." },
     ],
   },
@@ -304,10 +304,10 @@ export const services: Service[] = [
     slug: "graphic-design-2d-3d",
     icon: Boxes,
     title: "2D/3D Graphic Design",
-    seoDescription: "Custom 2D illustration and 3D renders — no stock clichés, ever. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    seoDescription: "Custom 2D illustration and 3D renders, no stock clichés, ever. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Illustration, motion graphics and 3D visuals that give your product a visual language of its own.",
     color: "#22d3ee",
-    tagline: "Custom 2D illustration and 3D renders — no stock clichés, ever.",
+    tagline: "Custom 2D illustration and 3D renders, no stock clichés, ever.",
     overview: [
       "From editorial illustration and icon sets to fully rendered 3D product scenes, we create original graphic assets that make your brand unmistakable across web, print and video.",
       "Our 3D pipeline covers modeling, texturing, lighting and rendering, delivered optimized for real-time web (glTF/Three.js) or cinematic stills and loops.",
@@ -332,8 +332,8 @@ export const services: Service[] = [
       { value: "60fps", label: "Real-time ready" },
     ],
     faq: [
-      { q: "Can 3D models run on our website?", a: "Yes — we deliver Draco-compressed glTF models tuned for Three.js, typically under 2 MB per scene." },
-      { q: "Do you work from our sketches?", a: "Absolutely. Rough sketches, moodboards or napkins — we can start from anything and professionalise it." },
+      { q: "Can 3D models run on our website?", a: "Yes, we deliver Draco-compressed glTF models tuned for Three.js, typically under 2 MB per scene." },
+      { q: "Do you work from our sketches?", a: "Absolutely. Rough sketches, moodboards or napkins, we can start from anything and professionalise it." },
       { q: "Who owns the artwork?", a: "You do. Full commercial rights transfer on final payment, including source files." },
     ],
   },
@@ -342,13 +342,13 @@ export const services: Service[] = [
     icon: GraduationCap,
     title: "1:1 Consultation & Training",
     seoTitle: "Technology Consulting & 1:1 Training | THE JIMMY LAB",
-    seoDescription: "Senior expertise on tap — unblock your team without hiring for it. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    seoDescription: "Senior expertise on tap, unblock your team without hiring for it. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Focused 1-on-1 guidance, code reviews and hands-on training for teams and individuals.",
     color: "#a3e635",
-    tagline: "Senior expertise on tap — unblock your team without hiring for it.",
+    tagline: "Senior expertise on tap, unblock your team without hiring for it.",
     overview: [
       "Book focused 1-on-1 sessions with our senior engineers and designers: architecture reviews, stack decisions, project planning, or hands-on pair programming on your own codebase.",
-      "We also run structured training tracks — modern frontend, animation, AI tooling — built around your team's real projects instead of toy examples.",
+      "We also run structured training tracks, modern frontend, animation, AI tooling, built around your team's real projects instead of toy examples.",
     ],
     features: [
       { title: "Technical Consultancy", desc: "Architecture, stack selection and roadmap decisions with a senior operator." },
@@ -371,7 +371,7 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "How do sessions work?", a: "60 or 90 minute video calls, screen-share first. You leave each session with notes and next steps." },
-      { q: "Can you train our whole team?", a: "Yes — private cohort workshops, scheduled around your sprints, using your own codebase as the curriculum." },
+      { q: "Can you train our whole team?", a: "Yes, private cohort workshops, scheduled around your sprints, using your own codebase as the curriculum." },
       { q: "Do you offer ongoing retainers?", a: "We keep a limited number of monthly advisory slots for continued guidance between builds." },
     ],
   },
@@ -380,11 +380,11 @@ export const services: Service[] = [
     icon: Search,
     title: "SEO & Website Optimization",
     seoDescription: "Get found on Google, load fast everywhere, and turn search traffic into enquiries. Custom quote. Serving the USA, UK, Europe & the Gulf.",
-    desc: "Higher rankings, faster pages and more organic traffic — technical SEO and performance work that compounds over time.",
+    desc: "Higher rankings, faster pages and more organic traffic, technical SEO and performance work that compounds over time.",
     color: "#ef4444",
     tagline: "Get found on Google, load fast everywhere, and turn search traffic into enquiries.",
     overview: [
-      "We audit your site end to end — technical SEO, on-page structure, Core Web Vitals and content gaps — then fix what actually moves rankings, not just what looks good in a report.",
+      "We audit your site end to end, technical SEO, on-page structure, Core Web Vitals and content gaps, then fix what actually moves rankings, not just what looks good in a report.",
       "Every optimization is measured: before-and-after speed scores, ranking movement and traffic, with a clear monthly report on what changed and what comes next.",
     ],
     features: [
@@ -409,7 +409,7 @@ export const services: Service[] = [
     faq: [
       { q: "How long before SEO results show?", a: "Technical and speed fixes usually show within weeks; ranking and traffic growth typically builds over 2–3 months." },
       { q: "Do you write content too?", a: "We map keywords and optimize existing pages, and can brief or produce SEO content as part of a package." },
-      { q: "Is this a one-time job or ongoing?", a: "Both — a one-time audit and fix, or a monthly retainer for continuous optimization and reporting." },
+      { q: "Is this a one-time job or ongoing?", a: "Both, a one-time audit and fix, or a monthly retainer for continuous optimization and reporting." },
     ],
   },
   {
@@ -418,12 +418,12 @@ export const services: Service[] = [
     title: "Maintenance & Support",
     seoTitle: "Website Maintenance & Support Services | THE JIMMY LAB",
     seoDescription: "Never worry about updates, downtime or broken pages again. Custom quote. Serving the USA, UK, Europe & the Gulf.",
-    desc: "Your site stays fast, secure and up to date — updates, monitoring, backups and fixes handled for you.",
+    desc: "Your site stays fast, secure and up to date, updates, monitoring, backups and fixes handled for you.",
     color: "#0ea5e9",
     tagline: "Never worry about updates, downtime or broken pages again.",
     overview: [
       "Websites break quietly: outdated plugins, expired certificates, slow databases and small bugs that cost enquiries. Our maintenance plans keep everything patched, monitored and backed up.",
-      "When something does go wrong, you have a team that already knows your site — no explaining your stack to a stranger, no waiting days for a fix.",
+      "When something does go wrong, you have a team that already knows your site, no explaining your stack to a stranger, no waiting days for a fix.",
     ],
     features: [
       { title: "Updates & Patching", desc: "Core, plugin and dependency updates tested before they go live." },
@@ -445,9 +445,9 @@ export const services: Service[] = [
       { value: "Same-day", label: "Priority fix response" },
     ],
     faq: [
-      { q: "What counts as a small fix?", a: "Text and image changes, broken links, layout bugs and small feature tweaks — anything that fits in a short session." },
-      { q: "Do you support sites you did not build?", a: "Yes — we start with a quick health check, then take over maintenance from there." },
-      { q: "Can I cancel anytime?", a: "Yes — maintenance is month to month, with your backups and documentation handed over if you leave." },
+      { q: "What counts as a small fix?", a: "Text and image changes, broken links, layout bugs and small feature tweaks, anything that fits in a short session." },
+      { q: "Do you support sites you did not build?", a: "Yes, we start with a quick health check, then take over maintenance from there." },
+      { q: "Can I cancel anytime?", a: "Yes, maintenance is month to month, with your backups and documentation handed over if you leave." },
     ],
   },
   {
@@ -455,7 +455,7 @@ export const services: Service[] = [
     icon: Workflow,
     title: "Integration & Automation",
     seoDescription: "Less copy-paste, fewer dropped leads, more time for real work. Custom quote. Serving the USA, UK, Europe & the Gulf.",
-    desc: "Connect your tools and automate the busywork — CRMs, forms, payments and workflows that run themselves.",
+    desc: "Connect your tools and automate the busywork, CRMs, forms, payments and workflows that run themselves.",
     color: "#f59e0b",
     tagline: "Less copy-paste, fewer dropped leads, more time for real work.",
     overview: [
@@ -482,22 +482,22 @@ export const services: Service[] = [
       { value: "1 map", label: "Full workflow documentation" },
     ],
     faq: [
-      { q: "Which tools can you connect?", a: "GoHighLevel, HubSpot, Stripe, Calendly, email platforms and most tools with an API or webhook — tell us your stack and we will map it." },
-      { q: "What if an automation breaks?", a: "Every flow has error alerts, and maintenance clients get priority fixes — nothing fails silently for weeks." },
-      { q: "Do I need a CRM first?", a: "No — we can set up GoHighLevel or a simpler CRM as part of the project, then build the automations on top." },
+      { q: "Which tools can you connect?", a: "GoHighLevel, HubSpot, Stripe, Calendly, email platforms and most tools with an API or webhook . Tell us your stack and we will map it." },
+      { q: "What if an automation breaks?", a: "Every flow has error alerts, and maintenance clients get priority fixes . Nothing fails silently for weeks." },
+      { q: "Do I need a CRM first?", a: "No, we can set up GoHighLevel or a simpler CRM as part of the project, then build the automations on top." },
     ],
   },
   {
     slug: "website-redesign-migration",
     icon: RefreshCw,
     title: "Website Redesign & Migration",
-    seoDescription: "New design, same traffic — a relaunch done properly. Custom quote. Serving the USA, UK, Europe & the Gulf.",
-    desc: "A fresh look without losing what works — redesigns and platform moves with zero ranking or content loss.",
+    seoDescription: "New design, same traffic, a relaunch done properly. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    desc: "A fresh look without losing what works, redesigns and platform moves with zero ranking or content loss.",
     color: "#6366f1",
-    tagline: "New design, same traffic — a relaunch done properly.",
+    tagline: "New design, same traffic, a relaunch done properly.",
     overview: [
       "A redesign should never cost you your Google rankings or your content. We rebuild your site with a modern design and faster stack, while carefully preserving URLs, SEO value and everything your visitors already love.",
-      "Moving platforms — WordPress to Next.js, Wix to Shopify, or anything in between — gets the same treatment: full content migration, redirect mapping and post-launch checks.",
+      "Moving platforms, WordPress to Next.js, Wix to Shopify, or anything in between, gets the same treatment: full content migration, redirect mapping and post-launch checks.",
     ],
     features: [
       { title: "Redesign Without Regression", desc: "New look, same (or better) speed, SEO and conversion performance." },
@@ -519,8 +519,8 @@ export const services: Service[] = [
       { value: "2x", label: "Faster on average post-launch" },
     ],
     faq: [
-      { q: "Will I lose my Google rankings?", a: "No — redirect mapping and SEO preservation are built into every redesign and migration, with checks after launch." },
-      { q: "Can you move my site to a different platform?", a: "Yes — WordPress, Wix, Shopify, Squarespace and custom stacks are all in scope, with content migrated intact." },
+      { q: "Will I lose my Google rankings?", a: "No, redirect mapping and SEO preservation are built into every redesign and migration, with checks after launch." },
+      { q: "Can you move my site to a different platform?", a: "Yes, WordPress, Wix, Shopify, Squarespace and custom stacks are all in scope, with content migrated intact." },
       { q: "How long does a redesign take?", a: "Most redesigns take 3–6 weeks depending on page count and whether a platform move is included." },
     ],
   },
@@ -528,13 +528,13 @@ export const services: Service[] = [
     slug: "code-review-technical-audit",
     icon: FileSearch,
     title: "Code Review & Technical Audit",
-    seoDescription: "Know exactly where your code stands — before it becomes a problem. Custom quote. Serving the USA, UK, Europe & the Gulf.",
-    desc: "A senior, independent look at your codebase — what is solid, what is risky, and what to fix first.",
+    seoDescription: "Know exactly where your code stands, before it becomes a problem. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    desc: "A senior, independent look at your codebase, what is solid, what is risky, and what to fix first.",
     color: "#10b981",
-    tagline: "Know exactly where your code stands — before it becomes a problem.",
+    tagline: "Know exactly where your code stands, before it becomes a problem.",
     overview: [
       "This is a full technical audit, not a quick session review: architecture, code quality, security, performance and scalability, examined by senior engineers and delivered as a prioritised, actionable report.",
-      "You get a clear fix order — critical issues first — with concrete recommendations your team can act on, whether you hire us to fix them or handle them in-house.",
+      "You get a clear fix order, critical issues first, with concrete recommendations your team can act on, whether you hire us to fix them or handle them in-house.",
     ],
     features: [
       { title: "Architecture Review", desc: "Structure, patterns and scalability assessed against how your product actually grows." },
@@ -557,22 +557,22 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "How is this different from your consultation code reviews?", a: "Consultation reviews happen inside a 1:1 session. This is a standalone, documented audit of the whole codebase with a written report and roadmap." },
-      { q: "Do you need access to our code?", a: "Yes — read-only repository access is enough, under NDA if you need one." },
-      { q: "Can you fix what you find?", a: "Yes — fixes can be quoted as a follow-up project, or your team can work from the report directly." },
+      { q: "Do you need access to our code?", a: "Yes, read-only repository access is enough, under NDA if you need one." },
+      { q: "Can you fix what you find?", a: "Yes, fixes can be quoted as a follow-up project, or your team can work from the report directly." },
     ],
   },
   {
     slug: "nextjs-development",
     icon: Rocket,
     title: "Next.js Development",
-    seoDescription: "Next.js websites and web apps — fast, server-rendered, built to scale. Custom quote. Serving the USA, UK, Europe & the Gulf.",
-    desc: "Next.js websites and web apps — fast, server-rendered and built to scale from day one.",
+    seoDescription: "Next.js websites and web apps, fast, server-rendered, built to scale. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    desc: "Next.js websites and web apps, fast, server-rendered and built to scale from day one.",
     color: "#38bdf8",
     tagline: "Next.js builds for growing businesses: fast pages, clean code, and a launch in weeks, not months.",
     overview: [
-      "We build production Next.js websites and web applications for businesses at every level — startups, growing companies and established brands: marketing sites, SaaS products, dashboards and headless storefronts. Server-rendered pages, image optimization and edge caching come as standard, so your site is fast on the first visit and stays fast as you grow.",
-      "Businesses choose Next.js because it removes the usual trade-offs — SEO-friendly pages, app-like interactions, and a codebase your next hire can actually understand. We build it that way on purpose: typed, tested and documented.",,
-      "Who it is for: businesses at every level — startups, growing companies and established brands — that need a site which is fast, findable and easy to grow. How it works: we follow the same three phases on every build — Architect, then Build, then Accelerate — with weekly demos and a staging link from day one. What it costs: every project is priced individually with a custom quote, based on pages, design, integrations and content — no packages, no hidden fees."
+      "We build production Next.js websites and web applications for businesses at every level, startups, growing companies and established brands: marketing sites, SaaS products, dashboards and headless storefronts. Server-rendered pages, image optimization and edge caching come as standard, so your site is fast on the first visit and stays fast as you grow.",
+      "Businesses choose Next.js because it removes the usual trade-offs, SEO-friendly pages, app-like interactions, and a codebase your next hire can actually understand. We build it that way on purpose: typed, tested and documented.",,
+      "Who it is for: businesses at every level, startups, growing companies and established brands, that need a site which is fast, findable and easy to grow. How it works: we follow the same three phases on every build, Architect, then Build, then Accelerate, with weekly demos and a staging link from day one. What it costs: every project is priced individually with a custom quote, based on pages, design, integrations and content, no packages, no hidden fees."
     ],
     features: [
       { title: "Fast Delivery", desc: "Lean, focused builds with weekly demos and a staging link from day one." },
@@ -594,23 +594,23 @@ export const services: Service[] = [
       { value: "2013", label: "Founded" },
     ],
     faq: [
-      { q: "How much does a Next.js website cost?", a: "It depends on scope — pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly." },
-      { q: "Do you work with startups in the USA and UK?", a: "Yes — we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time." },
-      { q: "Can you rebuild our existing site in Next.js?", a: "Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact — see our redesign and migration service." },
+      { q: "How much does a Next.js website cost?", a: "It depends on scope, pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly." },
+      { q: "Do you work with startups in the USA and UK?", a: "Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time." },
+      { q: "Can you rebuild our existing site in Next.js?", a: "Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact, see our redesign and migration service." },
     ],
   },
   {
     slug: "react-website-redesign",
     icon: Layers,
     title: "React Website Redesign",
-    seoDescription: "React redesigns for SaaS — a faster, clearer product site without losing traffic. Custom quote. USA, UK, Europe & the Gulf.",
-    desc: "React redesigns for SaaS companies — a faster, clearer product site without losing traffic or users.",
+    seoDescription: "React redesigns for SaaS, a faster, clearer product site without losing traffic. Custom quote. USA, UK, Europe & the Gulf.",
+    desc: "React redesigns for SaaS companies, a faster, clearer product site without losing traffic or users.",
     color: "#fb7185",
-    tagline: "A React redesign for your SaaS product — new design, same traffic, better conversions.",
+    tagline: "A React redesign for your SaaS product, new design, same traffic, better conversions.",
     overview: [
-      "We redesign React websites for SaaS companies: the marketing site, the onboarding flow and the in-product experience, rebuilt around what your visitors actually do. The goal is not just a prettier site — it is a site that explains the product faster and converts more trials.",
+      "We redesign React websites for SaaS companies: the marketing site, the onboarding flow and the in-product experience, rebuilt around what your visitors actually do. The goal is not just a prettier site. It is a site that explains the product faster and converts more trials.",
       "Redesigns are done with rankings protected: URL mapping, redirect checks and a post-launch verification pass, so the new site keeps the traffic the old one earned.",,
-      "Who it is for: SaaS companies whose marketing site, onboarding flow or in-product experience no longer explains the product clearly. How it works: we start with a review of your current site, redesign around trial conversion, and relaunch with URL mapping, redirect checks and a post-launch verification pass so rankings hold. What it costs: priced per project with a custom quote, based on page count and scope — most redesigns take 3–6 weeks."
+      "Who it is for: SaaS companies whose marketing site, onboarding flow or in-product experience no longer explains the product clearly. How it works: we start with a review of your current site, redesign around trial conversion, and relaunch with URL mapping, redirect checks and a post-launch verification pass so rankings hold. What it costs: priced per project with a custom quote, based on page count and scope, most redesigns take 3–6 weeks."
     ],
     features: [
       { title: "SaaS-Focused UX", desc: "Pricing, onboarding and feature pages structured around trial conversion." },
@@ -632,9 +632,9 @@ export const services: Service[] = [
       { value: "1 hr", label: "Avg. response time" },
     ],
     faq: [
-      { q: "Will a redesign hurt our search rankings?", a: "No — redirect mapping and SEO preservation are built in, with checks after launch. A redesign done properly keeps your rankings and usually improves them as speed rises." },
+      { q: "Will a redesign hurt our search rankings?", a: "No, redirect mapping and SEO preservation are built in, with checks after launch. A redesign done properly keeps your rankings and usually improves them as speed rises." },
       { q: "How long does a SaaS website redesign take?", a: "Most redesigns take 3–6 weeks depending on page count. We give a firm timeline after a short review of your current site." },
-      { q: "Can you redesign only parts of the site?", a: "Yes — pricing pages, onboarding flows or the homepage alone are common starting points, with the rest following in phases." },
+      { q: "Can you redesign only parts of the site?", a: "Yes, pricing pages, onboarding flows or the homepage alone are common starting points, with the rest following in phases." },
     ],
   },
   {
@@ -642,13 +642,13 @@ export const services: Service[] = [
     icon: Bot,
     title: "AI Chatbot Integration",
     seoDescription: "AI chatbots on your website that answer from your own content. Custom quote. Serving the USA, UK, Europe & the Gulf.",
-    desc: "AI chatbots on your website that answer from your own content — trained on your docs, not on guesswork.",
+    desc: "AI chatbots on your website that answer from your own content, trained on your docs, not on guesswork.",
     color: "#facc15",
-    tagline: "A chatbot that knows your business — answers grounded in your own content, live on your site.",
+    tagline: "A chatbot that knows your business, answers grounded in your own content, live on your site.",
     overview: [
       "We integrate AI chatbots into your website that answer visitors from your own content: product docs, FAQs, pricing pages and support articles. Answers stay grounded in what you actually wrote, with sources the visitor can check.",
-      "Chatbots work best as a first line: instant answers at any hour, with a clean handover to a human when the question needs one. We build them that way — useful on day one, and honest about what they cannot do.",,
-      "Who it is for: businesses whose visitors ask the same questions again and again, and whose team is stretched answering them. How it works: we build a knowledge base from your existing pages, FAQs and docs, connect the chatbot to your site, and set up a human handover for questions it cannot answer — then review early conversations to fix anything it gets wrong. What it costs: priced per project with a custom quote, based on the content volume and the integrations you need."
+      "Chatbots work best as a first line: instant answers at any hour, with a clean handover to a human when the question needs one. We build them that way, useful on day one, and honest about what they cannot do.",,
+      "Who it is for: businesses whose visitors ask the same questions again and again, and whose team is stretched answering them. How it works: we build a knowledge base from your existing pages, FAQs and docs, connect the chatbot to your site, and set up a human handover for questions it cannot answer, then review early conversations to fix anything it gets wrong. What it costs: priced per project with a custom quote, based on the content volume and the integrations you need."
     ],
     features: [
       { title: "Grounded Answers", desc: "Retrieval from your own docs, so the bot quotes your content instead of inventing." },
@@ -671,7 +671,7 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "Will the chatbot make things up?", a: "It is built to answer only from your content, and to say when it does not know. We review early conversations to catch and fix anything it gets wrong." },
-      { q: "Can it take bookings or capture leads?", a: "Yes — it can collect details, book calls and pass leads to your CRM or inbox, with a human notified immediately." },
+      { q: "Can it take bookings or capture leads?", a: "Yes, it can collect details, book calls and pass leads to your CRM or inbox, with a human notified immediately." },
       { q: "What content does it need from us?", a: "Your existing pages, FAQs and docs are usually enough to start. Gaps become a short list of pages to write, not a big project." },
     ],
   },
@@ -680,14 +680,14 @@ export const services: Service[] = [
     icon: Orbit,
     title: "Three.js & Interactive 3D",
     seoTitle: "Three.js 3D Website Development | THE JIMMY LAB",
-    seoDescription: "Interactive 3D websites with Three.js — configurators and scenes that stay fast on a phone. Custom quote.",
-    desc: "Interactive 3D websites with Three.js — product configurators and scenes that stay fast on a phone.",
+    seoDescription: "Interactive 3D websites with Three.js, configurators and scenes that stay fast on a phone. Custom quote.",
+    desc: "Interactive 3D websites with Three.js, product configurators and scenes that stay fast on a phone.",
     color: "#c084fc",
-    tagline: "3D on the web that earns its place — interactive, on-brand, and fast enough for a phone.",
+    tagline: "3D on the web that earns its place, interactive, on-brand, and fast enough for a phone.",
     overview: [
-      "We build interactive 3D websites with Three.js and WebGL: product configurators, 3D showcases and scroll-driven scenes that make a product memorable. Every scene has a job — show the product, explain the idea, or guide the visitor — and a performance budget to match.",
+      "We build interactive 3D websites with Three.js and WebGL: product configurators, 3D showcases and scroll-driven scenes that make a product memorable. Every scene has a job, show the product, explain the idea, or guide the visitor, and a performance budget to match.",
       "3D is only worth it when it stays fast. We cap frame rates, lazy-load scenes, and fall back to a still image on weaker devices, so the experience feels premium instead of punishing.",,
-      "Who it is for: brands with a product that deserves to be seen from every angle — configurators, showcases and scroll-driven scenes. How it works: we model and build the scene, cap frame rates, lazy-load it, and fall back to a still image on weaker devices, so the page stays fast. What it costs: priced per project with a custom quote, based on the scene complexity and the 3D assets involved."
+      "Who it is for: brands with a product that deserves to be seen from every angle, configurators, showcases and scroll-driven scenes. How it works: we model and build the scene, cap frame rates, lazy-load it, and fall back to a still image on weaker devices, so the page stays fast. What it costs: priced per project with a custom quote, based on the scene complexity and the 3D assets involved."
     ],
     features: [
       { title: "Product Configurators", desc: "Rotate, customise and explore products in real time, in the browser." },
@@ -709,9 +709,9 @@ export const services: Service[] = [
       { value: "2013", label: "Founded" },
     ],
     faq: [
-      { q: "Will 3D slow my website down?", a: "Not if it is budgeted. Scenes load only when needed, frame rates are capped, and weaker devices get a static image instead — the page stays fast either way." },
-      { q: "What can visitors actually do in 3D?", a: "Rotate and inspect a product, change colours or options, and explore a scene — configurators and showcases are the most common uses." },
-      { q: "Do you model the 3D assets too?", a: "Yes — modelling, texturing and rendering are in-house, delivered as optimized web-ready models." },
+      { q: "Will 3D slow my website down?", a: "Not if it is budgeted. Scenes load only when needed, frame rates are capped, and weaker devices get a static image instead, the page stays fast either way." },
+      { q: "What can visitors actually do in 3D?", a: "Rotate and inspect a product, change colours or options, and explore a scene, configurators and showcases are the most common uses." },
+      { q: "Do you model the 3D assets too?", a: "Yes, modelling, texturing and rendering are in-house, delivered as optimized web-ready models." },
     ],
   },
 ];

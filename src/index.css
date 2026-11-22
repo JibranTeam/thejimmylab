@@ -177,7 +177,7 @@ select option:disabled {
     transform: scaleY(1);
   }
 
-  /* ── Fiverr CTA — same rising-fill hover as btn-ghost, in Fiverr green ── */
+  /* ── Fiverr CTA - same rising-fill hover as btn-ghost, in Fiverr green ── */
   .btn-fiverr {
     position: relative;
     display: inline-flex;
@@ -582,7 +582,7 @@ select option:disabled {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   MONOCHROME SYSTEM  —  every legacy accent resolves to greyscale
+   MONOCHROME SYSTEM  -  every legacy accent resolves to greyscale
    ══════════════════════════════════════════════════════════════ */
 [class*="#ff6b35"],
 [class*="#ff3c2f"],
@@ -679,7 +679,7 @@ footer.bg-\[\#070f1a\] {
   z-index: -2;
   pointer-events: none;
   /* molten-liquid texture generated natively: fractal turbulence lit by a
-     distant specular source — self-contained, no external asset */
+     distant specular source - self-contained, no external asset */
   background-color: #05070a;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1000'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.009' numOctaves='5' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeSpecularLighting surfaceScale='7' specularConstant='1.05' specularExponent='21' lighting-color='%23a8bed4'%3E%3CfeDistantLight azimuth='238' elevation='57'/%3E%3C/feSpecularLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
   background-size: cover;

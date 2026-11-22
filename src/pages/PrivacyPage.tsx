@@ -1,7 +1,7 @@
 import { ArrowLeft, Code2 } from "lucide-react";
 
 /**
- * Privacy Policy — short, honest, and specific to what this site actually
+ * Privacy Policy - short, honest, and specific to what this site actually
  * collects: the contact form (via Formspree) and anonymous analytics
  * (Vercel Analytics). No accounts, no tracking cookies, no data sold.
  */
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
       <main>
         <section className="relative py-20 md:py-24 overflow-hidden border-b-2 border-[#ff6b35]/30">
           <div className="relative z-10 max-w-4xl mx-auto px-6">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mb-4">Last updated — November 22, 2026</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mb-4">Last updated - November 22, 2026</p>
             <h1 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-6">Privacy Policy</h1>
             <p className="text-white/70 text-base leading-relaxed">This policy explains what information this website collects and what we do with it. We collect as little as possible.</p>
           </div>
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
             </div>
             <div>
               <h2 className="font-['Syne'] text-2xl font-bold text-white mb-3">Analytics</h2>
-              <p className="text-white/70 leading-relaxed">We use Vercel Analytics to see anonymous, aggregated usage — which pages are visited and how often. It does not use cookies and does not identify individual visitors. No Google Analytics tracking is active on this site at present.</p>
+              <p className="text-white/70 leading-relaxed">We use Vercel Analytics to see anonymous, aggregated usage, which pages are visited and how often. It does not use cookies and does not identify individual visitors. No Google Analytics tracking is active on this site at present.</p>
             </div>
             <div>
               <h2 className="font-['Syne'] text-2xl font-bold text-white mb-3">Third parties</h2>
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
             </div>
             <div>
               <h2 className="font-['Syne'] text-2xl font-bold text-white mb-3">Your choices</h2>
-              <p className="text-white/70 leading-relaxed">You can ask us to delete the inquiry you sent, or to confirm what we hold about you, at any time — write to us through the contact form on this site and we will action it.</p>
+              <p className="text-white/70 leading-relaxed">You can ask us to delete the inquiry you sent, or to confirm what we hold about you, at any time, write to us through the contact form on this site and we will action it.</p>
             </div>
             <div>
               <h2 className="font-['Syne'] text-2xl font-bold text-white mb-3">Changes</h2>

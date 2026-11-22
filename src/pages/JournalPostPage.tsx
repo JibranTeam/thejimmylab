@@ -12,7 +12,7 @@ export default function JournalPostPage({ post }: { post: JournalPost }) {
   const currentIndex = sorted.findIndex((p) => p.id === post.id);
   const newerPost = currentIndex > 0 ? sorted[currentIndex - 1] : undefined;
   const olderPost = currentIndex >= 0 && currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : undefined;
-  // Same category first, then the rest — never the post itself.
+  // Same category first, then the rest - never the post itself.
   const others = [
     ...JOURNAL_POSTS.filter((p) => p.id !== post.id && p.category === post.category),
     ...JOURNAL_POSTS.filter((p) => p.id !== post.id && p.category !== post.category),

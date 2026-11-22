@@ -15,27 +15,27 @@ THE JIMMY LAB is a digital agency crafting immersive websites, web applications 
 ## Services
 
 - [Web Development](https://thejimmylab.vercel.app/services/web-development): Fast, secure and scalable web applications built around your business.
-- [UI/UX Design](https://thejimmylab.vercel.app/services/ui-ux-design): Interfaces that feel effortless — designed from research, not guesswork.
+- [UI/UX Design](https://thejimmylab.vercel.app/services/ui-ux-design): Interfaces that feel effortless, designed from research, not guesswork.
 - [Mobile Development](https://thejimmylab.vercel.app/services/mobile-development): Mobile experiences that feel native, ship fast and scale with your users.
-- [E-Commerce](https://thejimmylab.vercel.app/services/e-commerce): Storefronts built to convert — fast, flexible and beautiful at every step.
+- [E-Commerce](https://thejimmylab.vercel.app/services/e-commerce): Storefronts built to convert, fast, flexible and beautiful at every step.
 - [AI Solutions](https://thejimmylab.vercel.app/services/ai-solutions): Turn your data and workflows into intelligent, automated products.
 - [Web Animation](https://thejimmylab.vercel.app/services/web-animation): Motion that guides, delights and sets your brand apart.
 - [Logo Design & Branding](https://thejimmylab.vercel.app/services/logo-design-branding): A mark people remember, and a brand system that holds up everywhere it lands.
-- [2D/3D Graphic Design](https://thejimmylab.vercel.app/services/graphic-design-2d-3d): Custom 2D illustration and 3D renders — no stock clichés, ever.
-- [1:1 Consultation & Training](https://thejimmylab.vercel.app/services/consultation-training): Senior expertise on tap — unblock your team without hiring for it.
+- [2D/3D Graphic Design](https://thejimmylab.vercel.app/services/graphic-design-2d-3d): Custom 2D illustration and 3D renders, no stock clichés, ever.
+- [1:1 Consultation & Training](https://thejimmylab.vercel.app/services/consultation-training): Senior expertise on tap, unblock your team without hiring for it.
 - [SEO & Website Optimization](https://thejimmylab.vercel.app/services/seo-website-optimization): Get found on Google, load fast everywhere, and turn search traffic into enquiries.
 - [Maintenance & Support](https://thejimmylab.vercel.app/services/maintenance-support): Never worry about updates, downtime or broken pages again.
 - [Integration & Automation](https://thejimmylab.vercel.app/services/integration-automation): Less copy-paste, fewer dropped leads, more time for real work.
-- [Website Redesign & Migration](https://thejimmylab.vercel.app/services/website-redesign-migration): New design, same traffic — a relaunch done properly.
-- [Code Review & Technical Audit](https://thejimmylab.vercel.app/services/code-review-technical-audit): Know exactly where your code stands — before it becomes a problem.
+- [Website Redesign & Migration](https://thejimmylab.vercel.app/services/website-redesign-migration): New design, same traffic, a relaunch done properly.
+- [Code Review & Technical Audit](https://thejimmylab.vercel.app/services/code-review-technical-audit): Know exactly where your code stands, before it becomes a problem.
 - [Next.js Development](https://thejimmylab.vercel.app/services/nextjs-development): Next.js builds for growing businesses: fast pages, clean code, and a launch in weeks, not months.
-- [React Website Redesign](https://thejimmylab.vercel.app/services/react-website-redesign): A React redesign for your SaaS product — new design, same traffic, better conversions.
-- [AI Chatbot Integration](https://thejimmylab.vercel.app/services/ai-chatbot-integration): A chatbot that knows your business — answers grounded in your own content, live on your site.
-- [Three.js & Interactive 3D](https://thejimmylab.vercel.app/services/threejs-3d-websites): 3D on the web that earns its place — interactive, on-brand, and fast enough for a phone.
+- [React Website Redesign](https://thejimmylab.vercel.app/services/react-website-redesign): A React redesign for your SaaS product, new design, same traffic, better conversions.
+- [AI Chatbot Integration](https://thejimmylab.vercel.app/services/ai-chatbot-integration): A chatbot that knows your business, answers grounded in your own content, live on your site.
+- [Three.js & Interactive 3D](https://thejimmylab.vercel.app/services/threejs-3d-websites): 3D on the web that earns its place, interactive, on-brand, and fast enough for a phone.
 
 ## Locations
 
-Remote web development from a global team — no local office is claimed in any market.
+Remote web development from a global team, no local office is claimed in any market.
 
 - [Web Development Agency for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
 - [Bespoke Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
@@ -45,9 +45,9 @@ Remote web development from a global team — no local office is claimed in any 
 
 ## Industries
 
-- [Website Redesign for SaaS Companies](https://thejimmylab.vercel.app/industries/saas): A SaaS website that explains the product faster — and converts more trials.
-- [E-commerce Websites for Fashion Brands](https://thejimmylab.vercel.app/industries/ecommerce-fashion): A fashion storefront that looks like the brand — and sells like it means it.
-- [Restaurant Website Design & Development](https://thejimmylab.vercel.app/industries/restaurants): A restaurant website that fills tables — menu, bookings and directions in one tap.
+- [Website Redesign for SaaS Companies](https://thejimmylab.vercel.app/industries/saas): A SaaS website that explains the product faster, and converts more trials.
+- [E-commerce Websites for Fashion Brands](https://thejimmylab.vercel.app/industries/ecommerce-fashion): A fashion storefront that looks like the brand, and sells like it means it.
+- [Restaurant Website Design & Development](https://thejimmylab.vercel.app/industries/restaurants): A restaurant website that fills tables, menu, bookings and directions in one tap.
 
 ## Journal
 
@@ -57,12 +57,12 @@ Remote web development from a global team — no local office is claimed in any 
 - [AI-Assisted Development in 2026: Speed Without Losing Craft](https://thejimmylab.vercel.app/journal/ai-assisted-development-2026) (AI): AI tools now write a large share of first drafts. The craft has moved from typing code to reviewing it, and that changes how a good team works.
 - [Core Web Vitals in 2026: What Actually Moves the Score](https://thejimmylab.vercel.app/journal/core-web-vitals-2026) (Performance): Most sites fail the same few checks for the same few reasons. Here is the short list of fixes that move the score, in order.
 - [Interactive 3D on the Web Without Killing Performance](https://thejimmylab.vercel.app/journal/interactive-3d-without-slowing-down) (Interactive): 3D on a website grabs attention, but it is also the fastest way to drain a phone battery. Here is how to keep the wow and lose the cost.
-- [How Much Does a Next.js Website Cost?](https://thejimmylab.vercel.app/journal/how-much-nextjs-website-costs) (Guides): There is no single price for a Next.js website — but there is a short list of things that decide it. Here is what drives the cost, and what to ask before you get a quote.
-- [Website Redesign Cost in 2026: What Actually Drives the Price](https://thejimmylab.vercel.app/journal/website-redesign-cost-2026) (Guides): A redesign is not one job — it is design, rebuild, migration and SEO protection bundled together. Here is where the money actually goes.
+- [How Much Does a Next.js Website Cost?](https://thejimmylab.vercel.app/journal/how-much-nextjs-website-costs) (Guides): There is no single price for a Next.js website, but there is a short list of things that decide it. Here is what drives the cost, and what to ask before you get a quote.
+- [Website Redesign Cost in 2026: What Actually Drives the Price](https://thejimmylab.vercel.app/journal/website-redesign-cost-2026) (Guides): A redesign is not one job, it is design, rebuild, migration and SEO protection bundled together. Here is where the money actually goes.
 - [How Long Does a Website Redesign Take?](https://thejimmylab.vercel.app/journal/how-long-website-redesign-takes) (Guides): Most redesigns take 3–6 weeks. Here is what fills those weeks, and what usually makes them longer.
-- [Next.js vs WordPress for a Business Website](https://thejimmylab.vercel.app/journal/nextjs-vs-wordpress) (Engineering): WordPress is the safe default and Next.js is the fast one — but the right choice depends on who updates the site and what it has to do.
-- [How to Migrate Your Website to Next.js](https://thejimmylab.vercel.app/journal/migrate-to-nextjs) (Engineering): Moving to Next.js is a migration, not a rewrite. Done in the right order, your visitors never notice — and your rankings hold.
-- [Website Maintenance Checklist: What to Check Every Month](https://thejimmylab.vercel.app/journal/website-maintenance-checklist) (Guides): Websites break quietly. A monthly checklist — updates, backups, speed, links and security — is the difference between a small fix and a lost week.
+- [Next.js vs WordPress for a Business Website](https://thejimmylab.vercel.app/journal/nextjs-vs-wordpress) (Engineering): WordPress is the safe default and Next.js is the fast one, but the right choice depends on who updates the site and what it has to do.
+- [How to Migrate Your Website to Next.js](https://thejimmylab.vercel.app/journal/migrate-to-nextjs) (Engineering): Moving to Next.js is a migration, not a rewrite. Done in the right order, your visitors never notice, and your rankings hold.
+- [Website Maintenance Checklist: What to Check Every Month](https://thejimmylab.vercel.app/journal/website-maintenance-checklist) (Guides): Websites break quietly. A monthly checklist, updates, backups, speed, links and security, is the difference between a small fix and a lost week.
 
 ## Team
 
@@ -77,7 +77,7 @@ Remote web development from a global team — no local office is claimed in any 
 
 ## Service details
 
-### Web Development — https://thejimmylab.vercel.app/services/web-development
+### Web Development - https://thejimmylab.vercel.app/services/web-development
 
 Production-grade websites and web applications engineered to scale from day one.
 
@@ -85,17 +85,17 @@ Q: How long does a typical web project take?
 A: A marketing site typically takes 2–4 weeks, while a full web application can take 6–16 weeks depending on scope and complexity.
 
 Q: Do you provide ongoing support?
-A: Yes — we offer maintenance and retainer packages covering updates, monitoring and new feature development.
+A: Yes, we offer maintenance and retainer packages covering updates, monitoring and new feature development.
 
 Q: Can you work with our existing codebase?
 A: Absolutely. We regularly audit, refactor and extend existing React, Node.js and PHP codebases.
 
-### UI/UX Design — https://thejimmylab.vercel.app/services/ui-ux-design
+### UI/UX Design - https://thejimmylab.vercel.app/services/ui-ux-design
 
 Pixel-perfect interfaces and design systems crafted around real user behaviour.
 
 Q: Do you also implement the designs?
-A: Yes — our designers and engineers work side-by-side, so the shipped product matches the design pixel-for-pixel.
+A: Yes, our designers and engineers work side-by-side, so the shipped product matches the design pixel-for-pixel.
 
 Q: Can you redesign our existing product?
 A: Absolutely. We start with a UX audit, then redesign and improve without disrupting your current flow.
@@ -103,7 +103,7 @@ A: Absolutely. We start with a UX audit, then redesign and improve without disru
 Q: What tools do you use?
 A: Figma is our primary tool, with Framer for high-fidelity prototypes and After Effects for motion studies.
 
-### Mobile Development — https://thejimmylab.vercel.app/services/mobile-development
+### Mobile Development - https://thejimmylab.vercel.app/services/mobile-development
 
 Native-quality mobile apps for iOS and Android built with modern cross-platform tooling.
 
@@ -111,12 +111,12 @@ Q: Native or cross-platform?
 A: For most products, cross-platform (React Native/Flutter) gives the best speed-to-market and cost, while still feeling native.
 
 Q: Can you take our app to the store?
-A: Yes — we handle the full submission process for both the App Store and Google Play.
+A: Yes, we handle the full submission process for both the App Store and Google Play.
 
 Q: Do you build MVPs?
-A: Definitely. MVPs are our speciality — a lean, focused first release to validate your idea fast.
+A: Definitely. MVPs are our speciality, a lean, focused first release to validate your idea fast.
 
-### E-Commerce — https://thejimmylab.vercel.app/services/e-commerce
+### E-Commerce - https://thejimmylab.vercel.app/services/e-commerce
 
 High-converting storefronts and headless commerce builds that turn browsers into buyers.
 
@@ -124,38 +124,38 @@ Q: Shopify or custom?
 A: It depends on your needs. Shopify is great for speed-to-market; a headless build gives maximum flexibility and performance.
 
 Q: Can you migrate our existing store?
-A: Yes — we migrate products, customers and orders with zero downtime and SEO preserved.
+A: Yes, we migrate products, customers and orders with zero downtime and SEO preserved.
 
 Q: Do you handle payments?
 A: We integrate Stripe, PayPal, Apple Pay and local payment gateways, plus subscription billing.
 
-### AI Solutions — https://thejimmylab.vercel.app/services/ai-solutions
+### AI Solutions - https://thejimmylab.vercel.app/services/ai-solutions
 
 AI-powered products, automations and copilots that put intelligence to work for your business.
 
 Q: What can AI actually do for my business?
-A: It depends on your data and workflows — but common wins are automating support, document processing, content and data analysis.
+A: It depends on your data and workflows, but common wins are automating support, document processing, content and data analysis.
 
 Q: Is our data kept private?
 A: Yes. We can use private models, on-prem hosting and strict data isolation depending on your compliance needs.
 
 Q: How do you measure success?
-A: We define clear metrics up front — time saved, cost reduced, or revenue generated — and report against them.
+A: We define clear metrics up front, time saved, cost reduced, or revenue generated, and report against them.
 
-### Web Animation — https://thejimmylab.vercel.app/services/web-animation
+### Web Animation - https://thejimmylab.vercel.app/services/web-animation
 
 Scroll-driven, 2D & 3D motion that makes interfaces feel alive and unforgettable.
 
 Q: Will animation slow my site down?
-A: No — we optimise every animation for performance and respect reduced-motion preferences for accessibility.
+A: No, we optimise every animation for performance and respect reduced-motion preferences for accessibility.
 
 Q: Can you animate an existing site?
 A: Yes. We can add scroll experiences, interactions and motion to your current product without a rebuild.
 
 Q: Do you do 3D product configurators?
-A: Absolutely — interactive 3D configurators are one of our signature offerings.
+A: Absolutely, interactive 3D configurators are one of our signature offerings.
 
-### Logo Design & Branding — https://thejimmylab.vercel.app/services/logo-design-branding
+### Logo Design & Branding - https://thejimmylab.vercel.app/services/logo-design-branding
 
 Distinctive logos and complete brand systems that make you instantly recognisable everywhere.
 
@@ -163,25 +163,25 @@ Q: How many concepts do we get?
 A: We present two to three distinct strategic directions, then refine the chosen route together until it's right.
 
 Q: Do you redesign existing logos?
-A: Yes — evolutionary refreshes that keep your equity while modernising the mark are a big part of our work.
+A: Yes, evolutionary refreshes that keep your equity while modernising the mark are a big part of our work.
 
 Q: What files do we receive?
 A: Full vector and raster suites, plus favicon, app icons and a printable brand guidelines document.
 
-### 2D/3D Graphic Design — https://thejimmylab.vercel.app/services/graphic-design-2d-3d
+### 2D/3D Graphic Design - https://thejimmylab.vercel.app/services/graphic-design-2d-3d
 
 Illustration, motion graphics and 3D visuals that give your product a visual language of its own.
 
 Q: Can 3D models run on our website?
-A: Yes — we deliver Draco-compressed glTF models tuned for Three.js, typically under 2 MB per scene.
+A: Yes, we deliver Draco-compressed glTF models tuned for Three.js, typically under 2 MB per scene.
 
 Q: Do you work from our sketches?
-A: Absolutely. Rough sketches, moodboards or napkins — we can start from anything and professionalise it.
+A: Absolutely. Rough sketches, moodboards or napkins, we can start from anything and professionalise it.
 
 Q: Who owns the artwork?
 A: You do. Full commercial rights transfer on final payment, including source files.
 
-### 1:1 Consultation & Training — https://thejimmylab.vercel.app/services/consultation-training
+### 1:1 Consultation & Training - https://thejimmylab.vercel.app/services/consultation-training
 
 Focused 1-on-1 guidance, code reviews and hands-on training for teams and individuals.
 
@@ -189,14 +189,14 @@ Q: How do sessions work?
 A: 60 or 90 minute video calls, screen-share first. You leave each session with notes and next steps.
 
 Q: Can you train our whole team?
-A: Yes — private cohort workshops, scheduled around your sprints, using your own codebase as the curriculum.
+A: Yes, private cohort workshops, scheduled around your sprints, using your own codebase as the curriculum.
 
 Q: Do you offer ongoing retainers?
 A: We keep a limited number of monthly advisory slots for continued guidance between builds.
 
-### SEO & Website Optimization — https://thejimmylab.vercel.app/services/seo-website-optimization
+### SEO & Website Optimization - https://thejimmylab.vercel.app/services/seo-website-optimization
 
-Higher rankings, faster pages and more organic traffic — technical SEO and performance work that compounds over time.
+Higher rankings, faster pages and more organic traffic, technical SEO and performance work that compounds over time.
 
 Q: How long before SEO results show?
 A: Technical and speed fixes usually show within weeks; ranking and traffic growth typically builds over 2–3 months.
@@ -205,145 +205,145 @@ Q: Do you write content too?
 A: We map keywords and optimise existing pages, and can brief or produce SEO content as part of a package.
 
 Q: Is this a one-time job or ongoing?
-A: Both — a one-time audit and fix, or a monthly retainer for continuous optimisation and reporting.
+A: Both, a one-time audit and fix, or a monthly retainer for continuous optimisation and reporting.
 
-### Maintenance & Support — https://thejimmylab.vercel.app/services/maintenance-support
+### Maintenance & Support - https://thejimmylab.vercel.app/services/maintenance-support
 
-Your site stays fast, secure and up to date — updates, monitoring, backups and fixes handled for you.
+Your site stays fast, secure and up to date, updates, monitoring, backups and fixes handled for you.
 
 Q: What counts as a small fix?
-A: Text and image changes, broken links, layout bugs and small feature tweaks — anything that fits in a short session.
+A: Text and image changes, broken links, layout bugs and small feature tweaks, anything that fits in a short session.
 
 Q: Do you support sites you did not build?
-A: Yes — we start with a quick health check, then take over maintenance from there.
+A: Yes, we start with a quick health check, then take over maintenance from there.
 
 Q: Can I cancel anytime?
-A: Yes — maintenance is month to month, with your backups and documentation handed over if you leave.
+A: Yes, maintenance is month to month, with your backups and documentation handed over if you leave.
 
-### Integration & Automation — https://thejimmylab.vercel.app/services/integration-automation
+### Integration & Automation - https://thejimmylab.vercel.app/services/integration-automation
 
-Connect your tools and automate the busywork — CRMs, forms, payments and workflows that run themselves.
+Connect your tools and automate the busywork, CRMs, forms, payments and workflows that run themselves.
 
 Q: Which tools can you connect?
-A: GoHighLevel, HubSpot, Stripe, Calendly, email platforms and most tools with an API or webhook — tell us your stack and we will map it.
+A: GoHighLevel, HubSpot, Stripe, Calendly, email platforms and most tools with an API or webhook . Tell us your stack and we will map it.
 
 Q: What if an automation breaks?
-A: Every flow has error alerts, and maintenance clients get priority fixes — nothing fails silently for weeks.
+A: Every flow has error alerts, and maintenance clients get priority fixes . Nothing fails silently for weeks.
 
 Q: Do I need a CRM first?
-A: No — we can set up GoHighLevel or a simpler CRM as part of the project, then build the automations on top.
+A: No, we can set up GoHighLevel or a simpler CRM as part of the project, then build the automations on top.
 
-### Website Redesign & Migration — https://thejimmylab.vercel.app/services/website-redesign-migration
+### Website Redesign & Migration - https://thejimmylab.vercel.app/services/website-redesign-migration
 
-A fresh look without losing what works — redesigns and platform moves with zero ranking or content loss.
+A fresh look without losing what works, redesigns and platform moves with zero ranking or content loss.
 
 Q: Will I lose my Google rankings?
-A: No — redirect mapping and SEO preservation are built into every redesign and migration, with checks after launch.
+A: No, redirect mapping and SEO preservation are built into every redesign and migration, with checks after launch.
 
 Q: Can you move my site to a different platform?
-A: Yes — WordPress, Wix, Shopify, Squarespace and custom stacks are all in scope, with content migrated intact.
+A: Yes, WordPress, Wix, Shopify, Squarespace and custom stacks are all in scope, with content migrated intact.
 
 Q: How long does a redesign take?
 A: Most redesigns take 3–6 weeks depending on page count and whether a platform move is included.
 
-### Code Review & Technical Audit — https://thejimmylab.vercel.app/services/code-review-technical-audit
+### Code Review & Technical Audit - https://thejimmylab.vercel.app/services/code-review-technical-audit
 
-A senior, independent look at your codebase — what is solid, what is risky, and what to fix first.
+A senior, independent look at your codebase, what is solid, what is risky, and what to fix first.
 
 Q: How is this different from your consultation code reviews?
 A: Consultation reviews happen inside a 1:1 session. This is a standalone, documented audit of the whole codebase with a written report and roadmap.
 
 Q: Do you need access to our code?
-A: Yes — read-only repository access is enough, under NDA if you need one.
+A: Yes, read-only repository access is enough, under NDA if you need one.
 
 Q: Can you fix what you find?
-A: Yes — fixes can be quoted as a follow-up project, or your team can work from the report directly.
+A: Yes, fixes can be quoted as a follow-up project, or your team can work from the report directly.
 
-### Next.js Development — https://thejimmylab.vercel.app/services/nextjs-development
+### Next.js Development - https://thejimmylab.vercel.app/services/nextjs-development
 
-Next.js websites and web apps — fast, server-rendered and built to scale from day one.
+Next.js websites and web apps, fast, server-rendered and built to scale from day one.
 
 Q: How much does a Next.js website cost?
-A: It depends on scope — pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly.
+A: It depends on scope, pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly.
 
 Q: Do you work with startups in the USA and UK?
-A: Yes — we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time.
+A: Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time.
 
 Q: Can you rebuild our existing site in Next.js?
-A: Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact — see our redesign and migration service.
+A: Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact, see our redesign and migration service.
 
-### React Website Redesign — https://thejimmylab.vercel.app/services/react-website-redesign
+### React Website Redesign - https://thejimmylab.vercel.app/services/react-website-redesign
 
-React redesigns for SaaS companies — a faster, clearer product site without losing traffic or users.
+React redesigns for SaaS companies, a faster, clearer product site without losing traffic or users.
 
 Q: Will a redesign hurt our search rankings?
-A: No — redirect mapping and SEO preservation are built in, with checks after launch. A redesign done properly keeps your rankings and usually improves them as speed rises.
+A: No, redirect mapping and SEO preservation are built in, with checks after launch. A redesign done properly keeps your rankings and usually improves them as speed rises.
 
 Q: How long does a SaaS website redesign take?
 A: Most redesigns take 3–6 weeks depending on page count. We give a firm timeline after a short review of your current site.
 
 Q: Can you redesign only parts of the site?
-A: Yes — pricing pages, onboarding flows or the homepage alone are common starting points, with the rest following in phases.
+A: Yes, pricing pages, onboarding flows or the homepage alone are common starting points, with the rest following in phases.
 
-### AI Chatbot Integration — https://thejimmylab.vercel.app/services/ai-chatbot-integration
+### AI Chatbot Integration - https://thejimmylab.vercel.app/services/ai-chatbot-integration
 
-AI chatbots on your website that answer from your own content — trained on your docs, not on guesswork.
+AI chatbots on your website that answer from your own content, trained on your docs, not on guesswork.
 
 Q: Will the chatbot make things up?
 A: It is built to answer only from your content, and to say when it does not know. We review early conversations to catch and fix anything it gets wrong.
 
 Q: Can it take bookings or capture leads?
-A: Yes — it can collect details, book calls and pass leads to your CRM or inbox, with a human notified immediately.
+A: Yes, it can collect details, book calls and pass leads to your CRM or inbox, with a human notified immediately.
 
 Q: What content does it need from us?
 A: Your existing pages, FAQs and docs are usually enough to start. Gaps become a short list of pages to write, not a big project.
 
-### Three.js & Interactive 3D — https://thejimmylab.vercel.app/services/threejs-3d-websites
+### Three.js & Interactive 3D - https://thejimmylab.vercel.app/services/threejs-3d-websites
 
-Interactive 3D websites with Three.js — product configurators and scenes that stay fast on a phone.
+Interactive 3D websites with Three.js, product configurators and scenes that stay fast on a phone.
 
 Q: Will 3D slow my website down?
-A: Not if it is budgeted. Scenes load only when needed, frame rates are capped, and weaker devices get a static image instead — the page stays fast either way.
+A: Not if it is budgeted. Scenes load only when needed, frame rates are capped, and weaker devices get a static image instead, the page stays fast either way.
 
 Q: What can visitors actually do in 3D?
-A: Rotate and inspect a product, change colours or options, and explore a scene — configurators and showcases are the most common uses.
+A: Rotate and inspect a product, change colours or options, and explore a scene, configurators and showcases are the most common uses.
 
 Q: Do you model the 3D assets too?
-A: Yes — modelling, texturing and rendering are in-house, delivered as optimized web-ready models.
+A: Yes, modelling, texturing and rendering are in-house, delivered as optimized web-ready models.
 
-## Locations — FAQs
+## Locations - FAQs
 
 ### Web Development Agency for USA Businesses
 
 Q: Do you have an office in the USA?
-A: No — we are a global remote team and work with US clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
+A: No, we are a global remote team and work with US clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
 
 Q: What hours do you work with US clients?
 A: Our working day overlaps with US mornings and midday. Your morning is our evening, so calls happen in your morning and progress lands in your inbox overnight.
 
 Q: How much does a website cost for a US business?
-A: It depends on scope — pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need. Tell us the scope and we will quote it plainly.
+A: It depends on scope, pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need. Tell us the scope and we will quote it plainly.
 
 
 ### Bespoke Web Development for UK Businesses
 
 Q: Do you have an office in the UK?
-A: No — we are a global remote team and work with UK clients remotely. Our process is built for it: daily overlap, weekly demos and a staging link from day one.
+A: No, we are a global remote team and work with UK clients remotely. Our process is built for it: daily overlap, weekly demos and a staging link from day one.
 
 Q: What hours do you work with UK clients?
 A: Your afternoon is our evening. Calls, demos and reviews happen in your working afternoon, every working day.
 
 Q: Do you build bespoke websites or use templates?
-A: Bespoke. Every site is designed and built for the client — no bought templates, no page-builder shortcuts.
+A: Bespoke. Every site is designed and built for the client, no bought templates, no page-builder shortcuts.
 
 
 ### Web Development Agency for UAE & Dubai Businesses
 
 Q: Do you have an office in Dubai or the UAE?
-A: No — we are a global remote team and work with UAE clients remotely. We do not claim a local office; the working relationship feels local anyway.
+A: No, we are a global remote team and work with UAE clients remotely. We do not claim a local office; the working relationship feels local anyway.
 
 Q: What kind of UAE projects do you take on?
-A: Corporate websites, e-commerce storefronts, mobile apps and web applications — mostly for SMEs and growing businesses across the Emirates.
+A: Corporate websites, e-commerce storefronts, mobile apps and web applications, mostly for SMEs and growing businesses across the Emirates.
 
 Q: How do we work together across the week?
 A: Same working day, same hours. Kick-off call, weekly demos on a staging link, and a reply within an hour on average.
@@ -352,36 +352,36 @@ A: Same working day, same hours. Kick-off call, weekly demos on a staging link, 
 ### Web Development Agency for Australian Businesses
 
 Q: Do you have an office in Australia?
-A: No — we are a global remote team and work with Australian clients remotely. The time difference is the advantage: your afternoon is our morning, so work moves every day.
+A: No, we are a global remote team and work with Australian clients remotely. The time difference is the advantage: your afternoon is our morning, so work moves every day.
 
 Q: How do we communicate across the time difference?
-A: Mostly async — written updates and a staging link you can check any time — with live calls in the overlap whenever a decision needs one.
+A: Mostly async, written updates and a staging link you can check any time, with live calls in the overlap whenever a decision needs one.
 
 Q: Can you work with our existing site?
-A: Yes — redesigns, optimizations and migrations on existing sites are a large part of our work, with rankings protected.
+A: Yes, redesigns, optimizations and migrations on existing sites are a large part of our work, with rankings protected.
 
 
 ### Web Development Agency for Canadian Businesses
 
 Q: Do you have an office in Canada?
-A: No — we are a global remote team and work with Canadian clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
+A: No, we are a global remote team and work with Canadian clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
 
 Q: What hours do you work with Canadian clients?
 A: Our working day overlaps with Canadian mornings and midday. Your morning is our evening, so calls happen in your morning and progress lands in your inbox overnight.
 
 Q: Do you work with small businesses?
-A: Yes — we work with businesses at every level, from startups to established companies. Scopes are lean, pricing is project-based, and quotes are plain.
+A: Yes, we work with businesses at every level, from startups to established companies. Scopes are lean, pricing is project-based, and quotes are plain.
 
 
-## Industries — FAQs
+## Industries - FAQs
 
 ### Website Redesign for SaaS Companies
 
 Q: Will a redesign hurt our trial signups?
-A: A redesign done properly improves them — clearer messaging, faster pages and a shorter path to signup. We measure before and after so the effect is visible, not assumed.
+A: A redesign done properly improves them, clearer messaging, faster pages and a shorter path to signup. We measure before and after so the effect is visible, not assumed.
 
 Q: Do you redesign the product itself, or just the marketing site?
-A: Both. Marketing site first is the usual order, then in-product UX once the site is live — or both together if the timeline allows.
+A: Both. Marketing site first is the usual order, then in-product UX once the site is live, or both together if the timeline allows.
 
 Q: How long does a SaaS redesign take?
 A: Most take 3–6 weeks depending on page count. We give a firm timeline after a short review of your current site.
@@ -393,7 +393,7 @@ Q: Shopify or a headless build?
 A: Shopify is fastest to market and easiest to run day to day. A headless Next.js storefront gives more design freedom and speed. We recommend based on your catalogue size and growth plans, not on what earns us more.
 
 Q: Can you migrate our existing store?
-A: Yes — products, customers and orders move with zero downtime, and your search rankings are preserved with redirect mapping.
+A: Yes, products, customers and orders move with zero downtime, and your search rankings are preserved with redirect mapping.
 
 Q: Do you handle product photography?
 A: We design around your photography and can art-direct shoots; the store is built to make your images the hero.
@@ -402,10 +402,10 @@ A: We design around your photography and can art-direct shoots; the store is bui
 ### Restaurant Website Design & Development
 
 Q: Can we update the menu ourselves?
-A: Yes — the menu is editable without touching code, and we show you how in a short handover call.
+A: Yes, the menu is editable without touching code, and we show you how in a short handover call.
 
 Q: Do you set up online ordering?
-A: Yes — ordering and table bookings integrate with the tools you already use, or we recommend one that fits.
+A: Yes, ordering and table bookings integrate with the tools you already use, or we recommend one that fits.
 
 Q: How long does a restaurant website take?
 A: Most take 2–4 weeks from content handover to launch, depending on pages and photography.

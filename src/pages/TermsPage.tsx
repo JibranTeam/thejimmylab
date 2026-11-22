@@ -1,7 +1,7 @@
 import { ArrowLeft, Code2 } from "lucide-react";
 
 /**
- * Terms of Service — short and plain, matching how the studio actually
+ * Terms of Service - short and plain, matching how the studio actually
  * works: project-based, custom quotes, ownership on final payment.
  */
 export default function TermsPage() {
@@ -27,7 +27,7 @@ export default function TermsPage() {
       <main>
         <section className="relative py-20 md:py-24 overflow-hidden border-b-2 border-[#ff6b35]/30">
           <div className="relative z-10 max-w-4xl mx-auto px-6">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mb-4">Last updated — November 22, 2026</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mb-4">Last updated - November 22, 2026</p>
             <h1 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-6">Terms of Service</h1>
             <p className="text-white/70 text-base leading-relaxed">The plain-English terms for working with THE JIMMY LAB and for using this website.</p>
           </div>
@@ -48,7 +48,7 @@ export default function TermsPage() {
             </div>
             <div>
               <h2 className="font-['Syne'] text-2xl font-bold text-white mb-3">Your responsibilities</h2>
-              <p className="text-white/70 leading-relaxed">You are responsible for the content you supply — text, images, logos and data — and confirm you have the right to use it. You are also responsible for keeping your own accounts, domains and third-party services in good standing.</p>
+              <p className="text-white/70 leading-relaxed">You are responsible for the content you supply, text, images, logos and data, and confirm you have the right to use it. You are also responsible for keeping your own accounts, domains and third-party services in good standing.</p>
             </div>
             <div>
               <h2 className="font-['Syne'] text-2xl font-bold text-white mb-3">Liability</h2>

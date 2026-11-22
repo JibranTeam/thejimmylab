@@ -54,7 +54,7 @@ function currentHomeSection(): string | null {
 
 // Scroll memory: where the user was on each URL, so Back can return them
 // to the exact section they came from instead of the top of the page.
-// The logo is always there for Home — Back means back to the section.
+// The logo is always there for Home - Back means back to the section.
 const savedScroll = new Map<string, number>();
 
 export function scrollKey(): string {
@@ -103,7 +103,7 @@ export function navigateHomeToSection(sectionId: string) {
 // `scroll-behavior: smooth` on html, so plain scrolls glide; these helpers
 // add the timing that makes the glide invisible: wait for the target to
 // exist, let the browser lay it out, glide once, and resolve only when the
-// scroll has ended — so the curtain lifts on a settled page, never
+// scroll has ended - so the curtain lifts on a settled page, never
 // mid-glide. (The old instant scroll + correction check was the flick: it
 // fired before layout settled and corrected mid-glide.)
 // ---------------------------------------------------------------------------
@@ -118,7 +118,7 @@ export function afterLayoutSettled(): Promise<void> {
 
 // Instant scroll that ignores the CSS `scroll-behavior: smooth` on html.
 // Forward navigations (new page = top) use this so the page is already at
-// the top before the curtain lifts — the user never sees the jump.
+// the top before the curtain lifts - the user never sees the jump.
 export function scrollToInstant(y: number) {
   const root = document.documentElement;
   const prev = root.style.scrollBehavior;
@@ -129,14 +129,14 @@ export function scrollToInstant(y: number) {
 
 // Restore scrolling (used under the transition curtain, so the scroll is
 // invisible): settle, then ONE instant set to the target, verified once.
-// Instant is right here because the curtain hides the movement — a smooth
+// Instant is right here because the curtain hides the movement - a smooth
 // glide only made the curtain stay up longer (several seconds for a long
 // trip to the footer), with no visible benefit. The visible transition is
 // the curtain fade, which stays smooth.
 export async function restoreToY(y: number): Promise<void> {
   // Wait until the new page has mounted and is tall enough to reach y.
   // The restore runs on route change, while the old page is still exiting
-  // (AnimatePresence mode="wait") — scrolling now would clamp to the old
+  // (AnimatePresence mode="wait") - scrolling now would clamp to the old
   // page's height and land a section too high. That was the browser-Back
   // bug: Back from a service page landed on About instead of Services.
   const startedAt = Date.now();
@@ -152,7 +152,7 @@ export async function restoreToY(y: number): Promise<void> {
 }
 
 // Land on a home-page section once, after it exists and the page has laid
-// out. Never drops to the top if the section is missing — the section
+// out. Never drops to the top if the section is missing - the section
 // simply is not there yet, so keep waiting (up to 3s) and give up quietly
 // rather than landing on the hero.
 export async function restoreToSection(sectionId: string): Promise<void> {
@@ -173,7 +173,7 @@ export async function restoreToSection(sectionId: string): Promise<void> {
 }
 
 // Back to a saved scroll position on the home page. The saved pixel can be
-// stale — captured mid-glide while a nav scroll was still running — and
+// stale - captured mid-glide while a nav scroll was still running - and
 // restoring a stale pixel lands a whole section off. So the pixel is only
 // trusted when it still falls inside the section the user came from;
 // otherwise land on the section itself. The section is the one the clicked
