@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, navigateTo, navigateHomeToSection, normalizePath, scrollToSectionWithRetry } from './utils/navigation';
+import { getSavedScrollPosition, navigateTo, navigateHomeToSection, normalizePath, glideToSection, glideToY, scrollToInstant } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -41,6 +41,16 @@ import { industries, getIndustryBySlug } from './data/industries';
 import { team } from './data/team';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Entrance animations (hero + section reveals + word headings + hero stats)
+// play once per browser session. The home page unmounts when a
+// service/journal page opens and remounts on return; the entrance tweens
+// are created on mount, so without this every return replays them from
+// opacity 0 while the scroll is landing — the flick. HomePage sets the flag
+// after its first mount (parent effects run after children), so the first
+// visit still plays everything. A full reload resets it, so a fresh visit
+// gets the intro again.
+let homeEntrancesPlayed = false;
 
 /* ================= Navigation ================= */
 const Navigation = () => {
@@ -220,9 +230,11 @@ const HeroSection = () => {
       gsap.to(layer1Ref.current, { yPercent: -20, ease: 'none', scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 } });
       gsap.to(layer2Ref.current, { yPercent: -40, ease: 'none', scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 } });
       gsap.to(layer3Ref.current, { yPercent: -60, ease: 'none', scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 } });
-      gsap.from('.hero-title', { y: 100, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.1 });
-      gsap.from('.hero-subtitle', { y: 50, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
-      gsap.from('.hero-cta', { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out', delay: 0.3 });
+      if (!homeEntrancesPlayed) {
+        gsap.from('.hero-title', { y: 100, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.1 });
+        gsap.from('.hero-subtitle', { y: 50, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+        gsap.from('.hero-cta', { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out', delay: 0.3 });
+      }
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -276,7 +288,7 @@ const HeroSection = () => {
             { value: '2013', label: 'Founded' },
             { value: '5.0', label: 'Top Rated' },
           ].map((stat, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + i * 0.08 }} className="bg-[#05070a]/70 px-5 py-7">
+            <motion.div key={i} initial={homeEntrancesPlayed ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + i * 0.08 }} className="bg-[#05070a]/70 px-5 py-7">
               <div className="text-3xl md:text-[2.6rem] font-extralight tracking-[-0.02em] text-white leading-none">{stat.value}</div>
               <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/60 mt-3">{stat.label}</div>
             </motion.div>
@@ -312,7 +324,7 @@ const Words = ({
         return (
           <span key={i} aria-hidden="true" className="inline-block whitespace-pre">
             <motion.span
-              initial={{ opacity: 0, y: '0.55em' }}
+              initial={homeEntrancesPlayed ? false : { opacity: 0, y: '0.55em' }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-12% 0px' }}
               transition={{ delay: baseDelay + i * 0.05, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -542,6 +554,7 @@ const PartnersSection = () => {
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (homeEntrancesPlayed) return;
     const ctx = gsap.context(() => {
       gsap.from('.about-content', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, y: 60, opacity: 0, duration: 1, ease: 'power3.out' });
       gsap.from('.about-card', { scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' }, y: 80, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
@@ -654,6 +667,7 @@ const ServicesSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [servicePage, setServicePage] = useState(0);
   useEffect(() => {
+    if (homeEntrancesPlayed) return;
     const ctx = gsap.context(() => {
       gsap.from('.service-title', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' });
       gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }, y: 100, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
@@ -666,7 +680,7 @@ const ServicesSection = () => {
   const servicePages = Array.from({ length: totalServicePages }, (_, pg) => services.slice(pg * SERVICES_PER_PAGE, pg * SERVICES_PER_PAGE + SERVICES_PER_PAGE));
   const goToServicePage = (page: number) => { if (page < 0 || page >= totalServicePages || page === servicePage) return; setHoveredCard(null); setServicePage(page); };
   return (
-    <section id="services" ref={sectionRef} className="cv-auto relative py-32 bg-[#070f1a] overflow-hidden">
+    <section id="services" ref={sectionRef} className="relative py-32 bg-[#070f1a] overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-[#d4a574]/5 cardboard-cutout rounded-full rotate-12" />
         <div className="absolute bottom-20 right-10 w-48 h-48 bg-[#ff6b35]/5 cardboard-cutout rounded-full -rotate-6" />
@@ -769,13 +783,14 @@ const ServicesSection = () => {
 const PortfolioSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (homeEntrancesPlayed) return;
     const ctx = gsap.context(() => {
       gsap.from('.portfolio-card', { scrollTrigger: { trigger: '.portfolio-grid', start: 'top 80%' }, y: 80, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
   return (
-    <section id="portfolio" ref={sectionRef} className="cv-auto relative py-32 bg-[#3A373E] overflow-hidden">
+    <section id="portfolio" ref={sectionRef} className="relative py-32 bg-[#3A373E] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Work</div>
@@ -972,7 +987,7 @@ const JournalSection = () => {
   const journalPages = Array.from({ length: totalJournalPages }, (_, pg) => articles.slice(pg * ARTICLES_PER_PAGE, pg * ARTICLES_PER_PAGE + ARTICLES_PER_PAGE));
   const goToJournalPage = (page: number) => { if (page < 0 || page >= totalJournalPages || page === journalPage) return; setJournalPage(page); };
   return (
-    <section id="journal" className="cv-auto relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
+    <section id="journal" className="relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-[8%] w-64 h-64 bg-[#d4a574]/5 cardboard-cutout rounded-full rotate-12" />
         <div className="absolute bottom-20 right-[10%] w-48 h-48 bg-[#ff6b35]/5 cardboard-cutout rounded-full -rotate-6" />
@@ -1328,7 +1343,11 @@ const Footer = () => (
   </footer>
 );
 
-const HomePage = () => (
+const HomePage = () => {
+  useEffect(() => {
+    homeEntrancesPlayed = true;
+  }, []);
+  return (
   <div className="min-h-screen relative">
     <div className="liquid-bg" aria-hidden="true" />
     <div className="rule-grid" aria-hidden="true" />
@@ -1351,7 +1370,8 @@ const HomePage = () => (
       <Footer />
     </div>
   </div>
-);
+  );
+};
 
 function NotFoundPage() {
   return (
@@ -1457,43 +1477,62 @@ function App() {
   // (nav link from another page, or a legacy hash link) wins; otherwise the
   // Back/forward restore applies — the section, or the exact scroll position
   // the user was at when they left that page.
-  const pendingRestoreRef = useRef<{ y?: number; section?: string } | null>(null);
+  //
+  // The scroll is ONE smooth glide, started only after the page has mounted
+  // and laid out, and the curtain lifts only when the glide ends — so the
+  // user never sees the page move. Forward navigations go to the top
+  // instantly, under the curtain. This effect owns the curtain: the popstate
+  // handler only shows it. (The old instant scroll + correction check was
+  // the flick: it fired before layout settled, and the 450ms curtain hide
+  // exposed the page mid-glide.)
+  const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
   useEffect(() => {
-    if (route === '/') {
-      let pending: string | null = null;
-      try { pending = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-      if (pending) {
-        try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-        pendingRestoreRef.current = null;
-        scrollToSectionWithRetry(pending);
+    let cancelled = false;
+    const hideCurtain = () => { if (!cancelled) setShowCurtain(false); };
+    const run = async () => {
+      if (route === '/') {
+        let pending: string | null = null;
+        try { pending = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+        if (pending) {
+          try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+          pendingRestoreRef.current = null;
+          await glideToSection(pending);
+          if (cancelled) return;
+          hideCurtain();
+          return;
+        }
+      }
+      const restore = pendingRestoreRef.current;
+      pendingRestoreRef.current = null;
+      if (!restore) {
+        // No restore to apply (first load, or a plain route change): lift
+        // the curtain on the normal beat.
+        window.setTimeout(hideCurtain, 450);
         return;
       }
-    }
-    const restore = pendingRestoreRef.current;
-    pendingRestoreRef.current = null;
-    if (!restore) return;
-    if (restore.section) {
-      // No fallback to the top here: if the section is not in the DOM yet
-      // (the new page mounts after the exit animation), keep retrying —
-      // dropping to the hero would be the wrong landing.
-      scrollToSectionWithRetry(restore.section, 'auto', false, 3000);
-      return;
-    }
-    if (typeof restore.y === 'number') {
-      // Instant, under the curtain: the page is already in place when the
-      // curtain lifts, so there is no visible jump and no waiting for a
-      // glide. A smooth scroll here was the slowness — the glide took half
-      // a second after the page appeared, and the correction glide made a
-      // second bump. One instant set after mount, one instant correction
-      // check before the curtain lifts.
-      const target = restore.y;
-      window.setTimeout(() => {
-        window.scrollTo(0, target);
-        window.setTimeout(() => {
-          if (Math.abs(window.scrollY - target) > 4) window.scrollTo(0, target);
-        }, 150);
-      }, 450);
-    }
+      if (restore.instant) {
+        // Forward navigation to a new page: top, instantly, under the curtain.
+        scrollToInstant(0);
+        window.setTimeout(hideCurtain, 450);
+        return;
+      }
+      if (restore.section) {
+        await glideToSection(restore.section);
+        if (cancelled) return;
+        hideCurtain();
+        return;
+      }
+      if (typeof restore.y === 'number') {
+        // Back to an exact position: settle, then one smooth glide.
+        await glideToY(restore.y);
+        if (cancelled) return;
+        hideCurtain();
+        return;
+      }
+      window.setTimeout(hideCurtain, 450);
+    };
+    void run();
+    return () => { cancelled = true; };
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
   // is unreliable in this SPA (it fights the app's own scroll and lands in
@@ -1523,14 +1562,14 @@ function App() {
           pendingRestoreRef.current = { y: 0 };
         }
       } else {
-        // Forward navigation (a link click): top of the new page.
-        pendingRestoreRef.current = { y: 0 };
+        // Forward navigation (a link click): top of the new page, instantly.
+        pendingRestoreRef.current = { y: 0, instant: true };
       }
       // No artificial delay: the route changes at once and the exit
       // animation (AnimatePresence) still plays. The old 320ms wait made
-      // every click feel slow.
+      // every click feel slow. The curtain is lifted by the restore effect
+      // once the new page is settled — never mid-glide.
       setRoute(next);
-      window.setTimeout(() => setShowCurtain(false), 450);
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
