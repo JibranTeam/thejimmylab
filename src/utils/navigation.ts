@@ -39,8 +39,12 @@ export function getLastHomeSection(): string | null {
 }
 
 const HOME_SECTIONS = ['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'];
-function currentHomeSection(): string | null {
-  const mid = window.scrollY + window.innerHeight / 2;
+// Which home section the viewport centre sits in when the page is scrolled
+// to y. The saved scroll pixel is the precise record of where the user was
+// when they left home, so browser Back derives its section from it instead
+// of trusting a recorded section that can be stale or missing.
+export function sectionAtScrollY(y: number): string | null {
+  const mid = y + window.innerHeight / 2;
   let found: string | null = null;
   for (const el of Array.from(document.querySelectorAll('section[id], footer [id]'))) {
     const id = (el as HTMLElement).id;
@@ -50,6 +54,36 @@ function currentHomeSection(): string | null {
     else break;
   }
   return found;
+}
+function currentHomeSection(): string | null {
+  return sectionAtScrollY(window.scrollY);
+}
+
+// Scroll Y that puts a section's heading at the vertical centre of the
+// viewport. Falls back to the section itself (the footer block has no
+// heading tag). Clamped to the page, so a section at the very end can only
+// go as far as the bottom allows.
+export function centerYForSection(sectionId: string): number | null {
+  const el = document.getElementById(sectionId);
+  if (!el) return null;
+  const heading = el.querySelector('h1, h2, h3');
+  const target = heading ?? el;
+  const rect = target.getBoundingClientRect();
+  const centerY = rect.top + window.scrollY + rect.height / 2;
+  const vpH = window.innerHeight;
+  const maxScroll = Math.max(0, document.documentElement.scrollHeight - vpH);
+  return Math.min(Math.max(0, centerY - vpH / 2), maxScroll);
+}
+
+// Scroll to a home section so its heading lands at the viewport centre,
+// instead of the top (scrollIntoView block:'start' is what left every
+// section heading in the upper third). Returns false when the section is
+// not in the DOM yet.
+export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehavior = 'auto'): boolean {
+  const y = centerYForSection(sectionId);
+  if (y === null) return false;
+  window.scrollTo({ top: y, behavior });
+  return true;
 }
 
 // Scroll memory: where the user was on each URL, so Back can return them
@@ -72,9 +106,8 @@ export function getSavedScrollPosition(key: string): number | undefined {
 export function scrollToSectionWithRetry(sectionId: string, behavior: ScrollBehavior = 'auto', fallbackToTop = true, windowMs = 1500) {
   const startedAt = Date.now();
   const tryScroll = () => {
-    const el = document.getElementById(sectionId);
-    if (el) el.scrollIntoView({ behavior, block: 'start' });
-    else if (Date.now() - startedAt < windowMs) window.setTimeout(tryScroll, 100);
+    if (scrollToSectionCentered(sectionId, behavior)) return;
+    if (Date.now() - startedAt < windowMs) window.setTimeout(tryScroll, 100);
     else if (fallbackToTop) window.scrollTo(0, 0);
   };
   window.setTimeout(tryScroll, 80);
@@ -82,11 +115,7 @@ export function scrollToSectionWithRetry(sectionId: string, behavior: ScrollBeha
 
 export function navigateHomeToSection(sectionId: string) {
   if (normalizePath(window.location.pathname) === '/') {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
-    }
+    if (scrollToSectionCentered(sectionId, 'smooth')) return;
     scrollToSectionWithRetry(sectionId, 'smooth');
     return;
   }

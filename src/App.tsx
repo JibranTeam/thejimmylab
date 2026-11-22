@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant } from './utils/navigation';
+import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -1000,7 +1000,7 @@ const JournalSection = () => {
             <h2 className="font-['Syne'] text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.05] tracking-tight text-white mb-4">Perspectives on design &amp; <span className="gradient-text">engineering.</span></h2>
             <p className="text-[15px] leading-relaxed text-white/60 max-w-[520px]">Stay updated with our research, notes, and technical findings on frontend performance and interactive motion.</p>
           </div>
-          <a href="#journal" onClick={(e) => { e.preventDefault(); goToJournalPage(0); document.getElementById('journal')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/70 hover:text-[#ff6b35] transition-colors duration-300 shrink-0 group">Read All Articles<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" /></a>
+          <a href="#journal" onClick={(e) => { e.preventDefault(); goToJournalPage(0); scrollToSectionCentered('journal', 'smooth'); }} className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/70 hover:text-[#ff6b35] transition-colors duration-300 shrink-0 group">Read All Articles<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" /></a>
         </div>
         <div className="flex items-center justify-end gap-3 mb-6">
           <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {journalPage + 1} of {totalJournalPages}</span>
@@ -1498,21 +1498,9 @@ function App() {
   const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
   const restoreTargetRef = useRef<number | null>(null);
   useLayoutEffect(() => {
-    // Scroll Y that puts a section's heading at the vertical centre of the
-    // viewport. Falls back to the section itself (the footer block has no
-    // heading tag). Clamped to the page, so a section at the very end can
-    // only go as far as the bottom allows.
-    const centerSectionY = (sectionId: string): number | null => {
-      const el = document.getElementById(sectionId);
-      if (!el) return null;
-      const heading = el.querySelector('h1, h2, h3');
-      const target = heading ?? el;
-      const rect = target.getBoundingClientRect();
-      const centerY = rect.top + window.scrollY + rect.height / 2;
-      const vpH = window.innerHeight;
-      const maxScroll = Math.max(0, document.documentElement.scrollHeight - vpH);
-      return Math.min(Math.max(0, centerY - vpH / 2), maxScroll);
-    };
+    // Centring lives in navigation.ts (centerYForSection) so the restore,
+    // the nav and the in-page links all land the same way.
+    const centerSectionY = centerYForSection;
     let target: number | null = null;
     if (route === '/') {
       let pending: string | null = null;
@@ -1538,10 +1526,13 @@ function App() {
         } else if (typeof restore.y === 'number') {
           // Real Back/Forward: centre the section the user came from, so
           // the in-page "Back to ..." link and the browser Back agree.
-          // The exact saved scroll position is what left the section
-          // halfway up or halfway down, so it is only a fallback when no
-          // section was recorded.
-          const sectionId = getLastHomeSection();
+          // The saved scroll pixel is the precise record of where they
+          // were, so the section is derived from it first; the recorded
+          // section is only a fallback, and the exact pixel is the last
+          // resort. Restoring the pixel directly was the bug: it put the
+          // heading back in the upper third, or off-screen after a deep
+          // scroll, instead of centred.
+          const sectionId = sectionAtScrollY(restore.y) ?? getLastHomeSection();
           const y = sectionId ? centerSectionY(sectionId) : null;
           if (y !== null) {
             scrollToInstant(y);
@@ -1618,7 +1609,7 @@ function App() {
       }
       if (href.startsWith('#')) {
         const section = href.slice(1);
-        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
+        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
           e.preventDefault();
           navigateHomeToSection(section);
         }
