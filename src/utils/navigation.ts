@@ -49,7 +49,7 @@ export function sectionAtScrollY(y: number): string | null {
   for (const el of Array.from(document.querySelectorAll('section[id], footer [id]'))) {
     const id = (el as HTMLElement).id;
     if (!HOME_SECTIONS.includes(id)) continue;
-    const top = el.getBoundingClientRect().top + window.scrollY;
+    const top = docTop(el as HTMLElement);
     if (top <= mid) found = id;
     else break;
   }
@@ -59,6 +59,22 @@ function currentHomeSection(): string | null {
   return sectionAtScrollY(window.scrollY);
 }
 
+// Document top of an element from its layout position (offsetTop chain),
+// ignoring CSS transforms. GSAP ScrollTrigger entrances put a y transform
+// on section titles (Services title starts at y:50), so getBoundingClientRect
+// measures the animated position and the centred landing comes out ~50px
+// off. offsetTop is layout-based, so it gives the settled position even
+// while the entrance is still running.
+export function docTop(el: HTMLElement): number {
+  let top = 0;
+  let node: HTMLElement | null = el;
+  while (node) {
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+  return top;
+}
+
 // Scroll Y that puts a section's heading at the vertical centre of the
 // viewport. Falls back to the section itself (the footer block has no
 // heading tag). Clamped to the page, so a section at the very end can only
@@ -66,13 +82,24 @@ function currentHomeSection(): string | null {
 export function centerYForSection(sectionId: string): number | null {
   const el = document.getElementById(sectionId);
   if (!el) return null;
-  const heading = el.querySelector('h1, h2, h3');
-  const target = heading ?? el;
-  const rect = target.getBoundingClientRect();
-  const centerY = rect.top + window.scrollY + rect.height / 2;
+  const heading = el.querySelector('h1, h2, h3') as HTMLElement | null;
+  const target = (heading ?? el) as HTMLElement;
+  const centerY = docTop(target) + target.offsetHeight / 2;
   const vpH = window.innerHeight;
   const maxScroll = Math.max(0, document.documentElement.scrollHeight - vpH);
   return Math.min(Math.max(0, centerY - vpH / 2), maxScroll);
+}
+
+// How far a section heading's centre is from the viewport centre right
+// now, in px (positive = heading is below centre). Used to check whether a
+// landing actually centred, from a fresh measurement.
+export function headingCenterOffset(sectionId: string): number | null {
+  const el = document.getElementById(sectionId);
+  if (!el) return null;
+  const heading = el.querySelector('h1, h2, h3') as HTMLElement | null;
+  const target = (heading ?? el) as HTMLElement;
+  const centerY = docTop(target) + target.offsetHeight / 2;
+  return centerY - (window.scrollY + window.innerHeight / 2);
 }
 
 // Scroll to a home section so its heading lands at the viewport centre,

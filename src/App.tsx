@@ -1497,6 +1497,7 @@ function App() {
   // here. Forward navigations go to the top instantly.
   const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
   const restoreTargetRef = useRef<number | null>(null);
+  const restoreSectionRef = useRef<string | null>(null);
   useLayoutEffect(() => {
     // Centring lives in navigation.ts (centerYForSection) so the restore,
     // the nav and the in-page links all land the same way.
@@ -1509,7 +1510,7 @@ function App() {
         try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
         pendingRestoreRef.current = null;
         const y = centerSectionY(pending);
-        if (y !== null) { scrollToInstant(y); target = y; }
+        if (y !== null) { scrollToInstant(y); target = y; restoreSectionRef.current = pending; }
       }
     }
     if (target === null) {
@@ -1522,7 +1523,7 @@ function App() {
           target = 0;
         } else if (restore.section) {
           const y = centerSectionY(restore.section);
-          if (y !== null) { scrollToInstant(y); target = y; }
+          if (y !== null) { scrollToInstant(y); target = y; restoreSectionRef.current = restore.section; }
         } else if (typeof restore.y === 'number') {
           // Real Back/Forward: centre the section the user came from, so
           // the in-page "Back to ..." link and the browser Back agree.
@@ -1537,6 +1538,7 @@ function App() {
           if (y !== null) {
             scrollToInstant(y);
             target = y;
+            restoreSectionRef.current = sectionId;
           } else {
             scrollToInstant(restore.y);
             target = restore.y;
@@ -1546,13 +1548,19 @@ function App() {
     }
     restoreTargetRef.current = target;
   }, [route]);
-  // Post-paint: if the layout shifted and the scroll landed short, correct
-  // it once (instantly, while the crossfade is still running).
+  // Post-paint: re-centre the restored section from a fresh measurement
+  // of the settled layout, once, while the crossfade is still running.
+  // The before-paint scroll can land wrong (a title still sliding in, or
+  // a restore that fell back to the exact pixel); this corrects it to the
+  // centre from where the heading actually is now.
   useEffect(() => {
-    const target = restoreTargetRef.current;
+    const sectionId = restoreSectionRef.current;
+    restoreSectionRef.current = null;
     restoreTargetRef.current = null;
-    if (target === null) return;
-    if (Math.abs(window.scrollY - target) > 4) scrollToInstant(target);
+    if (!sectionId) return;
+    const y = centerSectionY(sectionId);
+    if (y === null) return;
+    if (Math.abs(window.scrollY - y) > 4) scrollToInstant(y);
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
   // is unreliable in this SPA (it fights the app's own scroll and lands in
