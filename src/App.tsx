@@ -1475,8 +1475,16 @@ function App() {
   // After landing on a page, apply the pending scroll BEFORE the browser
   // paints the new page. An explicit section (nav link from another page,
   // or a legacy hash link) wins; otherwise the Back/forward restore applies
-  // - the section, or the exact scroll position the user was at when they
-  // left that page.
+  // - the section the user came from.
+  //
+  // A return to a section lands CENTRED: the section's heading sits at the
+  // vertical centre of the viewport, not at the top under the nav and not
+  // at the arbitrary scroll position the user happened to be at (which left
+  // the section halfway up or halfway down). The browser Back and the
+  // in-page "Back to ..." links both use this same centred landing, so the
+  // two ways back agree. (The footer "Where we work" block is the one
+  // exception: it is the last thing on the page, so it can only be centred
+  // as far as the page allows - it lands at the bottom, fully visible.)
   //
   // This is a layout effect, not a plain effect, on purpose. The old
   // effect ran after paint and waited for layout, so a Back to the footer
@@ -1490,10 +1498,20 @@ function App() {
   const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
   const restoreTargetRef = useRef<number | null>(null);
   useLayoutEffect(() => {
-    const sectionTopY = (sectionId: string): number | null => {
+    // Scroll Y that puts a section's heading at the vertical centre of the
+    // viewport. Falls back to the section itself (the footer block has no
+    // heading tag). Clamped to the page, so a section at the very end can
+    // only go as far as the bottom allows.
+    const centerSectionY = (sectionId: string): number | null => {
       const el = document.getElementById(sectionId);
       if (!el) return null;
-      return el.getBoundingClientRect().top + window.scrollY - 96;
+      const heading = el.querySelector('h1, h2, h3');
+      const target = heading ?? el;
+      const rect = target.getBoundingClientRect();
+      const centerY = rect.top + window.scrollY + rect.height / 2;
+      const vpH = window.innerHeight;
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - vpH);
+      return Math.min(Math.max(0, centerY - vpH / 2), maxScroll);
     };
     let target: number | null = null;
     if (route === '/') {
@@ -1502,7 +1520,7 @@ function App() {
       if (pending) {
         try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
         pendingRestoreRef.current = null;
-        const y = sectionTopY(pending);
+        const y = centerSectionY(pending);
         if (y !== null) { scrollToInstant(y); target = y; }
       }
     }
@@ -1515,24 +1533,23 @@ function App() {
           scrollToInstant(0);
           target = 0;
         } else if (restore.section) {
-          const y = sectionTopY(restore.section);
+          const y = centerSectionY(restore.section);
           if (y !== null) { scrollToInstant(y); target = y; }
         } else if (typeof restore.y === 'number') {
-          // Back to an exact position - trusted only while it still falls
-          // inside the section the user came from.
-          let y = restore.y;
+          // Real Back/Forward: centre the section the user came from, so
+          // the in-page "Back to ..." link and the browser Back agree.
+          // The exact saved scroll position is what left the section
+          // halfway up or halfway down, so it is only a fallback when no
+          // section was recorded.
           const sectionId = getLastHomeSection();
-          if (sectionId) {
-            const el = document.getElementById(sectionId);
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              const top = rect.top + window.scrollY - 96;
-              const bottom = top + rect.height;
-              if (y < top || y >= bottom) y = top;
-            }
+          const y = sectionId ? centerSectionY(sectionId) : null;
+          if (y !== null) {
+            scrollToInstant(y);
+            target = y;
+          } else {
+            scrollToInstant(restore.y);
+            target = restore.y;
           }
-          scrollToInstant(y);
-          target = y;
         }
       }
     }
