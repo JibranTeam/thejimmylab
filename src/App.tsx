@@ -1527,13 +1527,11 @@ function App() {
         } else if (typeof restore.y === 'number') {
           // Real Back/Forward: centre the section the user came from, so
           // the in-page "Back to ..." link and the browser Back agree.
-          // The saved scroll pixel is the precise record of where they
-          // were, so the section is derived from it first; the recorded
-          // section is only a fallback, and the exact pixel is the last
-          // resort. Restoring the pixel directly was the bug: it put the
-          // heading back in the upper third, or off-screen after a deep
-          // scroll, instead of centred.
-          const sectionId = sectionAtScrollY(restore.y) ?? getLastHomeSection();
+          // The recorded section (captured when they left home) is the
+          // reliable record of where they were; deriving one from the
+          // saved pixel landed on the wrong section, so it is only a
+          // fallback now, and the exact pixel is the last resort.
+          const sectionId = getLastHomeSection() ?? sectionAtScrollY(restore.y);
           const y = sectionId ? centerSectionY(sectionId) : null;
           if (y !== null) {
             scrollToInstant(y);

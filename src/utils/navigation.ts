@@ -49,7 +49,7 @@ export function sectionAtScrollY(y: number): string | null {
   for (const el of Array.from(document.querySelectorAll('section[id], footer [id]'))) {
     const id = (el as HTMLElement).id;
     if (!HOME_SECTIONS.includes(id)) continue;
-    const top = docTop(el as HTMLElement);
+    const top = el.getBoundingClientRect().top + window.scrollY;
     if (top <= mid) found = id;
     else break;
   }
