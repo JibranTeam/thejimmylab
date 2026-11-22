@@ -204,9 +204,9 @@ const HeroSection = () => {
       gsap.to(layer1Ref.current, { yPercent: -20, ease: 'none', scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 } });
       gsap.to(layer2Ref.current, { yPercent: -40, ease: 'none', scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 } });
       gsap.to(layer3Ref.current, { yPercent: -60, ease: 'none', scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: 1 } });
-      gsap.from('.hero-title', { y: 100, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.3 });
-      gsap.from('.hero-subtitle', { y: 50, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.5 });
-      gsap.from('.hero-cta', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.7 });
+      gsap.from('.hero-title', { y: 100, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.1 });
+      gsap.from('.hero-subtitle', { y: 50, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+      gsap.from('.hero-cta', { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out', delay: 0.3 });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -639,8 +639,8 @@ const ServicesSection = () => {
   const [servicePage, setServicePage] = useState(0);
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.service-title', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, y: 50, opacity: 0, duration: 0.8, ease: 'power3.out' });
-      gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }, y: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' });
+      gsap.from('.service-title', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' });
+      gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }, y: 100, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -672,7 +672,7 @@ const ServicesSection = () => {
           <button type="button" onClick={() => goToServicePage(servicePage + 1)} disabled={servicePage === totalServicePages - 1} aria-label="Next services page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
         </div>
         <div className="overflow-hidden">
-        <div className="flex will-change-transform" style={{ transform: 'translateX(-' + servicePage * 100 + '%)', transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+        <div className="flex will-change-transform" style={{ transform: 'translateX(-' + servicePage * 100 + '%)', transition: 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' }}>
           {servicePages.map((pageServices, pg) => (
           <div key={pg} className="w-full shrink-0">
         <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-6">
@@ -981,7 +981,7 @@ const JournalSection = () => {
           <button type="button" onClick={() => goToJournalPage(journalPage + 1)} disabled={journalPage === totalJournalPages - 1} aria-label="Next journal page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
         </div>
         <div className="overflow-hidden">
-          <div className="flex will-change-transform" style={{ transform: 'translateX(-' + journalPage * 100 + '%)', transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+          <div className="flex will-change-transform" style={{ transform: 'translateX(-' + journalPage * 100 + '%)', transition: 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' }}>
             {journalPages.map((pagePosts, pg) => (
               <div key={pg} className="w-full shrink-0">
                 <div className="md:hidden flex flex-col gap-4">
@@ -1419,17 +1419,18 @@ function App() {
       return;
     }
     if (typeof restore.y === 'number') {
-      // One smooth glide, not a stuttering retry loop: re-issuing the scroll
-      // every 150ms restarts the smooth animation each time, so the page
-      // creeps instead of gliding. Wait for the new page to mount after the
-      // exit animation, glide once, then correct once if layout shifts
-      // (images loading) moved the target.
+      // Instant, under the curtain: the page is already in place when the
+      // curtain lifts, so there is no visible jump and no waiting for a
+      // glide. A smooth scroll here was the slowness — the glide took half
+      // a second after the page appeared, and the correction glide made a
+      // second bump. One instant set after mount, one instant correction
+      // check before the curtain lifts.
       const target = restore.y;
       window.setTimeout(() => {
-        window.scrollTo({ top: target, behavior: 'smooth' });
+        window.scrollTo(0, target);
         window.setTimeout(() => {
-          if (Math.abs(window.scrollY - target) > 4) window.scrollTo({ top: target, behavior: 'smooth' });
-        }, 550);
+          if (Math.abs(window.scrollY - target) > 4) window.scrollTo(0, target);
+        }, 150);
       }, 450);
     }
   }, [route]);
@@ -1464,10 +1465,11 @@ function App() {
         // Forward navigation (a link click): top of the new page.
         pendingRestoreRef.current = { y: 0 };
       }
-      window.setTimeout(() => {
-        setRoute(next);
-      }, 320);
-      window.setTimeout(() => setShowCurtain(false), 1000);
+      // No artificial delay: the route changes at once and the exit
+      // animation (AnimatePresence) still plays. The old 320ms wait made
+      // every click feel slow.
+      setRoute(next);
+      window.setTimeout(() => setShowCurtain(false), 650);
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
