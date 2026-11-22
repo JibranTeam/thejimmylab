@@ -44,13 +44,17 @@ const HOME_SECTIONS = ['home', 'about', 'services', 'portfolio', 'process', 'jou
 // when they left home, so browser Back derives its section from it instead
 // of trusting a recorded section that can be stale or missing.
 export function sectionAtScrollY(y: number): string | null {
-  const mid = y + window.innerHeight / 2;
+  // The section at the top of the viewport (just below the sticky nav),
+  // not the centre. A tall section's grid can fill the viewport while its
+  // centre has already crossed into the next section, and the top is the
+  // section the user is actually reading and clicking in.
+  const point = y + 120;
   let found: string | null = null;
   for (const el of Array.from(document.querySelectorAll('section[id], footer [id]'))) {
     const id = (el as HTMLElement).id;
     if (!HOME_SECTIONS.includes(id)) continue;
     const top = el.getBoundingClientRect().top + window.scrollY;
-    if (top <= mid) found = id;
+    if (top <= point) found = id;
     else break;
   }
   return found;
