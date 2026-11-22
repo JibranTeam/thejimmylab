@@ -1558,7 +1558,7 @@ function App() {
     restoreSectionRef.current = null;
     restoreTargetRef.current = null;
     if (!sectionId) return;
-    const y = centerSectionY(sectionId);
+    const y = centerYForSection(sectionId);
     if (y === null) return;
     if (Math.abs(window.scrollY - y) > 4) scrollToInstant(y);
   }, [route]);
