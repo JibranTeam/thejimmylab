@@ -97,38 +97,25 @@ export function scrollToInstant(y: number) {
   root.style.scrollBehavior = prev;
 }
 
-// One smooth glide to an exact Y. Resolves when the scroll ends
-// (scrollend), immediately if already there, or after a timeout. Respects
-// reduced-motion (instant, resolves at once).
-export function glideToY(y: number): Promise<void> {
-  return (async () => {
-    await afterLayoutSettled();
-    if (Math.abs(window.scrollY - y) < 4) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      scrollToInstant(y);
-      return;
-    }
-    await new Promise<void>((resolve) => {
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
-        window.removeEventListener('scrollend', onEnd);
-        resolve();
-      };
-      const onEnd = () => finish();
-      window.addEventListener('scrollend', onEnd);
-      window.setTimeout(finish, 1500);
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    });
-  })();
+// Restore scrolling (used under the transition curtain, so the scroll is
+// invisible): settle, then ONE instant set to the target, verified once.
+// Instant is right here because the curtain hides the movement — a smooth
+// glide only made the curtain stay up longer (several seconds for a long
+// trip to the footer), with no visible benefit. The visible transition is
+// the curtain fade, which stays smooth.
+export async function restoreToY(y: number): Promise<void> {
+  await afterLayoutSettled();
+  scrollToInstant(y);
+  // Verify once: if the layout shifted under us, the set may have landed
+  // short. One instant correction, still under the curtain.
+  if (Math.abs(window.scrollY - y) > 4) scrollToInstant(y);
 }
 
-// Glide to a home-page section once, after it exists and the page has laid
+// Land on a home-page section once, after it exists and the page has laid
 // out. Never drops to the top if the section is missing — the section
 // simply is not there yet, so keep waiting (up to 3s) and give up quietly
 // rather than landing on the hero.
-export async function glideToSection(sectionId: string): Promise<void> {
+export async function restoreToSection(sectionId: string): Promise<void> {
   const startedAt = Date.now();
   let el: HTMLElement | null = null;
   while (!el) {
@@ -140,11 +127,39 @@ export async function glideToSection(sectionId: string): Promise<void> {
   await afterLayoutSettled();
   // 96px = the scroll-margin-top set for [id] elements in the stylesheet.
   const targetY = () => el.getBoundingClientRect().top + window.scrollY - 96;
-  await glideToY(targetY());
-  // Verify once after the glide — if the layout shifted under us (fonts,
-  // images, content-visibility rendering), glide once more to the
-  // corrected position. All of this happens under the curtain, so the user
-  // never sees the correction.
+  await restoreToY(targetY());
   const corrected = targetY();
-  if (Math.abs(window.scrollY - corrected) > 4) await glideToY(corrected);
+  if (Math.abs(window.scrollY - corrected) > 4) await restoreToY(corrected);
+}
+
+// Back to a saved scroll position on the home page. The saved pixel can be
+// stale — captured mid-glide while a nav scroll was still running — and
+// restoring a stale pixel lands a whole section off. So the pixel is only
+// trusted when it still falls inside the section the user came from;
+// otherwise land on the section itself. The section is the one the clicked
+// link sat in, recorded when the user left home.
+export async function restoreToSavedY(y: number, sectionId?: string | null): Promise<void> {
+  if (!sectionId) {
+    await restoreToY(y);
+    return;
+  }
+  const startedAt = Date.now();
+  let el: HTMLElement | null = null;
+  while (!el) {
+    el = document.getElementById(sectionId);
+    if (el) break;
+    if (Date.now() - startedAt > 3000) {
+      await restoreToY(y);
+      return;
+    }
+    await new Promise((r) => window.setTimeout(r, 100));
+  }
+  await afterLayoutSettled();
+  const top = el.getBoundingClientRect().top + window.scrollY;
+  const bottom = top + el.offsetHeight;
+  if (y >= top - 96 && y < bottom) {
+    await restoreToY(y);
+  } else {
+    await restoreToSection(sectionId);
+  }
 }

@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, navigateTo, navigateHomeToSection, normalizePath, glideToSection, glideToY, scrollToInstant } from './utils/navigation';
+import { getSavedScrollPosition, navigateTo, navigateHomeToSection, normalizePath, restoreToSection, restoreToSavedY, scrollToInstant } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -51,6 +51,13 @@ gsap.registerPlugin(ScrollTrigger);
 // visit still plays everything. A full reload resets it, so a fresh visit
 // gets the intro again.
 let homeEntrancesPlayed = false;
+
+// Which home section the user was in when they last left home (set from the
+// clicked link's own section — a service card sits in Services, a journal
+// card in Journal). Browser Back trusts the saved scroll pixel only while
+// it still falls inside this section; a stale pixel (captured mid-glide)
+// would land a whole section off, so then Back lands on the section itself.
+let lastHomeSection: string | null = null;
 
 /* ================= Navigation ================= */
 const Navigation = () => {
@@ -1478,13 +1485,16 @@ function App() {
   // Back/forward restore applies — the section, or the exact scroll position
   // the user was at when they left that page.
   //
-  // The scroll is ONE smooth glide, started only after the page has mounted
-  // and laid out, and the curtain lifts only when the glide ends — so the
-  // user never sees the page move. Forward navigations go to the top
-  // instantly, under the curtain. This effect owns the curtain: the popstate
-  // handler only shows it. (The old instant scroll + correction check was
-  // the flick: it fired before layout settled, and the 450ms curtain hide
-  // exposed the page mid-glide.)
+  // The scroll is ONE instant set, started only after the page has mounted
+  // and laid out, and the curtain lifts only once the page is settled — so
+  // the user never sees the page move. Instant is right here because the
+  // curtain hides the movement; a smooth glide only kept the curtain up
+  // longer (several seconds for a long trip to the footer) with no visible
+  // benefit. Forward navigations go to the top instantly, under the
+  // curtain. This effect owns the curtain: the popstate handler only shows
+  // it. (The old instant scroll + correction check was the flick: it fired
+  // before layout settled, and the 450ms curtain hide exposed the page
+  // mid-glide.)
   const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -1496,7 +1506,7 @@ function App() {
         if (pending) {
           try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
           pendingRestoreRef.current = null;
-          await glideToSection(pending);
+          await restoreToSection(pending);
           if (cancelled) return;
           hideCurtain();
           return;
@@ -1517,14 +1527,15 @@ function App() {
         return;
       }
       if (restore.section) {
-        await glideToSection(restore.section);
+        await restoreToSection(restore.section);
         if (cancelled) return;
         hideCurtain();
         return;
       }
       if (typeof restore.y === 'number') {
-        // Back to an exact position: settle, then one smooth glide.
-        await glideToY(restore.y);
+        // Back to an exact position — trusted only while it still falls
+        // inside the section the user came from (see restoreToSavedY).
+        await restoreToSavedY(restore.y, lastHomeSection);
         if (cancelled) return;
         hideCurtain();
         return;
@@ -1586,6 +1597,17 @@ function App() {
       if (!href) return;
       if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/') {
         e.preventDefault();
+        if (normalizePath(window.location.pathname) === '/') {
+          // Which home section this link sits in — the card's own section
+          // is unambiguous, unlike the scroll pixel at click time.
+          const sections = ['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'];
+          let node: HTMLElement | null = anchor;
+          while (node) {
+            const id = node.getAttribute?.('id');
+            if (id && sections.includes(id)) { lastHomeSection = id; break; }
+            node = node.parentElement;
+          }
+        }
         navigateTo(href);
         return;
       }
