@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ComponentType } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, restoreToSection, restoreToSavedY, scrollToInstant } from './utils/navigation';
+import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -1472,57 +1472,79 @@ function App() {
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
-  // After landing on a page, apply the pending scroll. An explicit section
-  // (nav link from another page, or a legacy hash link) wins; otherwise the
-  // Back/forward restore applies - the section, or the exact scroll position
-  // the user was at when they left that page.
+  // After landing on a page, apply the pending scroll BEFORE the browser
+  // paints the new page. An explicit section (nav link from another page,
+  // or a legacy hash link) wins; otherwise the Back/forward restore applies
+  // - the section, or the exact scroll position the user was at when they
+  // left that page.
   //
-  // The scroll is ONE instant set, started only after the page has mounted
-  // and laid out. It runs at the start of the crossfade, while the new page
-  // is still fading in, so the jump is hidden by the transition itself -
-  // there is no curtain any more (the curtain was the clunk: a full-screen
-  // panel sweeping up on every click, with a black gap while the old page
-  // waited to exit). Forward navigations go to the top instantly.
+  // This is a layout effect, not a plain effect, on purpose. The old
+  // effect ran after paint and waited for layout, so a Back to the footer
+  // flashed the hero top for a frame and then jumped down - a visible
+  // second movement, now that there is no curtain to hide it. A layout
+  // effect runs after the new page's DOM is in place but before paint, so
+  // the scroll is set while the page is still invisible (mid-crossfade)
+  // and the first paint is already at the target. The home page mounts
+  // immediately (not lazy), so its sections are measurable synchronously
+  // here. Forward navigations go to the top instantly.
   const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    const run = async () => {
-      if (route === '/') {
-        let pending: string | null = null;
-        try { pending = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-        if (pending) {
-          try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-          pendingRestoreRef.current = null;
-          await restoreToSection(pending);
-          if (cancelled) return;
-          return;
-        }
+  const restoreTargetRef = useRef<number | null>(null);
+  useLayoutEffect(() => {
+    const sectionTopY = (sectionId: string): number | null => {
+      const el = document.getElementById(sectionId);
+      if (!el) return null;
+      return el.getBoundingClientRect().top + window.scrollY - 96;
+    };
+    let target: number | null = null;
+    if (route === '/') {
+      let pending: string | null = null;
+      try { pending = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+      if (pending) {
+        try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+        pendingRestoreRef.current = null;
+        const y = sectionTopY(pending);
+        if (y !== null) { scrollToInstant(y); target = y; }
       }
+    }
+    if (target === null) {
       const restore = pendingRestoreRef.current;
       pendingRestoreRef.current = null;
-      if (!restore) {
-        return;
+      if (restore) {
+        if (restore.instant) {
+          // Forward navigation to a new page: top, instantly.
+          scrollToInstant(0);
+          target = 0;
+        } else if (restore.section) {
+          const y = sectionTopY(restore.section);
+          if (y !== null) { scrollToInstant(y); target = y; }
+        } else if (typeof restore.y === 'number') {
+          // Back to an exact position - trusted only while it still falls
+          // inside the section the user came from.
+          let y = restore.y;
+          const sectionId = getLastHomeSection();
+          if (sectionId) {
+            const el = document.getElementById(sectionId);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              const top = rect.top + window.scrollY - 96;
+              const bottom = top + rect.height;
+              if (y < top || y >= bottom) y = top;
+            }
+          }
+          scrollToInstant(y);
+          target = y;
+        }
       }
-      if (restore.instant) {
-        // Forward navigation to a new page: top, instantly.
-        scrollToInstant(0);
-        return;
-      }
-      if (restore.section) {
-        await restoreToSection(restore.section);
-        if (cancelled) return;
-        return;
-      }
-      if (typeof restore.y === 'number') {
-        // Back to an exact position - trusted only while it still falls
-        // inside the section the user came from (see restoreToSavedY).
-        await restoreToSavedY(restore.y, getLastHomeSection());
-        if (cancelled) return;
-        return;
-      }
-    };
-    void run();
-    return () => { cancelled = true; };
+    }
+    restoreTargetRef.current = target;
+  }, [route]);
+  // Post-paint: if the layout shifted and the scroll landed short, correct
+  // it once (instantly, while the crossfade is still running).
+  useEffect(() => {
+    const target = restoreTargetRef.current;
+    restoreTargetRef.current = null;
+    if (target === null) return;
+    if (Math.abs(window.scrollY - target) > 4) scrollToInstant(target);
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
   // is unreliable in this SPA (it fights the app's own scroll and lands in
