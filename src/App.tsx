@@ -33,7 +33,7 @@ const ComingSoonPage = lazyRetry(() => import('./pages/ComingSoonPage'));
 const TopicPage = lazyRetry(() => import('./pages/TopicPage'));
 const PrivacyPage = lazyRetry(() => import('./pages/PrivacyPage'));
 const TermsPage = lazyRetry(() => import('./pages/TermsPage'));
-import { PageTransition, RouteCurtain } from './components/PageTransition';
+import { PageTransition } from './components/PageTransition';
 import { CornerTicks } from './components/CornerTicks';
 import { services as serviceData, getServiceBySlug } from './data/services';
 import { locations, getLocationBySlug } from './data/locations';
@@ -1407,7 +1407,6 @@ const PageFallback = () => (
 
 function App() {
   const [route, setRoute] = useState<string>(() => normalizePath(window.location.pathname));
-  const [showCurtain, setShowCurtain] = useState(false);
   // Warm the lazy page chunks shortly after mount, so the first click on a
   // service/journal/location card never waits on a cold chunk fetch. A cold
   // chunk once left the screen black for 10+ seconds (the Suspense fallback
@@ -1479,19 +1478,14 @@ function App() {
   // the user was at when they left that page.
   //
   // The scroll is ONE instant set, started only after the page has mounted
-  // and laid out, and the curtain lifts only once the page is settled - so
-  // the user never sees the page move. Instant is right here because the
-  // curtain hides the movement; a smooth glide only kept the curtain up
-  // longer (several seconds for a long trip to the footer) with no visible
-  // benefit. Forward navigations go to the top instantly, under the
-  // curtain. This effect owns the curtain: the popstate handler only shows
-  // it. (The old instant scroll + correction check was the flick: it fired
-  // before layout settled, and the 450ms curtain hide exposed the page
-  // mid-glide.)
+  // and laid out. It runs at the start of the crossfade, while the new page
+  // is still fading in, so the jump is hidden by the transition itself -
+  // there is no curtain any more (the curtain was the clunk: a full-screen
+  // panel sweeping up on every click, with a black gap while the old page
+  // waited to exit). Forward navigations go to the top instantly.
   const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
   useEffect(() => {
     let cancelled = false;
-    const hideCurtain = () => { if (!cancelled) setShowCurtain(false); };
     const run = async () => {
       if (route === '/') {
         let pending: string | null = null;
@@ -1501,28 +1495,22 @@ function App() {
           pendingRestoreRef.current = null;
           await restoreToSection(pending);
           if (cancelled) return;
-          hideCurtain();
           return;
         }
       }
       const restore = pendingRestoreRef.current;
       pendingRestoreRef.current = null;
       if (!restore) {
-        // No restore to apply (first load, or a plain route change): lift
-        // the curtain on the normal beat.
-        window.setTimeout(hideCurtain, 450);
         return;
       }
       if (restore.instant) {
-        // Forward navigation to a new page: top, instantly, under the curtain.
+        // Forward navigation to a new page: top, instantly.
         scrollToInstant(0);
-        window.setTimeout(hideCurtain, 450);
         return;
       }
       if (restore.section) {
         await restoreToSection(restore.section);
         if (cancelled) return;
-        hideCurtain();
         return;
       }
       if (typeof restore.y === 'number') {
@@ -1530,10 +1518,8 @@ function App() {
         // inside the section the user came from (see restoreToSavedY).
         await restoreToSavedY(restore.y, getLastHomeSection());
         if (cancelled) return;
-        hideCurtain();
         return;
       }
-      window.setTimeout(hideCurtain, 450);
     };
     void run();
     return () => { cancelled = true; };
@@ -1548,7 +1534,6 @@ function App() {
     const onPopState = (e: PopStateEvent) => {
       const next = normalizePath(window.location.pathname);
       if (next === route) return;
-      setShowCurtain(true);
       if (e.isTrusted) {
         // Real Back/Forward: return to the exact place the user came from,
         // not the top. The saved scroll position is the most precise record
@@ -1569,10 +1554,9 @@ function App() {
         // Forward navigation (a link click): top of the new page, instantly.
         pendingRestoreRef.current = { y: 0, instant: true };
       }
-      // No artificial delay: the route changes at once and the exit
-      // animation (AnimatePresence) still plays. The old 320ms wait made
-      // every click feel slow. The curtain is lifted by the restore effect
-      // once the new page is settled - never mid-glide.
+      // No artificial delay: the route changes at once and the crossfade
+      // (AnimatePresence mode="popLayout") plays - old page slides out
+      // while the new page slides in, overlapping, no black gap.
       setRoute(next);
     };
     window.addEventListener('popstate', onPopState);
@@ -1705,10 +1689,9 @@ function App() {
   const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
-      <AnimatePresence>{showCurtain && <RouteCurtain key="curtain" />}</AnimatePresence>
       <ComingSoonToast />
       <Analytics />
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout">
         <PageTransition key={routeKey}>
           {service ? <Suspense fallback={<PageFallback />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<PageFallback />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<PageFallback />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<PageFallback />}><TeamPage /></Suspense> : isPrivacyPage ? <Suspense fallback={<PageFallback />}><PrivacyPage /></Suspense> : isTermsPage ? <Suspense fallback={<PageFallback />}><TermsPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<PageFallback />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
         </PageTransition>
