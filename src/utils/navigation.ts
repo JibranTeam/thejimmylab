@@ -109,11 +109,17 @@ export function headingCenterOffset(sectionId: string): number | null {
 // Scroll to a home section so its heading lands at the viewport centre,
 // instead of the top (scrollIntoView block:'start' is what left every
 // section heading in the upper third). Returns false when the section is
-// not in the DOM yet.
+// not in the DOM yet. Uses the browser's native centring on the heading
+// itself: the hand-rolled Y math overshot Journal by ~800px while centring
+// Services, so the native call (which centres the element's actual border
+// box) is the reliable one for link clicks. The heading has no id, so the
+// [id] scroll-margin does not apply to it.
 export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehavior = 'auto'): boolean {
-  const y = centerYForSection(sectionId);
-  if (y === null) return false;
-  window.scrollTo({ top: y, behavior });
+  const el = document.getElementById(sectionId);
+  if (!el) return false;
+  const heading = el.querySelector('h1, h2, h3') as HTMLElement | null;
+  const target = (heading ?? el) as HTMLElement;
+  target.scrollIntoView({ behavior, block: 'center' });
   return true;
 }
 
