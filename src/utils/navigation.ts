@@ -17,9 +17,39 @@ export function navigateTo(path: string) {
     window.scrollTo(0, 0);
     return;
   }
+  // Leaving the home page: remember which section the user was in, from
+  // the viewport centre. The card's own section is the most precise
+  // signal, but card onClick handlers call navigateTo directly (with
+  // preventDefault), so the document click handler never sees them.
+  if (normalizePath(window.location.pathname) === '/') {
+    lastHomeSection = currentHomeSection();
+  }
   rememberScrollPosition();
   window.history.pushState(null, '', target);
   window.dispatchEvent(new PopStateEvent('popstate'));
+}
+
+// Which home section the user was in when they last left home (see
+// navigateTo). Browser Back trusts the saved scroll pixel only while it
+// still falls inside this section; a stale pixel (captured mid-glide)
+// would land a whole section off, so then Back lands on the section itself.
+let lastHomeSection: string | null = null;
+export function getLastHomeSection(): string | null {
+  return lastHomeSection;
+}
+
+const HOME_SECTIONS = ['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'];
+function currentHomeSection(): string | null {
+  const mid = window.scrollY + window.innerHeight / 2;
+  let found: string | null = null;
+  for (const el of Array.from(document.querySelectorAll('section[id], footer [id]'))) {
+    const id = (el as HTMLElement).id;
+    if (!HOME_SECTIONS.includes(id)) continue;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    if (top <= mid) found = id;
+    else break;
+  }
+  return found;
 }
 
 // Scroll memory: where the user was on each URL, so Back can return them
@@ -104,6 +134,16 @@ export function scrollToInstant(y: number) {
 // trip to the footer), with no visible benefit. The visible transition is
 // the curtain fade, which stays smooth.
 export async function restoreToY(y: number): Promise<void> {
+  // Wait until the new page has mounted and is tall enough to reach y.
+  // The restore runs on route change, while the old page is still exiting
+  // (AnimatePresence mode="wait") — scrolling now would clamp to the old
+  // page's height and land a section too high. That was the browser-Back
+  // bug: Back from a service page landed on About instead of Services.
+  const startedAt = Date.now();
+  while (document.documentElement.scrollHeight - window.innerHeight < y) {
+    if (Date.now() - startedAt > 3000) break;
+    await new Promise((r) => window.setTimeout(r, 100));
+  }
   await afterLayoutSettled();
   scrollToInstant(y);
   // Verify once: if the layout shifted under us, the set may have landed

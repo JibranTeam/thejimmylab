@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, navigateTo, navigateHomeToSection, normalizePath, restoreToSection, restoreToSavedY, scrollToInstant } from './utils/navigation';
+import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, restoreToSection, restoreToSavedY, scrollToInstant } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -52,12 +52,6 @@ gsap.registerPlugin(ScrollTrigger);
 // gets the intro again.
 let homeEntrancesPlayed = false;
 
-// Which home section the user was in when they last left home (set from the
-// clicked link's own section — a service card sits in Services, a journal
-// card in Journal). Browser Back trusts the saved scroll pixel only while
-// it still falls inside this section; a stale pixel (captured mid-glide)
-// would land a whole section off, so then Back lands on the section itself.
-let lastHomeSection: string | null = null;
 
 /* ================= Navigation ================= */
 const Navigation = () => {
@@ -1535,7 +1529,7 @@ function App() {
       if (typeof restore.y === 'number') {
         // Back to an exact position — trusted only while it still falls
         // inside the section the user came from (see restoreToSavedY).
-        await restoreToSavedY(restore.y, lastHomeSection);
+        await restoreToSavedY(restore.y, getLastHomeSection());
         if (cancelled) return;
         hideCurtain();
         return;
@@ -1597,17 +1591,6 @@ function App() {
       if (!href) return;
       if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/') {
         e.preventDefault();
-        if (normalizePath(window.location.pathname) === '/') {
-          // Which home section this link sits in — the card's own section
-          // is unambiguous, unlike the scroll pixel at click time.
-          const sections = ['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'];
-          let node: HTMLElement | null = anchor;
-          while (node) {
-            const id = node.getAttribute?.('id');
-            if (id && sections.includes(id)) { lastHomeSection = id; break; }
-            node = node.parentElement;
-          }
-        }
         navigateTo(href);
         return;
       }
