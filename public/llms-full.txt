@@ -2,6 +2,16 @@
 
 THE JIMMY LAB is a digital agency crafting immersive websites, web applications and interactive experiences. A global remote team. Founded in 2013. Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
 
+## Facts
+
+- Founded in 2013.
+- A global remote team of six operators.
+- Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
+- Pricing is project-based with custom quotes.
+- Average response time: one hour.
+- Fiverr rating: 4.8 stars from 39 reviews.
+- Contact: hello@thejimmylab.com (shown on site) and Fiverr fiverr.com/jimmy3105.
+
 ## Services
 
 - [Web Development](https://thejimmylab.vercel.app/services/web-development): Fast, secure and scalable web applications built around your business.
@@ -27,17 +37,17 @@ THE JIMMY LAB is a digital agency crafting immersive websites, web applications 
 
 Remote web development from a global team — no local office is claimed in any market.
 
-- [Web Development for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
-- [Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
-- [Web Development for UAE Businesses](https://thejimmylab.vercel.app/locations/uae): A global remote team, working Gulf hours.
-- [Web Development for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): A global remote team, handing over work every day.
-- [Web Development for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): A global remote team, working on Canadian hours.
+- [Web Development Agency for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
+- [Bespoke Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
+- [Web Development Agency for UAE & Dubai Businesses](https://thejimmylab.vercel.app/locations/uae): A global remote team, working Gulf hours.
+- [Web Development Agency for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): A global remote team, handing over work every day.
+- [Web Development Agency for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): A global remote team, working on Canadian hours.
 
 ## Industries
 
 - [Website Redesign for SaaS Companies](https://thejimmylab.vercel.app/industries/saas): A SaaS website that explains the product faster — and converts more trials.
 - [E-commerce Websites for Fashion Brands](https://thejimmylab.vercel.app/industries/ecommerce-fashion): A fashion storefront that looks like the brand — and sells like it means it.
-- [Websites for Restaurants](https://thejimmylab.vercel.app/industries/restaurants): A restaurant website that fills tables — menu, bookings and directions in one tap.
+- [Restaurant Website Design & Development](https://thejimmylab.vercel.app/industries/restaurants): A restaurant website that fills tables — menu, bookings and directions in one tap.
 
 ## Journal
 
@@ -300,3 +310,103 @@ A: Rotate and inspect a product, change colours or options, and explore a scene 
 
 Q: Do you model the 3D assets too?
 A: Yes — modelling, texturing and rendering are in-house, delivered as optimized web-ready models.
+
+## Locations — FAQs
+
+### Web Development Agency for USA Businesses
+
+Q: Do you have an office in the USA?
+A: No — we are a global remote team and work with US clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
+
+Q: What hours do you work with US clients?
+A: Our working day overlaps with US mornings and midday. Your morning is our evening, so calls happen in your morning and progress lands in your inbox overnight.
+
+Q: How much does a website cost for a US business?
+A: It depends on scope — pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need. Tell us the scope and we will quote it plainly.
+
+
+### Bespoke Web Development for UK Businesses
+
+Q: Do you have an office in the UK?
+A: No — we are a global remote team and work with UK clients remotely. Our process is built for it: daily overlap, weekly demos and a staging link from day one.
+
+Q: What hours do you work with UK clients?
+A: Your afternoon is our evening. Calls, demos and reviews happen in your working afternoon, every working day.
+
+Q: Do you build bespoke websites or use templates?
+A: Bespoke. Every site is designed and built for the client — no bought templates, no page-builder shortcuts.
+
+
+### Web Development Agency for UAE & Dubai Businesses
+
+Q: Do you have an office in Dubai or the UAE?
+A: No — we are a global remote team and work with UAE clients remotely. We do not claim a local office; the working relationship feels local anyway.
+
+Q: What kind of UAE projects do you take on?
+A: Corporate websites, e-commerce storefronts, mobile apps and web applications — mostly for SMEs and growing businesses across the Emirates.
+
+Q: How do we work together across the week?
+A: Same working day, same hours. Kick-off call, weekly demos on a staging link, and a reply within an hour on average.
+
+
+### Web Development Agency for Australian Businesses
+
+Q: Do you have an office in Australia?
+A: No — we are a global remote team and work with Australian clients remotely. The time difference is the advantage: your afternoon is our morning, so work moves every day.
+
+Q: How do we communicate across the time difference?
+A: Mostly async — written updates and a staging link you can check any time — with live calls in the overlap whenever a decision needs one.
+
+Q: Can you work with our existing site?
+A: Yes — redesigns, optimizations and migrations on existing sites are a large part of our work, with rankings protected.
+
+
+### Web Development Agency for Canadian Businesses
+
+Q: Do you have an office in Canada?
+A: No — we are a global remote team and work with Canadian clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
+
+Q: What hours do you work with Canadian clients?
+A: Our working day overlaps with Canadian mornings and midday. Your morning is our evening, so calls happen in your morning and progress lands in your inbox overnight.
+
+Q: Do you work with small businesses?
+A: Yes — we work with businesses at every level, from startups to established companies. Scopes are lean, pricing is project-based, and quotes are plain.
+
+
+## Industries — FAQs
+
+### Website Redesign for SaaS Companies
+
+Q: Will a redesign hurt our trial signups?
+A: A redesign done properly improves them — clearer messaging, faster pages and a shorter path to signup. We measure before and after so the effect is visible, not assumed.
+
+Q: Do you redesign the product itself, or just the marketing site?
+A: Both. Marketing site first is the usual order, then in-product UX once the site is live — or both together if the timeline allows.
+
+Q: How long does a SaaS redesign take?
+A: Most take 3–6 weeks depending on page count. We give a firm timeline after a short review of your current site.
+
+
+### E-commerce Websites for Fashion Brands
+
+Q: Shopify or a headless build?
+A: Shopify is fastest to market and easiest to run day to day. A headless Next.js storefront gives more design freedom and speed. We recommend based on your catalogue size and growth plans, not on what earns us more.
+
+Q: Can you migrate our existing store?
+A: Yes — products, customers and orders move with zero downtime, and your search rankings are preserved with redirect mapping.
+
+Q: Do you handle product photography?
+A: We design around your photography and can art-direct shoots; the store is built to make your images the hero.
+
+
+### Restaurant Website Design & Development
+
+Q: Can we update the menu ourselves?
+A: Yes — the menu is editable without touching code, and we show you how in a short handover call.
+
+Q: Do you set up online ordering?
+A: Yes — ordering and table bookings integrate with the tools you already use, or we recommend one that fits.
+
+Q: How long does a restaurant website take?
+A: Most take 2–4 weeks from content handover to launch, depending on pages and photography.
+

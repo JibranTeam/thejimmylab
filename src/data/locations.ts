@@ -12,7 +12,7 @@ export const locations: Topic[] = [
     slug: "usa",
     kind: "location",
     icon: MapPin,
-    title: "Web Development for USA Businesses",
+    title: "Web Development Agency for USA Businesses",
     color: "#3b82f6",
     tagline: "A global remote team, working on US hours.",
     description:
@@ -50,7 +50,7 @@ export const locations: Topic[] = [
     slug: "uk",
     kind: "location",
     icon: MapPin,
-    title: "Web Development for UK Businesses",
+    title: "Bespoke Web Development for UK Businesses",
     color: "#a855f7",
     tagline: "A global remote team, working UK hours.",
     description:
@@ -88,7 +88,7 @@ export const locations: Topic[] = [
     slug: "uae",
     kind: "location",
     icon: MapPin,
-    title: "Web Development for UAE Businesses",
+    title: "Web Development Agency for UAE & Dubai Businesses",
     color: "#f59e0b",
     tagline: "A global remote team, working Gulf hours.",
     description:
@@ -126,7 +126,7 @@ export const locations: Topic[] = [
     slug: "australia",
     kind: "location",
     icon: MapPin,
-    title: "Web Development for Australian Businesses",
+    title: "Web Development Agency for Australian Businesses",
     color: "#00d4aa",
     tagline: "A global remote team, handing over work every day.",
     description:
@@ -164,7 +164,7 @@ export const locations: Topic[] = [
     slug: "canada",
     kind: "location",
     icon: MapPin,
-    title: "Web Development for Canadian Businesses",
+    title: "Web Development Agency for Canadian Businesses",
     color: "#ef4444",
     tagline: "A global remote team, working on Canadian hours.",
     description:

@@ -24,6 +24,8 @@ export interface Service {
   slug: string;
   icon: LucideIcon;
   title: string;
+  seoTitle?: string;
+  seoDescription?: string;
   desc: string;
   color: string;
   tagline: string;
@@ -40,6 +42,7 @@ export const services: Service[] = [
     slug: "web-development",
     icon: Code2,
     title: "Web Development",
+    seoDescription: "Fast, secure and scalable web applications built around your business. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Production-grade websites and web applications engineered to scale from day one.",
     color: "#ff6b35",
     tagline: "Fast, secure and scalable web applications built around your business.",
@@ -76,6 +79,7 @@ export const services: Service[] = [
     slug: "ui-ux-design",
     icon: Palette,
     title: "UI/UX Design",
+    seoDescription: "Interfaces that feel effortless — designed from research, not guesswork. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Pixel-perfect interfaces and design systems crafted around real user behaviour.",
     color: "#a855f7",
     tagline: "Interfaces that feel effortless — designed from research, not guesswork.",
@@ -112,6 +116,8 @@ export const services: Service[] = [
     slug: "mobile-development",
     icon: Smartphone,
     title: "Mobile Development",
+    seoTitle: "Mobile App Development Services | THE JIMMY LAB",
+    seoDescription: "Mobile experiences that feel native, ship fast and scale with your users. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Native-quality mobile apps for iOS and Android built with modern cross-platform tooling.",
     color: "#3b82f6",
     tagline: "Mobile experiences that feel native, ship fast and scale with your users.",
@@ -148,6 +154,8 @@ export const services: Service[] = [
     slug: "e-commerce",
     icon: ShoppingBag,
     title: "E-Commerce",
+    seoTitle: "E-Commerce Website Development | THE JIMMY LAB",
+    seoDescription: "Storefronts built to convert — fast, flexible and beautiful at every step. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "High-converting storefronts and headless commerce builds that turn browsers into buyers.",
     color: "#00d4aa",
     tagline: "Storefronts built to convert — fast, flexible and beautiful at every step.",
@@ -184,6 +192,8 @@ export const services: Service[] = [
     slug: "ai-solutions",
     icon: Sparkles,
     title: "AI Solutions",
+    seoTitle: "AI Development Services | THE JIMMY LAB",
+    seoDescription: "Turn your data and workflows into intelligent, automated products. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "AI-powered products, automations and copilots that put intelligence to work for your business.",
     color: "#ffd700",
     tagline: "Turn your data and workflows into intelligent, automated products.",
@@ -220,6 +230,7 @@ export const services: Service[] = [
     slug: "web-animation",
     icon: Wand2,
     title: "Web Animation",
+    seoDescription: "Motion that guides, delights and sets your brand apart. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Scroll-driven, 2D & 3D motion that makes interfaces feel alive and unforgettable.",
     color: "#ec4899",
     tagline: "Motion that guides, delights and sets your brand apart.",
@@ -256,6 +267,7 @@ export const services: Service[] = [
     slug: "logo-design-branding",
     icon: PenTool,
     title: "Logo Design & Branding",
+    seoDescription: "A mark people remember, and a brand system that holds up everywhere it lands. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Distinctive logos and complete brand systems that make you instantly recognisable everywhere.",
     color: "#f472b6",
     tagline: "A mark people remember, and a brand system that holds up everywhere it lands.",
@@ -292,6 +304,7 @@ export const services: Service[] = [
     slug: "graphic-design-2d-3d",
     icon: Boxes,
     title: "2D/3D Graphic Design",
+    seoDescription: "Custom 2D illustration and 3D renders — no stock clichés, ever. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Illustration, motion graphics and 3D visuals that give your product a visual language of its own.",
     color: "#22d3ee",
     tagline: "Custom 2D illustration and 3D renders — no stock clichés, ever.",
@@ -328,6 +341,8 @@ export const services: Service[] = [
     slug: "consultation-training",
     icon: GraduationCap,
     title: "1:1 Consultation & Training",
+    seoTitle: "Technology Consulting & 1:1 Training | THE JIMMY LAB",
+    seoDescription: "Senior expertise on tap — unblock your team without hiring for it. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Focused 1-on-1 guidance, code reviews and hands-on training for teams and individuals.",
     color: "#a3e635",
     tagline: "Senior expertise on tap — unblock your team without hiring for it.",
@@ -364,6 +379,7 @@ export const services: Service[] = [
     slug: "seo-website-optimization",
     icon: Search,
     title: "SEO & Website Optimization",
+    seoDescription: "Get found on Google, load fast everywhere, and turn search traffic into enquiries. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Higher rankings, faster pages and more organic traffic — technical SEO and performance work that compounds over time.",
     color: "#ef4444",
     tagline: "Get found on Google, load fast everywhere, and turn search traffic into enquiries.",
@@ -400,6 +416,8 @@ export const services: Service[] = [
     slug: "maintenance-support",
     icon: ShieldCheck,
     title: "Maintenance & Support",
+    seoTitle: "Website Maintenance & Support Services | THE JIMMY LAB",
+    seoDescription: "Never worry about updates, downtime or broken pages again. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Your site stays fast, secure and up to date — updates, monitoring, backups and fixes handled for you.",
     color: "#0ea5e9",
     tagline: "Never worry about updates, downtime or broken pages again.",
@@ -436,6 +454,7 @@ export const services: Service[] = [
     slug: "integration-automation",
     icon: Workflow,
     title: "Integration & Automation",
+    seoDescription: "Less copy-paste, fewer dropped leads, more time for real work. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Connect your tools and automate the busywork — CRMs, forms, payments and workflows that run themselves.",
     color: "#f59e0b",
     tagline: "Less copy-paste, fewer dropped leads, more time for real work.",
@@ -472,6 +491,7 @@ export const services: Service[] = [
     slug: "website-redesign-migration",
     icon: RefreshCw,
     title: "Website Redesign & Migration",
+    seoDescription: "New design, same traffic — a relaunch done properly. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "A fresh look without losing what works — redesigns and platform moves with zero ranking or content loss.",
     color: "#6366f1",
     tagline: "New design, same traffic — a relaunch done properly.",
@@ -508,6 +528,7 @@ export const services: Service[] = [
     slug: "code-review-technical-audit",
     icon: FileSearch,
     title: "Code Review & Technical Audit",
+    seoDescription: "Know exactly where your code stands — before it becomes a problem. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "A senior, independent look at your codebase — what is solid, what is risky, and what to fix first.",
     color: "#10b981",
     tagline: "Know exactly where your code stands — before it becomes a problem.",
@@ -544,12 +565,14 @@ export const services: Service[] = [
     slug: "nextjs-development",
     icon: Rocket,
     title: "Next.js Development",
+    seoDescription: "Next.js websites and web apps — fast, server-rendered, built to scale. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Next.js websites and web apps — fast, server-rendered and built to scale from day one.",
     color: "#38bdf8",
     tagline: "Next.js builds for growing businesses: fast pages, clean code, and a launch in weeks, not months.",
     overview: [
       "We build production Next.js websites and web applications for businesses at every level — startups, growing companies and established brands: marketing sites, SaaS products, dashboards and headless storefronts. Server-rendered pages, image optimization and edge caching come as standard, so your site is fast on the first visit and stays fast as you grow.",
-      "Businesses choose Next.js because it removes the usual trade-offs — SEO-friendly pages, app-like interactions, and a codebase your next hire can actually understand. We build it that way on purpose: typed, tested and documented.",
+      "Businesses choose Next.js because it removes the usual trade-offs — SEO-friendly pages, app-like interactions, and a codebase your next hire can actually understand. We build it that way on purpose: typed, tested and documented.",,
+      "Who it is for: businesses at every level — startups, growing companies and established brands — that need a site which is fast, findable and easy to grow. How it works: we follow the same three phases on every build — Architect, then Build, then Accelerate — with weekly demos and a staging link from day one. What it costs: every project is priced individually with a custom quote, based on pages, design, integrations and content — no packages, no hidden fees."
     ],
     features: [
       { title: "Fast Delivery", desc: "Lean, focused builds with weekly demos and a staging link from day one." },
@@ -580,12 +603,14 @@ export const services: Service[] = [
     slug: "react-website-redesign",
     icon: Layers,
     title: "React Website Redesign",
+    seoDescription: "React redesigns for SaaS — a faster, clearer product site without losing traffic. Custom quote. USA, UK, Europe & the Gulf.",
     desc: "React redesigns for SaaS companies — a faster, clearer product site without losing traffic or users.",
     color: "#fb7185",
     tagline: "A React redesign for your SaaS product — new design, same traffic, better conversions.",
     overview: [
       "We redesign React websites for SaaS companies: the marketing site, the onboarding flow and the in-product experience, rebuilt around what your visitors actually do. The goal is not just a prettier site — it is a site that explains the product faster and converts more trials.",
-      "Redesigns are done with rankings protected: URL mapping, redirect checks and a post-launch verification pass, so the new site keeps the traffic the old one earned.",
+      "Redesigns are done with rankings protected: URL mapping, redirect checks and a post-launch verification pass, so the new site keeps the traffic the old one earned.",,
+      "Who it is for: SaaS companies whose marketing site, onboarding flow or in-product experience no longer explains the product clearly. How it works: we start with a review of your current site, redesign around trial conversion, and relaunch with URL mapping, redirect checks and a post-launch verification pass so rankings hold. What it costs: priced per project with a custom quote, based on page count and scope — most redesigns take 3–6 weeks."
     ],
     features: [
       { title: "SaaS-Focused UX", desc: "Pricing, onboarding and feature pages structured around trial conversion." },
@@ -616,12 +641,14 @@ export const services: Service[] = [
     slug: "ai-chatbot-integration",
     icon: Bot,
     title: "AI Chatbot Integration",
+    seoDescription: "AI chatbots on your website that answer from your own content. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "AI chatbots on your website that answer from your own content — trained on your docs, not on guesswork.",
     color: "#facc15",
     tagline: "A chatbot that knows your business — answers grounded in your own content, live on your site.",
     overview: [
       "We integrate AI chatbots into your website that answer visitors from your own content: product docs, FAQs, pricing pages and support articles. Answers stay grounded in what you actually wrote, with sources the visitor can check.",
-      "Chatbots work best as a first line: instant answers at any hour, with a clean handover to a human when the question needs one. We build them that way — useful on day one, and honest about what they cannot do.",
+      "Chatbots work best as a first line: instant answers at any hour, with a clean handover to a human when the question needs one. We build them that way — useful on day one, and honest about what they cannot do.",,
+      "Who it is for: businesses whose visitors ask the same questions again and again, and whose team is stretched answering them. How it works: we build a knowledge base from your existing pages, FAQs and docs, connect the chatbot to your site, and set up a human handover for questions it cannot answer — then review early conversations to fix anything it gets wrong. What it costs: priced per project with a custom quote, based on the content volume and the integrations you need."
     ],
     features: [
       { title: "Grounded Answers", desc: "Retrieval from your own docs, so the bot quotes your content instead of inventing." },
@@ -652,12 +679,15 @@ export const services: Service[] = [
     slug: "threejs-3d-websites",
     icon: Orbit,
     title: "Three.js & Interactive 3D",
+    seoTitle: "Three.js 3D Website Development | THE JIMMY LAB",
+    seoDescription: "Interactive 3D websites with Three.js — configurators and scenes that stay fast on a phone. Custom quote.",
     desc: "Interactive 3D websites with Three.js — product configurators and scenes that stay fast on a phone.",
     color: "#c084fc",
     tagline: "3D on the web that earns its place — interactive, on-brand, and fast enough for a phone.",
     overview: [
       "We build interactive 3D websites with Three.js and WebGL: product configurators, 3D showcases and scroll-driven scenes that make a product memorable. Every scene has a job — show the product, explain the idea, or guide the visitor — and a performance budget to match.",
-      "3D is only worth it when it stays fast. We cap frame rates, lazy-load scenes, and fall back to a still image on weaker devices, so the experience feels premium instead of punishing.",
+      "3D is only worth it when it stays fast. We cap frame rates, lazy-load scenes, and fall back to a still image on weaker devices, so the experience feels premium instead of punishing.",,
+      "Who it is for: brands with a product that deserves to be seen from every angle — configurators, showcases and scroll-driven scenes. How it works: we model and build the scene, cap frame rates, lazy-load it, and fall back to a still image on weaker devices, so the page stays fast. What it costs: priced per project with a custom quote, based on the scene complexity and the 3D assets involved."
     ],
     features: [
       { title: "Product Configurators", desc: "Rotate, customise and explore products in real time, in the browser." },

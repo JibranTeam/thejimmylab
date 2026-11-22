@@ -87,7 +87,7 @@ export const industries: Topic[] = [
     slug: "restaurants",
     kind: "industry",
     icon: UtensilsCrossed,
-    title: "Websites for Restaurants",
+    title: "Restaurant Website Design & Development",
     color: "#f59e0b",
     tagline: "A restaurant website that fills tables — menu, bookings and directions in one tap.",
     description:

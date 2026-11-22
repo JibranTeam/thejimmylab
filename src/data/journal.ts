@@ -21,6 +21,7 @@ export interface JournalPost {
 export const JOURNAL_POSTS: JournalPost[] = [
   {
     id: 'scroll-animation-techniques',
+    relatedService: 'web-animation',
     featured: true,
     category: 'Motion',
     date: 'May 28, 2026',
@@ -32,7 +33,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'Why scroll animation is a performance problem first',
         paragraphs: [
-          'Scroll-linked animation looks simple on the surface: an element moves as the page moves. Underneath, it is one of the easiest places to break a site, because every scroll event can trigger layout work. The moment animation code reads a layout value and then writes one back, the browser is forced to recalculate the page, and a smooth scroll turns into a stutter.',
+          'The short answer: animate only transform and opacity, keep the work off the main thread, and never read a layout value and write one back in the same scroll handler. Scroll-linked animation looks simple on the surface: an element moves as the page moves. Underneath, it is one of the easiest places to break a site, because every scroll event can trigger layout work. The moment animation code reads a layout value and then writes one back, the browser is forced to recalculate the page, and a smooth scroll turns into a stutter.',
           'The fix is boring in the best way. Animate only transform and opacity, never width, height, top or left. Keep the work off the main thread where the browser allows it, and let the browser know what is about to change before it changes.',
         ],
       },
@@ -55,6 +56,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
   },
   {
     id: 'astro-for-portfolios',
+    relatedService: 'web-development',
     featured: false,
     category: 'Engineering',
     date: 'May 20, 2026',
@@ -66,7 +68,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'A portfolio is mostly content',
         paragraphs: [
-          'A portfolio site is, at its heart, a set of pages: work, writing, an about page and a way to get in touch. Very little of that needs JavaScript to exist. What it needs is to load fast, look sharp and be easy to update when new work ships.',
+          'The short answer: Astro fits a portfolio because a portfolio is mostly content — pages that need to load fast, not JavaScript to exist. A portfolio site is, at its heart, a set of pages: work, writing, an about page and a way to get in touch. Very little of that needs JavaScript to exist. What it needs is to load fast, look sharp and be easy to update when new work ships.',
           'That is exactly the shape Astro is built for. Pages are rendered to plain HTML at build time, and JavaScript is only shipped for the parts of the page that actually need to be interactive.',
         ],
       },
@@ -89,6 +91,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
   },
   {
     id: 'motion-design-principles',
+    relatedService: 'web-animation',
     featured: false,
     category: 'Motion',
     date: 'May 15, 2026',
@@ -100,7 +103,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'Motion should explain something',
         paragraphs: [
-          'Every animation on a page should answer a question for the visitor: where did that panel come from, where did it go, what just changed, what happens next. If an animation does not answer one of those questions, it is decoration, and decoration at scale becomes noise.',
+          'The short answer: every animation should answer a question for the visitor — where something came from, where it went, what changed, what happens next. If it does not, it is decoration. Every animation on a page should answer a question for the visitor: where did that panel come from, where did it go, what just changed, what happens next. If an animation does not answer one of those questions, it is decoration, and decoration at scale becomes noise.',
           'The best motion is often the quietest. A panel that slides from the button that opened it tells the visitor how to close it. A list item that fades out instead of vanishing tells them it was removed, not that the page broke.',
         ],
       },
@@ -123,6 +126,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
   },
   {
     id: 'ai-assisted-development-2026',
+    relatedService: 'ai-solutions',
     featured: true,
     category: 'AI',
     date: 'Oct 22, 2026',
@@ -134,7 +138,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'What actually changed',
         paragraphs: [
-          'The biggest change in development this year is not that AI writes code. It is that the first draft of almost anything is now cheap, and the expensive part has moved to deciding whether that draft is correct, secure and maintainable.',
+          'The short answer: AI has made the first draft of almost anything cheap, so the expensive part of development has moved to deciding what is right — reviewing, not typing. The biggest change in development this year is not that AI writes code. It is that the first draft of almost anything is now cheap, and the expensive part has moved to deciding whether that draft is correct, secure and maintainable.',
           'That shift rewards a different skill set. Reading code carefully, writing precise requirements, and testing edge cases matter more than they did when every line had to be typed by hand. Teams that treat AI output as a suggestion to review, rather than a result to ship, are the ones getting real value from it.',
         ],
       },
@@ -157,6 +161,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
   },
   {
     id: 'core-web-vitals-2026',
+    relatedService: 'seo-website-optimization',
     featured: false,
     category: 'Performance',
     date: 'Oct 20, 2026',
@@ -168,7 +173,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'Start with the largest contentful paint',
         paragraphs: [
-          'Largest Contentful Paint measures how long it takes for the main content to appear. On most marketing and portfolio sites, the culprit is the same: a large hero image or a heavy font blocking the first paint, or a bundle of JavaScript that has to run before anything shows.',
+          'The short answer: most sites fail the same few checks for the same few reasons — start with the largest contentful paint, and on most sites that means the hero image. Largest Contentful Paint measures how long it takes for the main content to appear. On most marketing and portfolio sites, the culprit is the same: a large hero image or a heavy font blocking the first paint, or a bundle of JavaScript that has to run before anything shows.',
           'The fixes, in order, are unglamorous: serve images at the size they are displayed, use modern formats, preload the hero image, and stop shipping JavaScript the first screen does not need. Each of these is small on its own; together they are usually the whole improvement.',
         ],
       },
@@ -191,6 +196,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
   },
   {
     id: 'interactive-3d-without-slowing-down',
+    relatedService: 'threejs-3d-websites',
     featured: false,
     category: 'Interactive',
     date: 'Oct 18, 2026',
@@ -202,7 +208,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'Decide what the 3D is for',
         paragraphs: [
-          'Before adding 3D to a page, decide its job. Is it the product itself, like a configurator a visitor needs to rotate? Or is it atmosphere, a background that sets a mood? The answer decides the budget.',
+          'The short answer: 3D only earns its place when it has a job — a configurator a visitor needs to rotate, or a scene that explains the product. Atmosphere alone is not worth the cost. Before adding 3D to a page, decide its job. Is it the product itself, like a configurator a visitor needs to rotate? Or is it atmosphere, a background that sets a mood? The answer decides the budget.',
           'Atmosphere should be cheap: low polygon counts, simple materials, no shadows, and a frame rate cap. A product view can spend more, because the visitor asked for it by interacting. Spending a product budget on a background is how sites end up slow.',
         ],
       },
@@ -237,7 +243,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'There is no single price — and that is honest',
         paragraphs: [
-          'A Next.js website can be a five-page marketing site or a full web application with accounts, payments and a content team behind it. Those two things share a framework and almost nothing else, so any agency quoting one flat price for "a Next.js website" is either guessing or selling you the simple one at the complex price.',
+          'The short answer: there is no single price — a five-page marketing site and a full web application share a framework and almost nothing else, so the cost comes down to scope. A Next.js website can be a five-page marketing site or a full web application with accounts, payments and a content team behind it. Those two things share a framework and almost nothing else, so any agency quoting one flat price for "a Next.js website" is either guessing or selling you the simple one at the complex price.',
           'What you can do instead is learn the drivers. Once you know what moves the price, you can read any quote — including ours — and tell whether it matches the job.',
         ],
       },
@@ -272,7 +278,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'A redesign is four jobs, not one',
         paragraphs: [
-          'When people ask what a redesign costs, they are usually picturing the visible part: a new design. But a proper redesign is four jobs bundled together — new design, rebuild on a modern stack, migration of everything the old site had, and protection of the search rankings the old site earned.',
+          'The short answer: a redesign is four jobs bundled together — new design, rebuild, migration and SEO protection — and that is where the money actually goes. When people ask what a redesign costs, they are usually picturing the visible part: a new design. But a proper redesign is four jobs bundled together — new design, rebuild on a modern stack, migration of everything the old site had, and protection of the search rankings the old site earned.',
           'Skip any one of those and the price drops — and so does the result. A cheap redesign that loses your Google rankings is the most expensive kind there is.',
         ],
       },
@@ -342,7 +348,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'The honest summary',
         paragraphs: [
-          'WordPress powers a huge share of the web for good reasons: anyone can update it, plugins exist for almost everything, and finding someone to maintain it is easy. Next.js is the newer choice: faster pages, better security by default, and a codebase a developer can reason about — but it needs a developer to change things.',
+          'The short answer: WordPress is the safe default and Next.js is the fast one — the right choice depends on who updates the site and what it has to do. WordPress powers a huge share of the web for good reasons: anyone can update it, plugins exist for almost everything, and finding someone to maintain it is easy. Next.js is the newer choice: faster pages, better security by default, and a codebase a developer can reason about — but it needs a developer to change things.',
           'Neither is wrong. The wrong choice is picking one for the wrong reason — WordPress because it is familiar, or Next.js because it is fashionable.',
         ],
       },
@@ -377,7 +383,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'Start with an inventory, not with code',
         paragraphs: [
-          'Before anything is rebuilt, list everything the current site has: pages, posts, products, images, forms, integrations and the URLs they live at. The inventory is the migration — everything after it is execution.',
+          'The short answer: a migration is not a rewrite — start with an inventory of everything the current site has, and move in the right order so visitors never notice and rankings hold. Before anything is rebuilt, list everything the current site has: pages, posts, products, images, forms, integrations and the URLs they live at. The inventory is the migration — everything after it is execution.',
           'The inventory also decides the order. Migrate the pages that earn traffic first, and the pages nobody visits last. If a page has no traffic and no links, consider dropping it instead of migrating it.',
         ],
       },
@@ -412,7 +418,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
       {
         heading: 'Why monthly, and why written down',
         paragraphs: [
-          'Websites break quietly: a plugin goes out of date, a certificate expires, a form stops sending, a page gets slow. None of these announce themselves. A monthly checklist turns "we should check the site" into a job with a list and a date.',
+          'The short answer: websites break quietly, so a written monthly checklist — updates, backups, speed, links and security — is the difference between a small fix and a lost week. Websites break quietly: a plugin goes out of date, a certificate expires, a form stops sending, a page gets slow. None of these announce themselves. A monthly checklist turns "we should check the site" into a job with a list and a date.',
           'Write the list down and keep it in one place. The checklist below is the one we use — it takes about an hour a month for a typical site, and it catches almost everything before it becomes a problem.',
         ],
       },

@@ -27,17 +27,17 @@ THE JIMMY LAB is a digital agency crafting immersive websites, web applications 
 
 Remote web development from a global team — no local office is claimed in any market.
 
-- [Web Development for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
-- [Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
-- [Web Development for UAE Businesses](https://thejimmylab.vercel.app/locations/uae): A global remote team, working Gulf hours.
-- [Web Development for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): A global remote team, handing over work every day.
-- [Web Development for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): A global remote team, working on Canadian hours.
+- [Web Development Agency for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
+- [Bespoke Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
+- [Web Development Agency for UAE & Dubai Businesses](https://thejimmylab.vercel.app/locations/uae): A global remote team, working Gulf hours.
+- [Web Development Agency for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): A global remote team, handing over work every day.
+- [Web Development Agency for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): A global remote team, working on Canadian hours.
 
 ## Industries
 
 - [Website Redesign for SaaS Companies](https://thejimmylab.vercel.app/industries/saas): A SaaS website that explains the product faster — and converts more trials.
 - [E-commerce Websites for Fashion Brands](https://thejimmylab.vercel.app/industries/ecommerce-fashion): A fashion storefront that looks like the brand — and sells like it means it.
-- [Websites for Restaurants](https://thejimmylab.vercel.app/industries/restaurants): A restaurant website that fills tables — menu, bookings and directions in one tap.
+- [Restaurant Website Design & Development](https://thejimmylab.vercel.app/industries/restaurants): A restaurant website that fills tables — menu, bookings and directions in one tap.
 
 ## Journal
 

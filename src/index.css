@@ -36,6 +36,14 @@ body {
   scroll-margin-top: 96px;
 }
 
+/* Below-fold sections: skip rendering until they approach the viewport,
+   so the initial load spends less time on style & layout. The generous
+   intrinsic size keeps the scrollbar steady. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 1200px;
+}
+
 ::selection {
   background: #ff6b35;
   color: #ffffff;

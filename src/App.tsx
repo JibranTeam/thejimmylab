@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type ComponentType } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,18 +11,34 @@ import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
 import { getSavedScrollPosition, navigateTo, navigateHomeToSection, normalizePath, scrollToSectionWithRetry } from './utils/navigation';
-const ServicePage = lazy(() => import('./pages/ServicePage'));
-const JournalPostPage = lazy(() => import('./pages/JournalPostPage'));
+// A chunk import can fail once on a fresh deploy (cold edge, transient
+// network blip) and React would keep the failed lazy page black. Retry once
+// before giving up.
+function lazyRetry<T extends ComponentType<any>>(factory: () => Promise<{ default: T }>) {
+  return lazy(async () => {
+    try {
+      return await factory();
+    } catch {
+      await new Promise((r) => window.setTimeout(r, 600));
+      return factory();
+    }
+  });
+}
+const ServicePage = lazyRetry(() => import('./pages/ServicePage'));
+const JournalPostPage = lazyRetry(() => import('./pages/JournalPostPage'));
 import ComingSoonToast from './components/ComingSoonToast';
 import { JOURNAL_POSTS, getJournalPostById } from './data/journal';
-const TeamPage = lazy(() => import('./pages/TeamPage'));
-const ComingSoonPage = lazy(() => import('./pages/ComingSoonPage'));
-const TopicPage = lazy(() => import('./pages/TopicPage'));
+const TeamPage = lazyRetry(() => import('./pages/TeamPage'));
+const ComingSoonPage = lazyRetry(() => import('./pages/ComingSoonPage'));
+const TopicPage = lazyRetry(() => import('./pages/TopicPage'));
+const PrivacyPage = lazyRetry(() => import('./pages/PrivacyPage'));
+const TermsPage = lazyRetry(() => import('./pages/TermsPage'));
 import { PageTransition, RouteCurtain } from './components/PageTransition';
 import { CornerTicks } from './components/CornerTicks';
 import { services as serviceData, getServiceBySlug } from './data/services';
 import { locations, getLocationBySlug } from './data/locations';
 import { industries, getIndustryBySlug } from './data/industries';
+import { team } from './data/team';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -226,7 +242,7 @@ const HeroSection = () => {
           <span className="display-heavy block text-[clamp(2.9rem,10.4vw,9.6rem)]">Experiences.</span>
         </h1>
         <p className="hero-subtitle font-mono text-[12px] sm:text-[13.5px] leading-[1.85] tracking-[0.11em] uppercase text-white/55 max-w-[46ch] mb-12">
-          Digital experience core. We design, build and optimize the
+          Web development &amp; design agency. We design, build and optimize the
           <br className="hidden sm:block" /> interfaces and systems that move brands forward.
         </p>
         <div className="hero-cta flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-10">
@@ -296,11 +312,11 @@ const Words = ({
         return (
           <span key={i} aria-hidden="true" className="inline-block whitespace-pre">
             <motion.span
-              initial={{ opacity: 0, y: '0.55em', filter: 'blur(12px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, y: '0.55em' }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-12% 0px' }}
               transition={{ delay: baseDelay + i * 0.05, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className={cn('inline-block [will-change:filter,opacity]', outlineLast && last && 'gradient-text')}
+              className={cn('inline-block [will-change:transform,opacity]', outlineLast && last && 'gradient-text')}
             >
               {w}
             </motion.span>
@@ -650,7 +666,7 @@ const ServicesSection = () => {
   const servicePages = Array.from({ length: totalServicePages }, (_, pg) => services.slice(pg * SERVICES_PER_PAGE, pg * SERVICES_PER_PAGE + SERVICES_PER_PAGE));
   const goToServicePage = (page: number) => { if (page < 0 || page >= totalServicePages || page === servicePage) return; setHoveredCard(null); setServicePage(page); };
   return (
-    <section id="services" ref={sectionRef} className="relative py-32 bg-[#070f1a] overflow-hidden">
+    <section id="services" ref={sectionRef} className="cv-auto relative py-32 bg-[#070f1a] overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-[#d4a574]/5 cardboard-cutout rounded-full rotate-12" />
         <div className="absolute bottom-20 right-10 w-48 h-48 bg-[#ff6b35]/5 cardboard-cutout rounded-full -rotate-6" />
@@ -759,7 +775,7 @@ const PortfolioSection = () => {
     return () => ctx.revert();
   }, []);
   return (
-    <section id="portfolio" ref={sectionRef} className="relative py-32 bg-[#3A373E] overflow-hidden">
+    <section id="portfolio" ref={sectionRef} className="cv-auto relative py-32 bg-[#3A373E] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Work</div>
@@ -832,7 +848,7 @@ const OurProcessSection = () => {
           </div>
           <div className="relative flex min-h-[320px] flex-col overflow-hidden rounded-3xl glass shadow-[0_8px_32px_rgba(0,0,0,0.3)] px-6 py-8 sm:min-h-[360px] sm:px-8 sm:py-10 lg:min-h-[400px] lg:px-10 lg:py-11">
             <AnimatePresence mode="wait" initial={false}>
-              <motion.div key={active} role="tabpanel" id={'approach-panel-' + current.num} initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -8, filter: 'blur(4px)' }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} className="flex flex-1 flex-col will-change-transform">
+              <motion.div key={active} role="tabpanel" id={'approach-panel-' + current.num} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} className="flex flex-1 flex-col will-change-transform">
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/50">{current.label} · {current.num}</p>
                 <h3 className="font-['Syne'] mt-3 font-extrabold leading-[1.05] tracking-[-0.03em] text-white [font-size:clamp(2.5rem,6vw,4rem)]">{current.title}</h3>
                 <p className="mt-5 max-w-[52ch] text-[17px] leading-[1.65] text-white/70">{current.desc}</p>
@@ -867,7 +883,7 @@ const TestimonialsSection = () => {
   const next = () => setActive((p) => (p + 1) % testimonials.length);
   const prev = () => setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
   return (
-    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#070f1a] overflow-hidden">
+    <section id="testimonials" className="cv-auto relative py-24 lg:py-32 bg-[#070f1a] overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-[0.35] pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[#ff6b35]/[0.04] blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[700px] h-[500px] bg-[#00d4aa]/[0.03] blur-[100px] rounded-full pointer-events-none" />
@@ -922,7 +938,7 @@ const FAQSection = () => {
     { question: 'Can you help with existing websites?', answer: 'Absolutely! We offer website redesigns, performance optimization, feature additions, and migration services for existing websites. We can work with most modern web technologies.' },
   ];
   return (
-    <section id="faq" className="relative py-32 bg-[#070f1a] overflow-hidden">
+    <section id="faq" className="cv-auto relative py-32 bg-[#070f1a] overflow-hidden">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">FAQ</div>
@@ -956,7 +972,7 @@ const JournalSection = () => {
   const journalPages = Array.from({ length: totalJournalPages }, (_, pg) => articles.slice(pg * ARTICLES_PER_PAGE, pg * ARTICLES_PER_PAGE + ARTICLES_PER_PAGE));
   const goToJournalPage = (page: number) => { if (page < 0 || page >= totalJournalPages || page === journalPage) return; setJournalPage(page); };
   return (
-    <section id="journal" className="relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
+    <section id="journal" className="cv-auto relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-[8%] w-64 h-64 bg-[#d4a574]/5 cardboard-cutout rounded-full rotate-12" />
         <div className="absolute bottom-20 right-[10%] w-48 h-48 bg-[#ff6b35]/5 cardboard-cutout rounded-full -rotate-6" />
@@ -1166,7 +1182,7 @@ const ConnectSection = () => {
     return () => window.removeEventListener('brief', onBrief);
   }, []);
   return (
-    <section id="connect" className="relative bg-[#0a0a0a] py-24 md:py-28 overflow-hidden">
+    <section id="connect" className="cv-auto relative bg-[#0a0a0a] py-24 md:py-28 overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
         <div className="inline-flex max-w-full flex-wrap items-center gap-x-7 gap-y-2 rounded-2xl border border-white/20 bg-[#3A373E]/40 backdrop-blur-xl px-5 py-3 mb-10">
             <p className="font-['Syne'] font-bold text-white text-[20px] leading-tight">THE JIMMY LA<span className="relative inline-block">B<span className="absolute -bottom-2 -right-5 flex w-6 h-6 items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#22c55e]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#22c55e] shadow-[0_0_10px_rgba(34,197,94,0.6)]"></span></span></span></p>
@@ -1189,12 +1205,6 @@ const ConnectSection = () => {
                 <button onClick={copyEmail} className="inline-flex items-center gap-2 rounded-md border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 font-mono text-[11px] text-white/70 hover:text-white hover:border-white/25 hover:bg-white/[0.1] transition-all shrink-0"><Copy className="w-3.5 h-3.5" />{copied ? 'Copied!' : 'Copy Email'}</button>
               </div>
               <div className="mt-3"><a href="https://www.fiverr.com/jimmy3105" target="_blank" rel="noreferrer" className="btn-fiverr"><span>Hire on Fiverr</span><ArrowUpRight className="w-4 h-4" /></a></div>
-            </div>
-            <div className="mt-9">
-              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-white/60 mb-4">Follow us</p>
-              <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
-                {['GitHub', 'LinkedIn', 'X / Twitter', 'Dribbble'].map((s) => (<a key={s} href="/coming-soon" className="font-mono text-[13.5px] text-white/60 hover:text-[#ff6b35] transition-colors">{s}</a>))}
-              </div>
             </div>
             <div className="w-full mt-12 p-6 rounded-2xl bg-white/5 border border-white/15 relative overflow-hidden group select-none">
               <div className="absolute right-6 top-6 flex items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#ff6b35]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#ff6b35] shadow-[0_0_10px_rgba(255,107,53,0.6)]"></span></div>
@@ -1249,7 +1259,6 @@ const Footer = () => (
           </div>
           <p className="text-[#ff6b35] font-mono text-[11px] font-bold uppercase tracking-[0.22em] mb-5">Digital Experiences. Built Better.</p>
           <p className="text-white/60 leading-relaxed max-w-md mb-6">We design, build, and optimize digital experiences that help businesses, brands, and ideas move forward. Whether you need a new website, a custom web application, an immersive interactive experience, help improving an existing project, technical consulting, or training, we work closely with you to understand your goals and build a solution that fits your needs.</p>
-          <div className="flex gap-4">{['Twitter', 'LinkedIn', 'GitHub', 'Dribbble'].map((social) => (<a key={social} href="/coming-soon" className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center text-white/60 hover:bg-[#ff6b35] hover:border-[#ff6b35] hover:text-white transition-all"><span className="text-xs font-bold">{social[0]}</span></a>))}</div>
         </div>
         <div>
           <h4 className="font-['Syne'] font-bold text-white mb-6">Quick Links</h4>
@@ -1280,8 +1289,8 @@ const Footer = () => (
               { name: 'E-Commerce', href: '/services/e-commerce' },
               { name: 'Mobile Apps', href: '/services/mobile-development' },
               { name: 'AI Solutions', href: '/services/ai-solutions' },
-              { name: 'SEO & Optimization', href: '#services' },
-              { name: 'Maintenance & Support', href: '#connect' },
+              { name: 'SEO & Optimization', href: '/services/seo-website-optimization' },
+              { name: 'Maintenance & Support', href: '/services/maintenance-support' },
             ].map((service) => (
               <li key={service.name}>
                 <a href={service.href} className="text-white/60 hover:text-[#ff6b35] transition-colors">{service.name}</a>
@@ -1301,10 +1310,19 @@ const Footer = () => (
             </span>
           ))}
         </p>
+        <p className="text-white/60 text-sm leading-relaxed mt-3">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50 mr-3">Industries</span>
+          {industries.map((t, i) => (
+            <span key={t.slug}>
+              {i > 0 && <span className="text-white/30"> · </span>}
+              <a href={'/industries/' + t.slug} className="text-white/60 hover:text-[#ff6b35] transition-colors">{({ saas: 'SaaS', 'ecommerce-fashion': 'Fashion e-commerce', restaurants: 'Restaurants' } as Record<string, string>)[t.slug] || t.slug}</a>
+            </span>
+          ))}
+        </p>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-white/60 text-sm">© {new Date().getFullYear()} THE JIMMY LAB. All rights reserved.</p>
-        <div className="flex gap-6 text-sm"><a href="/coming-soon" className="text-white/60 hover:text-white transition-colors">Privacy Policy</a><a href="/coming-soon" className="text-white/60 hover:text-white transition-colors">Terms of Service</a></div>
+        <div className="flex gap-6 text-sm"><a href="/privacy" className="text-white/60 hover:text-white transition-colors">Privacy Policy</a><a href="/terms" className="text-white/60 hover:text-white transition-colors">Terms of Service</a></div>
       </div>
     </div>
   </footer>
@@ -1342,13 +1360,56 @@ function NotFoundPage() {
       <h1 className="text-4xl md:text-6xl font-bold mb-4">This page doesn&apos;t exist.</h1>
       <p className="text-white/60 max-w-md mb-8">The link you followed may be outdated, or the address may have a typo. The home page and all services are still here.</p>
       <button onClick={() => navigateTo('/')} className="px-6 py-3 border border-white/35 hover:bg-white hover:text-black transition-colors font-mono text-sm tracking-wider">BACK TO HOME</button>
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+        <a href="#services" className="text-white/60 hover:text-[#ff6b35] transition-colors">Services</a>
+        <a href="#journal" className="text-white/60 hover:text-[#ff6b35] transition-colors">Journal</a>
+        <a href="#connect" className="text-white/60 hover:text-[#ff6b35] transition-colors">Contact</a>
+      </div>
     </main>
   );
 }
 
+// Branded loading state for the lazy pages: never a bare black screen while
+// a page chunk loads.
+const PageFallback = () => (
+  <div className="min-h-screen bg-[#05070a] flex items-center justify-center">
+    <div className="flex flex-col items-center gap-5">
+      <div className="w-16 h-16 bg-[#ff6b35] rounded-xl flex items-center justify-center shadow-layer-3">
+        <Code2 className="w-9 h-9 text-white" />
+      </div>
+      <span className="font-['Syne'] text-3xl md:text-4xl font-black text-white tracking-tight">
+        THE JIMMY LAB<span className="text-[#ff3c2f]">.</span>
+      </span>
+    </div>
+  </div>
+);
+
 function App() {
   const [route, setRoute] = useState<string>(() => normalizePath(window.location.pathname));
   const [showCurtain, setShowCurtain] = useState(false);
+  // Warm the lazy page chunks once the main thread is idle, so the first
+  // click on a service/journal/location card never waits on a cold chunk
+  // fetch. A cold chunk once left the screen black for 10+ seconds (the
+  // Suspense fallback was a bare dark div) until a reload. requestIdleCallback
+  // keeps this off the first paint; the 2s timeout is the fallback for
+  // browsers without it.
+  useEffect(() => {
+    const warm = () => {
+      void import('./pages/ServicePage');
+      void import('./pages/JournalPostPage');
+      void import('./pages/TeamPage');
+      void import('./pages/ComingSoonPage');
+      void import('./pages/TopicPage');
+      void import('./pages/PrivacyPage');
+      void import('./pages/TermsPage');
+    };
+    if (typeof window.requestIdleCallback === 'function') {
+      const id = window.requestIdleCallback(warm, { timeout: 2000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const t = window.setTimeout(warm, 300);
+    return () => window.clearTimeout(t);
+  }, []);
   // Legacy hash URLs (#/services/..., #/team, #/journal/...) shared before
   // real-URL routing: redirect them once to the matching real path.
   useEffect(() => {
@@ -1469,7 +1530,7 @@ function App() {
       // animation (AnimatePresence) still plays. The old 320ms wait made
       // every click feel slow.
       setRoute(next);
-      window.setTimeout(() => setShowCurtain(false), 650);
+      window.setTimeout(() => setShowCurtain(false), 450);
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
@@ -1484,7 +1545,7 @@ function App() {
       if (!anchor) return;
       const href = anchor.getAttribute('href');
       if (!href) return;
-      if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/') {
+      if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/') {
         e.preventDefault();
         navigateTo(href);
         return;
@@ -1512,36 +1573,54 @@ function App() {
   const topic = location || industry;
   const isTeamPage = /^\/team$/.test(route);
   const isComingSoonPage = route === '/coming-soon';
-  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry;
+  const isPrivacyPage = route === '/privacy';
+  const isTermsPage = route === '/terms';
+  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry && !isPrivacyPage && !isTermsPage;
   // Per-page title + canonical + description + structured data.
   useEffect(() => {
-    document.title = service ? service.title + ' Services | THE JIMMY LAB' : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB — Web Development & Design Agency';
+    document.title = service ? (service.seoTitle || service.title + ' Services | THE JIMMY LAB') : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isPrivacyPage ? 'Privacy Policy | THE JIMMY LAB' : isTermsPage ? 'Terms of Service | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB — Web Development & Design Agency';
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route));
-    const description = service ? service.tagline + ' | THE JIMMY LAB — a global remote web development and design agency, serving clients in the USA, UK, Europe and the Gulf.' : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB — six operators covering design, engineering, SEO and automation, working remotely with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Global remote web development and design agency, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
+    const description = service ? (service.seoDescription || service.tagline + ' | THE JIMMY LAB — a global remote web development and design agency, serving clients in the USA, UK, Europe and the Gulf.') : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB — six operators covering design, engineering, SEO and automation, working remotely with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isPrivacyPage ? 'Privacy Policy for THE JIMMY LAB — what information this website collects and how it is used.' : isTermsPage ? 'Terms of Service for THE JIMMY LAB — the terms for working with the studio and using this website.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Global remote web development and design agency, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
     const robotsMeta = document.querySelector('meta[name="robots"]');
     if (isComingSoonPage) { if (!robotsMeta) { const m = document.createElement('meta'); m.setAttribute('name', 'robots'); m.setAttribute('content', 'noindex'); document.head.appendChild(m); } else robotsMeta.setAttribute('content', 'noindex'); } else if (robotsMeta) robotsMeta.remove();
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', description);
+    // Open Graph / Twitter cards must follow the page too — they stayed on
+    // the home values on every route before this.
+    const pageUrl = 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route);
+    const setMetaContent = (sel: string, value: string) => { const el = document.querySelector(sel); if (el) el.setAttribute('content', value); };
+    setMetaContent('meta[property="og:title"]', document.title);
+    setMetaContent('meta[property="og:description"]', description);
+    setMetaContent('meta[property="og:url"]', pageUrl);
+    setMetaContent('meta[name="twitter:title"]', document.title);
+    setMetaContent('meta[name="twitter:description"]', description);
     const oldLd = document.getElementById('page-jsonld');
     if (oldLd) oldLd.remove();
     let ld: unknown = null;
     if (service) {
       ld = { '@context': 'https://schema.org', '@graph': [
-        { '@type': 'Service', name: service.title, description: service.tagline, url: 'https://thejimmylab.vercel.app/services/' + service.slug, provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
+        { '@type': 'Service', name: service.title, description: service.seoDescription || service.tagline, url: 'https://thejimmylab.vercel.app/services/' + service.slug, areaServed: ['US', 'GB', 'AE', 'AU', 'CA'], provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
+        { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://thejimmylab.vercel.app/' }, { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://thejimmylab.vercel.app/#services' }, { '@type': 'ListItem', position: 3, name: service.title, item: 'https://thejimmylab.vercel.app/services/' + service.slug }] },
         { '@type': 'FAQPage', mainEntity: service.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
       ] };
     } else if (topic) {
       const topicUrl = 'https://thejimmylab.vercel.app/' + (topic.kind === 'location' ? 'locations/' : 'industries/') + topic.slug;
       ld = { '@context': 'https://schema.org', '@graph': [
-        { '@type': 'Service', name: topic.title, description: topic.description, url: topicUrl, provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
+        { '@type': 'Service', name: topic.title, description: topic.description, url: topicUrl, areaServed: ['US', 'GB', 'AE', 'AU', 'CA'], provider: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' } },
+        { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://thejimmylab.vercel.app/' }, ...(topic.kind === 'location' ? [{ '@type': 'ListItem', position: 2, name: 'Locations', item: 'https://thejimmylab.vercel.app/#locations' }] : []), { '@type': 'ListItem', position: topic.kind === 'location' ? 3 : 2, name: topic.title, item: topicUrl }] },
         { '@type': 'FAQPage', mainEntity: topic.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
       ] };
     } else if (journalPost) {
       const months: Record<string, string> = { January: '01', February: '02', March: '03', April: '04', May: '05', June: '06', July: '07', August: '08', September: '09', October: '10', November: '11', December: '12' };
       const parts = journalPost.date.replace(',', '').split(' ');
       const iso = parts.length === 3 && months[parts[0]] ? parts[2] + '-' + months[parts[0]] + '-' + parts[1].padStart(2, '0') : undefined;
-      ld = { '@context': 'https://schema.org', '@type': 'Article', headline: journalPost.title, description: journalPost.excerpt, url: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, author: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' }, ...(iso ? { datePublished: iso } : {}) };
+      ld = { '@context': 'https://schema.org', '@type': 'Article', headline: journalPost.title, description: journalPost.excerpt, image: journalPost.image, url: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, mainEntityOfPage: 'https://thejimmylab.vercel.app/journal/' + journalPost.id, author: { '@type': 'Organization', name: 'THE JIMMY LAB', url: 'https://thejimmylab.vercel.app/' }, publisher: { '@id': 'https://thejimmylab.vercel.app/#organization' }, ...(iso ? { datePublished: iso, dateModified: iso } : {}) };
+    } else if (isTeamPage) {
+      // Person schema for the team — name and role only. The LinkedIn URLs
+      // in the team data look mismatched to the names, so no sameAs until
+      // each is verified.
+      ld = { '@context': 'https://schema.org', '@graph': team.map((m) => ({ '@type': 'Person', name: m.name, jobTitle: m.role, worksFor: { '@id': 'https://thejimmylab.vercel.app/#organization' } })) };
     } else if (!isTeamPage && !isComingSoonPage && !isNotFound) {
       // Home FAQPage schema — keep in sync with the HomePage faqs array.
       ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
@@ -1559,7 +1638,7 @@ function App() {
       script.text = JSON.stringify(ld);
       document.head.appendChild(script);
     }
-  }, [route, service, journalPost, topic, isTeamPage, isComingSoonPage, isNotFound]);
+  }, [route, service, journalPost, topic, isTeamPage, isComingSoonPage, isPrivacyPage, isTermsPage, isNotFound]);
   // GA4 (optional): set VITE_GA_MEASUREMENT_ID in Vercel env vars to activate.
   // No tracking code ships at all until that ID is set.
   useEffect(() => {
@@ -1580,7 +1659,7 @@ function App() {
     if (g) g('event', 'page_view', { page_path: route });
   }, [route]);
 
-  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
+  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
       <AnimatePresence>{showCurtain && <RouteCurtain key="curtain" />}</AnimatePresence>
@@ -1588,7 +1667,7 @@ function App() {
       <Analytics />
       <AnimatePresence mode="wait">
         <PageTransition key={routeKey}>
-          {service ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><TeamPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<div className="min-h-screen bg-[#05070a]" />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
+          {service ? <Suspense fallback={<PageFallback />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<PageFallback />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<PageFallback />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<PageFallback />}><TeamPage /></Suspense> : isPrivacyPage ? <Suspense fallback={<PageFallback />}><PrivacyPage /></Suspense> : isTermsPage ? <Suspense fallback={<PageFallback />}><TermsPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<PageFallback />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
         </PageTransition>
       </AnimatePresence>
     </>
