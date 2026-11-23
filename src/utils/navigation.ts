@@ -28,6 +28,11 @@ export function navigateTo(path: string) {
     lastHomeSection = currentHomeSection();
     if (lastHomeSection) {
       try { window.sessionStorage.setItem('thejimmylab:pendingSection', lastHomeSection); } catch { /* storage may be blocked */ }
+      // Stamp the section onto the home history entry itself, so a real
+      // Back reads it from the entry it is returning to. This survives
+      // reloads and does not depend on the module variable or on storage
+      // the layout effect may already have consumed.
+      try { window.history.replaceState({ returnSection: lastHomeSection }, ''); } catch { /* history may be restricted */ }
     }
   }
   rememberScrollPosition();

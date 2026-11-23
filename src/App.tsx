@@ -1622,7 +1622,12 @@ function App() {
         const key = window.location.pathname + window.location.hash;
         const savedY = getSavedScrollPosition(key);
         const hash = window.location.hash.slice(1);
-        const backSection = next === '/' ? getLastHomeSection() : null;
+        // Prefer the section stamped on the home history entry itself
+        // (written by navigateTo when leaving home); it survives reloads
+        // and is available synchronously here. Fall back to the recorded
+        // section, then the hash, then the saved pixel.
+        const stateSection = next === '/' ? ((e.state as { returnSection?: string } | null)?.returnSection ?? null) : null;
+        const backSection = stateSection ?? (next === '/' ? getLastHomeSection() : null);
         if (backSection) {
           pendingRestoreRef.current = { section: backSection };
         } else if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
