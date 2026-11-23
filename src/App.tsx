@@ -1593,6 +1593,17 @@ function App() {
       restoreYRef.current = null;
       sectionId = sectionAtScrollY(y);
     }
+    if (!sectionId && route === '/') {
+      // Last resort, and the point of this method: derive the section
+      // from where the browser actually landed. Every recording path can
+      // come back empty, and then Back restores the exact pixel and
+      // nothing corrects it. The settled scroll position itself tells us
+      // which section the user was in; centre that. Only when scrolled
+      // down (a Back restore), never for a deliberate trip to the top.
+      if (window.scrollY > 100) {
+        sectionId = sectionAtScrollY(window.scrollY);
+      }
+    }
     if (!sectionId) return;
     // Retry persistently until the heading is centred. A single retry
     // can run while the home layout is still settling, leaving the exact
