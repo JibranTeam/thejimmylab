@@ -137,12 +137,18 @@ export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehav
     // helper (ignores transforms and estimates) and correct instantly so
     // the CSS smooth scroll-behavior does not turn the correction into
     // another glide.
-    window.setTimeout(() => {
+    // Re-check until the heading is centred. A single check can run
+    // while the layout above is still settling, so retry a few times.
+    const recheck = (attempt: number) => {
       const y = centerYForSection(sectionId);
       if (y !== null && Math.abs(window.scrollY - y) > 4) {
         scrollToInstant(y);
       }
-    }, 1200);
+      if (attempt < 3) {
+        window.setTimeout(() => recheck(attempt + 1), 800);
+      }
+    };
+    window.setTimeout(() => recheck(1), 800);
   }
   return true;
 }

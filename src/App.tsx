@@ -899,7 +899,7 @@ const TestimonialsSection = () => {
   const next = () => setActive((p) => (p + 1) % testimonials.length);
   const prev = () => setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
   return (
-    <section id="testimonials" className="cv-auto relative py-24 lg:py-32 bg-[#070f1a] overflow-hidden">
+    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#070f1a] overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-[0.35] pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[#ff6b35]/[0.04] blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[700px] h-[500px] bg-[#00d4aa]/[0.03] blur-[100px] rounded-full pointer-events-none" />
@@ -954,7 +954,7 @@ const FAQSection = () => {
     { question: 'Can you help with existing websites?', answer: 'Absolutely! We offer website redesigns, performance optimization, feature additions, and migration services for existing websites. We can work with most modern web technologies.' },
   ];
   return (
-    <section id="faq" className="cv-auto relative py-32 bg-[#070f1a] overflow-hidden">
+    <section id="faq" className="relative py-32 bg-[#070f1a] overflow-hidden">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">FAQ</div>
