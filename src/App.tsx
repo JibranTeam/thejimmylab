@@ -1539,9 +1539,10 @@ function App() {
       if (pending) {
         try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
         pendingRestoreRef.current = null;
-        const y = centerSectionY(pending);
+        // Do not scroll here: the home layout is still settling, so a
+        // measurement now can be ~1000px off. Record the section and let
+        // the post-paint effect centre it once the layout is stable.
         restoreSectionRef.current = pending;
-        if (y !== null) { scrollToInstant(y); target = y; }
       }
     }
     if (target === null) {
@@ -1557,9 +1558,7 @@ function App() {
           scrollToInstant(0);
           target = 0;
         } else if (restore.section) {
-          const y = centerSectionY(restore.section);
           restoreSectionRef.current = restore.section;
-          if (y !== null) { scrollToInstant(y); target = y; }
         } else if (typeof restore.y === 'number') {
           // Real Back/Forward: centre the section the user came from, so
           // the in-page "Back to ..." link and the browser Back agree.
@@ -1573,8 +1572,6 @@ function App() {
           const sectionId = getLastHomeSection() ?? sectionAtScrollY(restore.y);
           if (sectionId) {
             restoreSectionRef.current = sectionId;
-            const y = centerSectionY(sectionId);
-            if (y !== null) { scrollToInstant(y); target = y; }
           } else {
             // Section not derivable yet (home layout not settled): keep
             // the pixel for now but record it, so the post-paint effect
@@ -1599,7 +1596,10 @@ function App() {
       if (!sectionId) return false;
       const y = centerYForSectionRect(sectionId);
       if (y === null) return false;
-      if (Math.abs(window.scrollY - y) > 4) scrollToInstant(y);
+      if (Math.abs(window.scrollY - y) > 4) {
+        scrollToInstant(y);
+        return false;
+      }
       return true;
     };
     let sectionId = restoreSectionRef.current;
@@ -1636,7 +1636,7 @@ function App() {
     // pixel as the landing (deep-scroll Back regressed to this).
     const attempt = (n: number) => {
       if (centre(sectionId)) return;
-      if (n < 6) window.setTimeout(() => attempt(n + 1), 300);
+      if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
     };
     attempt(1);
   }, [route]);
