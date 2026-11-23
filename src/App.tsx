@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered } from './utils/navigation';
+import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered, centerYForSectionRect } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -1531,7 +1531,7 @@ function App() {
   useLayoutEffect(() => {
     // Centring lives in navigation.ts (centerYForSection) so the restore,
     // the nav and the in-page links all land the same way.
-    const centerSectionY = centerYForSection;
+    const centerSectionY = centerYForSectionRect;
     let target: number | null = null;
     if (route === '/') {
       let pending: string | null = null;
@@ -1597,7 +1597,7 @@ function App() {
   useEffect(() => {
     const centre = (sectionId: string | null): boolean => {
       if (!sectionId) return false;
-      const y = centerYForSection(sectionId);
+      const y = centerYForSectionRect(sectionId);
       if (y === null) return false;
       if (Math.abs(window.scrollY - y) > 4) scrollToInstant(y);
       return true;

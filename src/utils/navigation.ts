@@ -94,6 +94,24 @@ export function docTop(el: HTMLElement): number {
 // viewport. Falls back to the section itself (the footer block has no
 // heading tag). Clamped to the page, so a section at the very end can only
 // go as far as the bottom allows.
+// Centre target from the heading's visual position, not from docTop.
+// docTop (offsetTop chain) overstates the position by ~1000px for the
+// Services heading, so the restore computed a target equal to the current
+// deep-scroll pixel and concluded it was already centred. The bounding
+// rect plus the current scroll is the true document position regardless
+// of offsetParent transforms.
+export function centerYForSectionRect(sectionId: string): number | null {
+  if (sectionId === 'top') return 0;
+  const el = document.getElementById(sectionId);
+  if (!el) return null;
+  const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
+  const rect = heading.getBoundingClientRect();
+  const centre = rect.top + window.scrollY + rect.height / 2;
+  const y = centre - window.innerHeight / 2;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  return Math.max(0, Math.min(y, Math.max(0, max)));
+}
+
 export function centerYForSection(sectionId: string): number | null {
   // 'top' is the logo's target; no element has id="top" (the hero is
   // id="home"), so it means the very top of the page.
