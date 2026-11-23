@@ -18,11 +18,17 @@ export function navigateTo(path: string) {
     return;
   }
   // Leaving the home page: remember which section the user was in, from
-  // the viewport centre. The card's own section is the most precise
-  // signal, but card onClick handlers call navigateTo directly (with
+  // the top of the viewport (the section they are reading and clicking
+  // in). Write it where Back can find it too: sessionStorage is the one
+  // mechanism every return to home uses, exactly like an in-page
+  // "Back to ..." link, so browser Back and the page buttons land the
+  // same way. Card onClick handlers call navigateTo directly (with
   // preventDefault), so the document click handler never sees them.
   if (normalizePath(window.location.pathname) === '/') {
     lastHomeSection = currentHomeSection();
+    if (lastHomeSection) {
+      try { window.sessionStorage.setItem('thejimmylab:pendingSection', lastHomeSection); } catch { /* storage may be blocked */ }
+    }
   }
   rememberScrollPosition();
   window.history.pushState(null, '', target);
@@ -117,7 +123,7 @@ export function headingCenterOffset(sectionId: string): number | null {
 export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehavior = 'auto'): boolean {
   const el = document.getElementById(sectionId);
   if (!el) return false;
-  const heading = el.querySelector('h1, h2, h3') as HTMLElement | null;
+  const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3')) as HTMLElement | null;
   const target = (heading ?? el) as HTMLElement;
   target.scrollIntoView({ behavior, block: 'center' });
   return true;

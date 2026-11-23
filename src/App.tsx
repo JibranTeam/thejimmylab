@@ -1510,7 +1510,8 @@ function App() {
         try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
         pendingRestoreRef.current = null;
         const y = centerSectionY(pending);
-        if (y !== null) { scrollToInstant(y); target = y; restoreSectionRef.current = pending; }
+        restoreSectionRef.current = pending;
+        if (y !== null) { scrollToInstant(y); target = y; }
       }
     }
     if (target === null) {
@@ -1523,7 +1524,8 @@ function App() {
           target = 0;
         } else if (restore.section) {
           const y = centerSectionY(restore.section);
-          if (y !== null) { scrollToInstant(y); target = y; restoreSectionRef.current = restore.section; }
+          restoreSectionRef.current = restore.section;
+          if (y !== null) { scrollToInstant(y); target = y; }
         } else if (typeof restore.y === 'number') {
           // Real Back/Forward: centre the section the user came from, so
           // the in-page "Back to ..." link and the browser Back agree.
@@ -1533,10 +1535,10 @@ function App() {
           // fallback now, and the exact pixel is the last resort.
           const sectionId = getLastHomeSection() ?? sectionAtScrollY(restore.y);
           const y = sectionId ? centerSectionY(sectionId) : null;
+          if (sectionId) restoreSectionRef.current = sectionId;
           if (y !== null) {
             scrollToInstant(y);
             target = y;
-            restoreSectionRef.current = sectionId;
           } else {
             scrollToInstant(restore.y);
             target = restore.y;
@@ -1610,6 +1612,12 @@ function App() {
       if (!href) return;
       if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/') {
         e.preventDefault();
+        if (href === '/') {
+          // Going home on purpose (logo): the top, not the section left
+          // earlier. Clear the stored return section so Back's record
+          // does not pull a deliberate home visit down to a section.
+          try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+        }
         navigateTo(href);
         return;
       }
