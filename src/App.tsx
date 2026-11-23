@@ -1347,22 +1347,6 @@ const Footer = () => (
 const HomePage = () => {
   useEffect(() => {
     homeEntrancesPlayed = true;
-    // Centre the stored return section now that HomePage is mounted and
-    // its sections are in the DOM. The App-level layout effect can run
-    // before the home page has mounted (the page transition), so its
-    // measurement can miss and the landing falls back to the old scroll.
-    // By mount time the sections are measurable, and the crossfade hides
-    // the instant jump. SessionStorage only: the logo clears it, so a
-    // deliberate home visit still goes to the top.
-    let section: string | null = null;
-    try { section = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-    if (!section) return;
-    try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
-    const el = document.getElementById(section);
-    if (!el) return;
-    const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3')) as HTMLElement | null;
-    const target = (heading ?? el) as HTMLElement;
-    target.scrollIntoView({ behavior: 'auto', block: 'center' });
   }, []);
   return (
   <div className="min-h-screen relative">
@@ -1607,18 +1591,21 @@ function App() {
       const next = normalizePath(window.location.pathname);
       if (next === route) return;
       if (e.isTrusted) {
-        // Real Back/Forward: return to the exact place the user came from,
-        // not the top. The saved scroll position is the most precise record
-        // of it, so it wins over the section hash; the hash is only a
-        // fallback for entries with no saved position. The logo is always
-        // there for Home - Back means back.
+        // Real Back/Forward: return to the section the user came from,
+        // centred, not the top and not the exact old pixel. The recorded
+        // section (captured when they left home) is the reliable record;
+        // the saved pixel is only a fallback when no section was recorded.
+        // The logo is always there for Home - Back means back.
         const key = window.location.pathname + window.location.hash;
         const savedY = getSavedScrollPosition(key);
         const hash = window.location.hash.slice(1);
-        if (typeof savedY === 'number') {
-          pendingRestoreRef.current = { y: savedY };
+        const backSection = next === '/' ? getLastHomeSection() : null;
+        if (backSection) {
+          pendingRestoreRef.current = { section: backSection };
         } else if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
           pendingRestoreRef.current = { section: hash };
+        } else if (typeof savedY === 'number') {
+          pendingRestoreRef.current = { y: savedY };
         } else {
           pendingRestoreRef.current = { y: 0 };
         }

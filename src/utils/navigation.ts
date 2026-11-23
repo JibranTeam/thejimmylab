@@ -90,6 +90,9 @@ export function docTop(el: HTMLElement): number {
 // heading tag). Clamped to the page, so a section at the very end can only
 // go as far as the bottom allows.
 export function centerYForSection(sectionId: string): number | null {
+  // 'top' is the logo's target; no element has id="top" (the hero is
+  // id="home"), so it means the very top of the page.
+  if (sectionId === 'top') return 0;
   const el = document.getElementById(sectionId);
   if (!el) return null;
   const heading = el.querySelector('h1, h2, h3') as HTMLElement | null;
@@ -157,6 +160,14 @@ export function scrollToSectionWithRetry(sectionId: string, behavior: ScrollBeha
 }
 
 export function navigateHomeToSection(sectionId: string) {
+  if (sectionId === 'top') {
+    if (normalizePath(window.location.pathname) === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigateTo('/');
+    }
+    return;
+  }
   if (normalizePath(window.location.pathname) === '/') {
     if (scrollToSectionCentered(sectionId, 'smooth')) return;
     scrollToSectionWithRetry(sectionId, 'smooth');
