@@ -1347,6 +1347,22 @@ const Footer = () => (
 const HomePage = () => {
   useEffect(() => {
     homeEntrancesPlayed = true;
+    // Centre the stored return section now that HomePage is mounted and
+    // its sections are in the DOM. The App-level layout effect can run
+    // before the home page has mounted (the page transition), so its
+    // measurement can miss and the landing falls back to the old scroll.
+    // By mount time the sections are measurable, and the crossfade hides
+    // the instant jump. SessionStorage only: the logo clears it, so a
+    // deliberate home visit still goes to the top.
+    let section: string | null = null;
+    try { section = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+    if (!section) return;
+    try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+    const el = document.getElementById(section);
+    if (!el) return;
+    const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3')) as HTMLElement | null;
+    const target = (heading ?? el) as HTMLElement;
+    target.scrollIntoView({ behavior: 'auto', block: 'center' });
   }, []);
   return (
   <div className="min-h-screen relative">
