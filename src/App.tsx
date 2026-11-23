@@ -1498,6 +1498,10 @@ function App() {
   const pendingRestoreRef = useRef<{ y?: number; section?: string; instant?: boolean } | null>(null);
   const restoreTargetRef = useRef<number | null>(null);
   const restoreSectionRef = useRef<string | null>(null);
+  const restoreYRef = useRef<number | null>(null);
+  // Saved scroll Y when the layout effect fell back to the exact pixel
+  // because the section was not derivable yet; the post-paint effect
+  // derives the section from it once the home layout has settled.
   useLayoutEffect(() => {
     // Centring lives in navigation.ts (centerYForSection) so the restore,
     // the nav and the in-page links all land the same way.
@@ -1546,6 +1550,11 @@ function App() {
             const y = centerSectionY(sectionId);
             if (y !== null) { scrollToInstant(y); target = y; }
           } else {
+            // Section not derivable yet (home layout not settled): keep
+            // the pixel for now but record it, so the post-paint effect
+            // can derive the section and centre it once the layout is
+            // measurable instead of leaving the exact pixel as the landing.
+            restoreYRef.current = restore.y;
             scrollToInstant(restore.y);
             target = restore.y;
           }
@@ -1577,12 +1586,22 @@ function App() {
       }
       sectionId = sectionId ?? getLastHomeSection();
     }
-    if (!sectionId) return;
-    if (!centre(sectionId)) {
-      // Section not measurable yet (home still mounting): retry once
-      // after the layout settles instead of leaving the old scroll.
-      window.setTimeout(() => { centre(sectionId); }, 250);
+    if (!sectionId && route === '/' && restoreYRef.current !== null) {
+      // The layout effect fell back to the exact pixel because the
+      // section was not derivable yet; derive it now from the saved Y.
+      const y = restoreYRef.current;
+      restoreYRef.current = null;
+      sectionId = sectionAtScrollY(y);
     }
+    if (!sectionId) return;
+    // Retry persistently until the heading is centred. A single retry
+    // can run while the home layout is still settling, leaving the exact
+    // pixel as the landing (deep-scroll Back regressed to this).
+    const attempt = (n: number) => {
+      if (centre(sectionId)) return;
+      if (n < 6) window.setTimeout(() => attempt(n + 1), 300);
+    };
+    attempt(1);
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
   // is unreliable in this SPA (it fights the app's own scroll and lands in
