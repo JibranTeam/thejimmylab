@@ -130,17 +130,19 @@ export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehav
   const target = (heading ?? el) as HTMLElement;
   target.scrollIntoView({ behavior, block: 'center' });
   if (behavior === 'smooth') {
-    // Re-check once the smooth scroll and the layout have settled; a long
-    // scroll from a fresh load can overshoot while the page is still
-    // settling, and the same click from a settled page centres.
+    // Re-check once the smooth scroll and the layout have settled. A long
+    // scroll from a fresh load can overshoot by ~800px while sections
+    // above it (content-visibility estimates) are still settling, and the
+    // same click from a settled page centres. Measure with the docTop
+    // helper (ignores transforms and estimates) and correct instantly so
+    // the CSS smooth scroll-behavior does not turn the correction into
+    // another glide.
     window.setTimeout(() => {
-      const rect = target.getBoundingClientRect();
-      const centre = rect.top + rect.height / 2;
-      const want = window.innerHeight / 2;
-      if (Math.abs(centre - want) > 4) {
-        target.scrollIntoView({ behavior: 'auto', block: 'center' });
+      const y = centerYForSection(sectionId);
+      if (y !== null && Math.abs(window.scrollY - y) > 4) {
+        scrollToInstant(y);
       }
-    }, 700);
+    }, 1200);
   }
   return true;
 }

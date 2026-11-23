@@ -1519,7 +1519,11 @@ function App() {
       pendingRestoreRef.current = null;
       if (restore) {
         if (restore.instant) {
-          // Forward navigation to a new page: top, instantly.
+          // Forward navigation to a new page: top, instantly. Record
+          // 'top' so the post-paint effect re-affirms the top instead of
+          // deriving the stale section from getLastHomeSection() and
+          // centring it (that is what made the logo land on Services).
+          restoreSectionRef.current = 'top';
           scrollToInstant(0);
           target = 0;
         } else if (restore.section) {
