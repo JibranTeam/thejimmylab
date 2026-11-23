@@ -1532,13 +1532,15 @@ function App() {
           // The recorded section (captured when they left home) is the
           // reliable record of where they were; deriving one from the
           // saved pixel landed on the wrong section, so it is only a
-          // fallback now, and the exact pixel is the last resort.
+          // fallback now. Never fall back to the exact pixel while a
+          // section is known: that is what made Back restore the old
+          // scroll instead of centring. Record the section and let the
+          // post-paint retry centre it from the settled layout.
           const sectionId = getLastHomeSection() ?? sectionAtScrollY(restore.y);
-          const y = sectionId ? centerSectionY(sectionId) : null;
-          if (sectionId) restoreSectionRef.current = sectionId;
-          if (y !== null) {
-            scrollToInstant(y);
-            target = y;
+          if (sectionId) {
+            restoreSectionRef.current = sectionId;
+            const y = centerSectionY(sectionId);
+            if (y !== null) { scrollToInstant(y); target = y; }
           } else {
             scrollToInstant(restore.y);
             target = restore.y;
@@ -1554,13 +1556,29 @@ function App() {
   // a restore that fell back to the exact pixel); this corrects it to the
   // centre from where the heading actually is now.
   useEffect(() => {
-    const sectionId = restoreSectionRef.current;
+    const centre = (sectionId: string | null): boolean => {
+      if (!sectionId) return false;
+      const y = centerYForSection(sectionId);
+      if (y === null) return false;
+      if (Math.abs(window.scrollY - y) > 4) scrollToInstant(y);
+      return true;
+    };
+    let sectionId = restoreSectionRef.current;
     restoreSectionRef.current = null;
     restoreTargetRef.current = null;
+    if (!sectionId && route === '/') {
+      try { sectionId = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+      if (sectionId) {
+        try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
+      }
+      sectionId = sectionId ?? getLastHomeSection();
+    }
     if (!sectionId) return;
-    const y = centerYForSection(sectionId);
-    if (y === null) return;
-    if (Math.abs(window.scrollY - y) > 4) scrollToInstant(y);
+    if (!centre(sectionId)) {
+      // Section not measurable yet (home still mounting): retry once
+      // after the layout settles instead of leaving the old scroll.
+      window.setTimeout(() => { centre(sectionId); }, 250);
+    }
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
   // is unreliable in this SPA (it fights the app's own scroll and lands in
