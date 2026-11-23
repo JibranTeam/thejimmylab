@@ -1410,8 +1410,8 @@ const PageFallback = () => (
 // the stored return section, the recorded section, scroll Y and route.
 // Remove once the cause is found.
 function DebugRestore() {
-  const [info, setInfo] = React.useState('');
-  React.useEffect(() => {
+  const [info, setInfo] = useState('');
+  useEffect(() => {
     const update = () => {
       let store: string | null = null;
       try { store = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* ignore */ }
