@@ -129,6 +129,19 @@ export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehav
   const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3')) as HTMLElement | null;
   const target = (heading ?? el) as HTMLElement;
   target.scrollIntoView({ behavior, block: 'center' });
+  if (behavior === 'smooth') {
+    // Re-check once the smooth scroll and the layout have settled; a long
+    // scroll from a fresh load can overshoot while the page is still
+    // settling, and the same click from a settled page centres.
+    window.setTimeout(() => {
+      const rect = target.getBoundingClientRect();
+      const centre = rect.top + rect.height / 2;
+      const want = window.innerHeight / 2;
+      if (Math.abs(centre - want) > 4) {
+        target.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+    }, 700);
+  }
   return true;
 }
 
@@ -161,6 +174,9 @@ export function scrollToSectionWithRetry(sectionId: string, behavior: ScrollBeha
 
 export function navigateHomeToSection(sectionId: string) {
   if (sectionId === 'top') {
+    // Clear any stored return section first, or the layout effect reads
+    // the stale section and centres it instead of the top.
+    try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
     if (normalizePath(window.location.pathname) === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
