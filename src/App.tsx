@@ -1405,6 +1405,32 @@ const PageFallback = () => (
   </div>
 );
 
+// TEMPORARY diagnostic readout for the Back-centring investigation.
+// Shows what the restore logic sees: the section at the current scroll,
+// the stored return section, the recorded section, scroll Y and route.
+// Remove once the cause is found.
+function DebugRestore() {
+  const [info, setInfo] = React.useState('');
+  React.useEffect(() => {
+    const update = () => {
+      let store: string | null = null;
+      try { store = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* ignore */ }
+      let sec: string | null = null;
+      try { sec = sectionAtScrollY(window.scrollY); } catch { /* ignore */ }
+      setInfo(`sec=${sec ?? '-'} store=${store ?? '-'} last=${getLastHomeSection() ?? '-'} y=${Math.round(window.scrollY)} route=${normalizePath(window.location.pathname)}`);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    const t = window.setInterval(update, 500);
+    return () => { window.removeEventListener('scroll', update); window.clearInterval(t); };
+  }, []);
+  return (
+    <div style={{ position: 'fixed', left: 8, bottom: 8, zIndex: 99999, background: 'rgba(0,0,0,0.85)', color: '#7dff9e', font: '11px monospace', padding: '6px 8px', borderRadius: 4, pointerEvents: 'none', whiteSpace: 'nowrap' }}>
+      DBG {info}
+    </div>
+  );
+}
+
 function App() {
   const [route, setRoute] = useState<string>(() => normalizePath(window.location.pathname));
   // Warm the lazy page chunks shortly after mount, so the first click on a
@@ -1793,6 +1819,7 @@ function App() {
   const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
+      <DebugRestore />
       <ComingSoonToast />
       <Analytics />
       <AnimatePresence mode="popLayout">
