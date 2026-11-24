@@ -1634,6 +1634,7 @@ function App() {
       }
     }
     if (!sectionId) return;
+    const mountMs = performance.now();
     // Diagnostic: expose what the restore derives and does, so the next
     // live check shows the truth instead of another hypothesis.
     const dbg = (window as any).__restoreDbg ?? ((window as any).__restoreDbg = {});
@@ -1650,6 +1651,14 @@ function App() {
     let lastY: number | null = null;
     let stableCount = 0;
     const attempt = (n: number) => {
+      // Do not measure until the exit transition has finished. While the
+      // exiting service page is still in the DOM (0.45s), it pushes the
+      // home page ~3500px down, so the measured target is ~3500px too
+      // large and the wrong landing "confirms" itself.
+      if (n === 1 && performance.now() - mountMs < 700) {
+        window.setTimeout(() => attempt(1), 700 - (performance.now() - mountMs));
+        return;
+      }
       dbg.attempts = n;
       dbg.lastScroll = window.scrollY;
       const y = centerYForSectionRect(sectionId);
