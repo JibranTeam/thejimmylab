@@ -146,6 +146,31 @@ export function headingCenterOffset(sectionId: string): number | null {
 // Services, so the native call (which centres the element's actual border
 // box) is the reliable one for link clicks. The heading has no id, so the
 // [id] scroll-margin does not apply to it.
+// Centre a section with the browser's native scrollIntoView, instantly.
+// This is the mechanism the nav clicks and in-page Back links use, and it
+// centres every time. The computed-Y restore (centerYForSectionRect +
+// scrollToInstant) never moved on deep-scroll Back: the app's own
+// measurement was not right at the moment of the call. scrollIntoView
+// measures the layout itself, so it is correct regardless of when it runs.
+export function scrollSectionToCenterNative(sectionId: string): boolean {
+  if (sectionId === 'top') {
+    scrollToInstant(0);
+    return true;
+  }
+  const el = document.getElementById(sectionId);
+  if (!el) return false;
+  const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
+  const root = document.documentElement;
+  const prev = root.style.scrollBehavior;
+  root.style.scrollBehavior = 'auto';
+  try {
+    heading.scrollIntoView({ behavior: 'auto', block: 'center' });
+  } finally {
+    root.style.scrollBehavior = prev;
+  }
+  return true;
+}
+
 export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehavior = 'auto'): boolean {
   const el = document.getElementById(sectionId);
   if (!el) return false;

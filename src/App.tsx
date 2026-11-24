@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered, centerYForSectionRect } from './utils/navigation';
+import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered, centerYForSectionRect, scrollSectionToCenterNative } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -1594,13 +1594,14 @@ function App() {
   useEffect(() => {
     const centre = (sectionId: string | null): boolean => {
       if (!sectionId) return false;
+      // Native scrollIntoView, the mechanism the nav and in-page Back
+      // links use. It measures the layout itself, so it centres even
+      // when the app's own measurement is wrong. Verify it landed: if
+      // the heading is not centred yet, keep retrying.
+      if (!scrollSectionToCenterNative(sectionId)) return false;
       const y = centerYForSectionRect(sectionId);
       if (y === null) return false;
-      if (Math.abs(window.scrollY - y) > 4) {
-        scrollToInstant(y);
-        return false;
-      }
-      return true;
+      return Math.abs(window.scrollY - y) <= 4;
     };
     let sectionId = restoreSectionRef.current;
     restoreSectionRef.current = null;
