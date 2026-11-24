@@ -1417,7 +1417,9 @@ function DebugRestore() {
       try { store = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* ignore */ }
       let sec: string | null = null;
       try { sec = sectionAtScrollY(window.scrollY); } catch { /* ignore */ }
-      setInfo(`sec=${sec ?? '-'} store=${store ?? '-'} last=${getLastHomeSection() ?? '-'} y=${Math.round(window.scrollY)} route=${normalizePath(window.location.pathname)}`);
+      const rd = (window as any).__restoreDbg;
+      const rtxt = rd ? ` rst=${rd.sectionId ?? '-'} att=${rd.attempts ?? 0} ty=${rd.lastY === null || rd.lastY === undefined ? '-' : Math.round(rd.lastY)}` : '';
+      setInfo(`sec=${sec ?? '-'} store=${store ?? '-'} last=${getLastHomeSection() ?? '-'} y=${Math.round(window.scrollY)} route=${normalizePath(window.location.pathname)}${rtxt}`);
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -1632,6 +1634,13 @@ function App() {
       }
     }
     if (!sectionId) return;
+    // Diagnostic: expose what the restore derives and does, so the next
+    // live check shows the truth instead of another hypothesis.
+    const dbg = (window as any).__restoreDbg ?? ((window as any).__restoreDbg = {});
+    dbg.sectionId = sectionId;
+    dbg.attempts = 0;
+    dbg.lastY = null;
+    dbg.lastScroll = window.scrollY;
     // Retry persistently until the heading is centred AND the layout is
     // stable. A measurement taken while images above the section are
     // still loading can be thousands of pixels off, and the wrong
@@ -1641,7 +1650,10 @@ function App() {
     let lastY: number | null = null;
     let stableCount = 0;
     const attempt = (n: number) => {
+      dbg.attempts = n;
+      dbg.lastScroll = window.scrollY;
       const y = centerYForSectionRect(sectionId);
+      dbg.lastY = y;
       if (y === null) {
         if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
         return;
