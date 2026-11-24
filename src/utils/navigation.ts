@@ -55,11 +55,13 @@ const HOME_SECTIONS = ['home', 'about', 'services', 'portfolio', 'process', 'jou
 // when they left home, so browser Back derives its section from it instead
 // of trusting a recorded section that can be stale or missing.
 export function sectionAtScrollY(y: number): string | null {
-  // The section at the top of the viewport (just below the sticky nav),
-  // not the centre. A tall section's grid can fill the viewport while its
-  // centre has already crossed into the next section, and the top is the
-  // section the user is actually reading and clicking in.
-  const point = y + 120;
+  // The section at the centre of the viewport, not the top. When a
+  // section is centred (the restore's landing), the top of the viewport
+  // is still in the previous section, so a top-based pick records the
+  // wrong section (a card click from centred Services recorded 'about').
+  // The centre is the section actually on screen and the one the
+  // restore centres.
+  const point = y + window.innerHeight / 2;
   let found: string | null = null;
   for (const el of Array.from(document.querySelectorAll('section[id], footer [id]'))) {
     const id = (el as HTMLElement).id;
