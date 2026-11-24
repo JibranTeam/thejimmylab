@@ -1632,11 +1632,31 @@ function App() {
       }
     }
     if (!sectionId) return;
-    // Retry persistently until the heading is centred. A single retry
-    // can run while the home layout is still settling, leaving the exact
-    // pixel as the landing (deep-scroll Back regressed to this).
+    // Retry persistently until the heading is centred AND the layout is
+    // stable. A measurement taken while images above the section are
+    // still loading can be thousands of pixels off, and the wrong
+    // landing then "confirms" itself, so the retry stops early. Only
+    // stop when the measured target is unchanged across consecutive
+    // checks and the scroll is within 4px of it.
+    let lastY: number | null = null;
+    let stableCount = 0;
     const attempt = (n: number) => {
-      if (centre(sectionId)) return;
+      const y = centerYForSectionRect(sectionId);
+      if (y === null) {
+        if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
+        return;
+      }
+      scrollSectionToCenterNative(sectionId);
+      const y2 = centerYForSectionRect(sectionId);
+      const targetStable = y2 !== null && Math.abs(y2 - y) <= 4;
+      const scrollCentred = y2 !== null && Math.abs(window.scrollY - y2) <= 4;
+      if (targetStable && scrollCentred) {
+        stableCount += 1;
+        if (stableCount >= 2) return;
+      } else {
+        stableCount = 0;
+      }
+      lastY = y2;
       if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
     };
     attempt(1);
