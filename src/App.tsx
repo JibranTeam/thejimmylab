@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered, centerYForSectionRect, scrollSectionToCenterNative } from './utils/navigation';
+import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered, centerYForSectionRect, scrollSectionToCenterNative, sectionContentTargetY, scrollSectionContentToCenter, sectionContentVisualOffset } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -1628,15 +1628,16 @@ function App() {
         window.setTimeout(() => attempt(1), 700 - (performance.now() - mountMs));
         return;
       }
-      const y = centerYForSectionRect(sectionId);
+      const y = sectionContentTargetY(sectionId);
       if (y === null) {
         if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
         return;
       }
-      scrollSectionToCenterNative(sectionId);
-      const y2 = centerYForSectionRect(sectionId);
+      scrollSectionContentToCenter(sectionId);
+      const y2 = sectionContentTargetY(sectionId);
+      const off = sectionContentVisualOffset(sectionId);
       const targetStable = y2 !== null && Math.abs(y2 - y) <= 4;
-      const scrollCentred = y2 !== null && Math.abs(window.scrollY - y2) <= 4;
+      const scrollCentred = y2 !== null && Math.abs(window.scrollY - y2) <= 4 && off !== null && Math.abs(off) <= 4;
       if (targetStable && scrollCentred) {
         stableCount += 1;
         if (stableCount >= 2) return;
@@ -1658,12 +1659,10 @@ function App() {
     // It never runs on a deliberate scroll: it only re-centres when the
     // heading is off-centre AND no scroll has happened in the last
     // 400ms (so a user scrolling away is left alone).
-    const headingEl = (() => {
-      const sec = document.getElementById(sectionId);
-      if (!sec) return null;
-      return (sec.querySelector('h1, h2') ?? sec.querySelector('h3') ?? sec) as HTMLElement;
-    })();
-    if (headingEl) {
+    // Watchdog on the section's CONTENT midpoint (heading + first card
+    // row), the same target the restore centres, so a landing that leaves
+    // the cards at the bottom gets corrected even after the retry closes.
+    if (document.getElementById(sectionId)) {
       const startedAt = performance.now();
       let lastUserScrollAt = 0;
       let centredSince: number | null = null;
@@ -1677,8 +1676,8 @@ function App() {
           return;
         }
         if (now - lastUserScrollAt < 400) return;
-        const rect = headingEl.getBoundingClientRect();
-        const off = (rect.top + rect.height / 2) - window.innerHeight / 2;
+        const off = sectionContentVisualOffset(sectionId);
+        if (off === null) return;
         if (Math.abs(off) <= 4) {
           if (centredSince === null) centredSince = now;
           if (now - centredSince >= 1000) {
@@ -1688,7 +1687,7 @@ function App() {
           return;
         }
         centredSince = null;
-        scrollSectionToCenterNative(sectionId);
+        scrollSectionContentToCenter(sectionId);
       }, 250);
     }
   }, [route]);

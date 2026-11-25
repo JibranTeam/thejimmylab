@@ -114,6 +114,61 @@ export function centerYForSectionRect(sectionId: string): number | null {
   return Math.max(0, Math.min(y, Math.max(0, max)));
 }
 
+// Centre a section's CONTENT as a group, not just its heading. The
+// user's screenshot showed the heading at the viewport centre while the
+// first row of service cards sat near the bottom, cut off, so the
+// section read as "downward". The target is the midpoint between the
+// heading's centre and the first content card's centre; sections without
+// cards fall back to the heading. Returns the scroll Y that puts that
+// midpoint at the viewport centre, clamped to the page.
+export function sectionContentTargetY(sectionId: string): number | null {
+  if (sectionId === 'top') return 0;
+  const el = document.getElementById(sectionId);
+  if (!el) return null;
+  const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
+  const hRect = heading.getBoundingClientRect();
+  const headingCentreY = hRect.top + window.scrollY + hRect.height / 2;
+  const card = el.querySelector('.service-card, .portfolio-card, .about-card, article') as HTMLElement | null;
+  let targetDocY = headingCentreY;
+  if (card) {
+    const cRect = card.getBoundingClientRect();
+    const cardCentreY = cRect.top + window.scrollY + cRect.height / 2;
+    targetDocY = (headingCentreY + cardCentreY) / 2;
+  }
+  const y = targetDocY - window.innerHeight / 2;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  return Math.max(0, Math.min(y, Math.max(0, max)));
+}
+
+// Scroll instantly so a section's content midpoint lands at the viewport
+// centre. Returns false when the section is not in the DOM yet.
+export function scrollSectionContentToCenter(sectionId: string): boolean {
+  const y = sectionContentTargetY(sectionId);
+  if (y === null) return false;
+  scrollToInstant(y);
+  return true;
+}
+
+// How far a section's content midpoint is from the viewport centre right
+// now, in px (positive = content is below centre). Ground truth of
+// whether the section actually looks centred.
+export function sectionContentVisualOffset(sectionId: string): number | null {
+  if (sectionId === 'top') return -window.scrollY;
+  const el = document.getElementById(sectionId);
+  if (!el) return null;
+  const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
+  const hRect = heading.getBoundingClientRect();
+  const headingCentre = hRect.top + hRect.height / 2;
+  const card = el.querySelector('.service-card, .portfolio-card, .about-card, article') as HTMLElement | null;
+  let targetCentre = headingCentre;
+  if (card) {
+    const cRect = card.getBoundingClientRect();
+    const cardCentre = cRect.top + cRect.height / 2;
+    targetCentre = (headingCentre + cardCentre) / 2;
+  }
+  return targetCentre - window.innerHeight / 2;
+}
+
 export function centerYForSection(sectionId: string): number | null {
   // 'top' is the logo's target; no element has id="top" (the hero is
   // id="home"), so it means the very top of the page.
@@ -174,11 +229,13 @@ export function scrollSectionToCenterNative(sectionId: string): boolean {
 }
 
 export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehavior = 'auto'): boolean {
-  const el = document.getElementById(sectionId);
-  if (!el) return false;
-  const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3')) as HTMLElement | null;
-  const target = (heading ?? el) as HTMLElement;
-  target.scrollIntoView({ behavior, block: 'center' });
+  const y = sectionContentTargetY(sectionId);
+  if (y === null) return false;
+  if (behavior === 'smooth') {
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  } else {
+    scrollToInstant(y);
+  }
   if (behavior === 'smooth') {
     // Re-check once the smooth scroll and the layout have settled. A long
     // scroll from a fresh load can overshoot by ~800px while sections
@@ -190,7 +247,7 @@ export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehav
     // Re-check until the heading is centred. A single check can run
     // while the layout above is still settling, so retry a few times.
     const recheck = (attempt: number) => {
-      const y = centerYForSection(sectionId);
+      const y = sectionContentTargetY(sectionId);
       if (y !== null && Math.abs(window.scrollY - y) > 4) {
         scrollToInstant(y);
       }
