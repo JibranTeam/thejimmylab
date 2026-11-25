@@ -1619,17 +1619,6 @@ function App() {
     // checks and the scroll is within 4px of it.
     let lastY: number | null = null;
     let stableCount = 0;
-    // Ground truth of "centred" is what the eye sees: the heading's
-    // visual centre against the viewport centre. A computed scroll Y
-    // can agree with the scroll while the visual is still off, so
-    // verify with the bounding rect, not the computed Y.
-    const visualOffset = (id: string): number | null => {
-      const el = document.getElementById(id);
-      if (!el) return null;
-      const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
-      const rect = heading.getBoundingClientRect();
-      return (rect.top + rect.height / 2) - window.innerHeight / 2;
-    };
     const attempt = (n: number) => {
       // Do not measure until the exit transition has finished. While the
       // exiting service page is still in the DOM (0.45s), it pushes the
@@ -1641,42 +1630,66 @@ function App() {
       }
       const y = centerYForSectionRect(sectionId);
       if (y === null) {
-        if (n < 30) window.setTimeout(() => attempt(n + 1), 300);
+        if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
         return;
       }
       scrollSectionToCenterNative(sectionId);
       const y2 = centerYForSectionRect(sectionId);
-      const off = visualOffset(sectionId);
       const targetStable = y2 !== null && Math.abs(y2 - y) <= 4;
-      const visuallyCentred = off !== null && Math.abs(off) <= 4;
-      if (targetStable && visuallyCentred) {
+      const scrollCentred = y2 !== null && Math.abs(window.scrollY - y2) <= 4;
+      if (targetStable && scrollCentred) {
         stableCount += 1;
         if (stableCount >= 2) return;
       } else {
         stableCount = 0;
       }
       lastY = y2;
-      if (n < 30) window.setTimeout(() => attempt(n + 1), 300);
+      if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
     };
     attempt(1);
-    // Re-centre once more when the page has fully loaded (images and
-    // fonts done). A late layout shift after the retry window can still
-    // leave the heading off-centre on a slower device; this catches it.
-    const reCentreOnLoad = () => {
-      const off = visualOffset(sectionId);
-      if (off !== null && Math.abs(off) > 4) {
+    // SECOND METHOD (watchdog): for 10s after a Back restore, keep
+    // watching the heading's actual on-screen position and re-centre it
+    // whenever it is off-centre. This is independent of the retry above:
+    // it measures what the eye actually sees (the heading's bounding
+    // rect against the viewport centre), so a landing that is downward,
+    // at the top, or drifted by a late layout shift gets corrected even
+    // after the retry window has closed. It stops itself after 10s and
+    // stops early once the heading has held centre for a full second.
+    // It never runs on a deliberate scroll: it only re-centres when the
+    // heading is off-centre AND no scroll has happened in the last
+    // 400ms (so a user scrolling away is left alone).
+    const headingEl = (() => {
+      const sec = document.getElementById(sectionId);
+      if (!sec) return null;
+      return (sec.querySelector('h1, h2') ?? sec.querySelector('h3') ?? sec) as HTMLElement;
+    })();
+    if (headingEl) {
+      const startedAt = performance.now();
+      let lastUserScrollAt = 0;
+      let centredSince: number | null = null;
+      const onScroll = () => { lastUserScrollAt = performance.now(); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      const watch = window.setInterval(() => {
+        const now = performance.now();
+        if (now - startedAt > 10000) {
+          window.clearInterval(watch);
+          window.removeEventListener('scroll', onScroll);
+          return;
+        }
+        if (now - lastUserScrollAt < 400) return;
+        const rect = headingEl.getBoundingClientRect();
+        const off = (rect.top + rect.height / 2) - window.innerHeight / 2;
+        if (Math.abs(off) <= 4) {
+          if (centredSince === null) centredSince = now;
+          if (now - centredSince >= 1000) {
+            window.clearInterval(watch);
+            window.removeEventListener('scroll', onScroll);
+          }
+          return;
+        }
+        centredSince = null;
         scrollSectionToCenterNative(sectionId);
-      }
-    };
-    if (document.readyState === 'complete') {
-      window.setTimeout(reCentreOnLoad, 500);
-    } else {
-      window.addEventListener('load', reCentreOnLoad, { once: true });
-    }
-    if (document.fonts) {
-      document.fonts.ready.then(() => {
-        window.setTimeout(reCentreOnLoad, 100);
-      }).catch(() => { /* ignore */ });
+      }, 250);
     }
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
