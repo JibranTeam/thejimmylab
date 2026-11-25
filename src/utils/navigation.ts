@@ -11,21 +11,34 @@ export function normalizePath(path: string): string {
   return clean || '/';
 }
 
-export function navigateTo(path: string) {
+// The home section an element belongs to, from its closest section
+// ancestor. A click on a Services card belongs to Services even when the
+// user has scrolled so far that the viewport centre is in Portfolio.
+export function sectionOfElement(el: HTMLElement | null): string | null {
+  const sec = el?.closest?.('section[id], footer [id], div[id]') as HTMLElement | null;
+  if (!sec) return null;
+  const id = sec.id;
+  if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(id)) return id;
+  return null;
+}
+
+export function navigateTo(path: string, fromSection?: string | null) {
   const target = normalizePath(path);
   if (normalizePath(window.location.pathname) === target) {
     window.scrollTo(0, 0);
     return;
   }
-  // Leaving the home page: remember which section the user was in, from
-  // the top of the viewport (the section they are reading and clicking
-  // in). Write it where Back can find it too: sessionStorage is the one
-  // mechanism every return to home uses, exactly like an in-page
-  // "Back to ..." link, so browser Back and the page buttons land the
-  // same way. Card onClick handlers call navigateTo directly (with
-  // preventDefault), so the document click handler never sees them.
+  // Leaving the home page: remember which section the user was in. Prefer
+  // the section the clicked element belongs to (a Services card belongs
+  // to Services even when the viewport centre has scrolled into
+  // Portfolio); fall back to the section at the viewport centre. Write
+  // it where Back can find it too: sessionStorage is the one mechanism
+  // every return to home uses, exactly like an in-page "Back to ..."
+  // link, so browser Back and the page buttons land the same way. Card
+  // onClick handlers call navigateTo directly (with preventDefault), so
+  // the document click handler never sees them.
   if (normalizePath(window.location.pathname) === '/') {
-    lastHomeSection = currentHomeSection();
+    lastHomeSection = fromSection ?? currentHomeSection();
     if (lastHomeSection) {
       try { window.sessionStorage.setItem('thejimmylab:pendingSection', lastHomeSection); } catch { /* storage may be blocked */ }
       // Stamp the section onto the home history entry itself, so a real

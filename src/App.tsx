@@ -10,7 +10,7 @@ import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
 import { goToConnect } from './utils/goToConnect';
 import { Analytics } from '@vercel/analytics/react';
-import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered, centerYForSectionRect, scrollSectionToCenterNative, sectionContentTargetY, scrollSectionContentToCenter, sectionContentVisualOffset } from './utils/navigation';
+import { getSavedScrollPosition, getLastHomeSection, navigateTo, navigateHomeToSection, normalizePath, scrollToInstant, sectionAtScrollY, centerYForSection, scrollToSectionCentered, centerYForSectionRect, scrollSectionToCenterNative, sectionContentTargetY, scrollSectionContentToCenter, sectionContentVisualOffset, sectionOfElement } from './utils/navigation';
 // A chunk import can fail once on a fresh deploy (cold edge, transient
 // network blip) and React would keep the failed lazy page black. Retry once
 // before giving up.
@@ -717,7 +717,7 @@ const ServicesSection = () => {
                 className="service-card relative group block"
                 onMouseEnter={() => setHoveredCard(globalIndex)}
                 onMouseLeave={() => setHoveredCard(null)}
-                onClick={(e) => { if (service.link) { e.preventDefault(); navigateTo(service.link); } }}
+                onClick={(e) => { if (service.link) { e.preventDefault(); navigateTo(service.link, 'services'); } }}
               >
                 <div
                   className={cn(
@@ -805,7 +805,7 @@ const PortfolioSection = () => {
             { title: 'Mobile Banking App', cat: 'Mobile Development', color: '#3b82f6', img: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=500&fit=crop&q=80' },
             { title: 'Restaurant Website', cat: 'Web Design', color: '#ffd700', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=500&fit=crop&q=80' },
           ].map((p) => (
-            <div key={p.title} onClick={() => navigateTo('/coming-soon')} className="portfolio-card group relative bg-[#0f1c2e] rounded-2xl overflow-hidden cursor-pointer shadow-[0_12px_40px_rgba(0,0,0,0.45)] border border-white/5 flex flex-col">
+            <div key={p.title} onClick={() => navigateTo('/coming-soon', 'portfolio')} className="portfolio-card group relative bg-[#0f1c2e] rounded-2xl overflow-hidden cursor-pointer shadow-[0_12px_40px_rgba(0,0,0,0.45)] border border-white/5 flex flex-col">
               <div className="relative h-[260px] overflow-hidden shrink-0">
                 <img alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={p.img} srcSet={unsplashSrcSet(p.img)} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0f1c2e] via-[#0f1c2e]/10 to-transparent"></div>
@@ -1755,7 +1755,7 @@ function App() {
           // does not pull a deliberate home visit down to a section.
           try { window.sessionStorage.removeItem('thejimmylab:pendingSection'); } catch { /* storage may be blocked */ }
         }
-        navigateTo(href);
+        navigateTo(href, sectionOfElement(anchor));
         return;
       }
       if (href.startsWith('#')) {
