@@ -569,7 +569,7 @@ const AboutSection = () => {
     { icon: Zap, title: 'Speed', desc: 'Fast turnaround without compromising quality' },
   ];
   return (
-    <section id="about" ref={sectionRef} className="relative py-32 bg-[#3A373E] overflow-hidden">
+    <section id="about" ref={sectionRef} className="relative py-32 bg-[#3A373E] overflow-hidden min-h-screen flex flex-col justify-center">
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#ff6b35]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#00d4aa]/5 rounded-full blur-3xl" />
       <div className="max-w-7xl mx-auto px-6">
