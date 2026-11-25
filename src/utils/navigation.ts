@@ -161,8 +161,21 @@ export function sectionContentTargetY(sectionId: string): number | null {
     const cardCentreY = cRect.top + window.scrollY + cRect.height / 2;
     targetDocY = (headingCentreY + cardCentreY) / 2;
   }
-  const y = targetDocY - window.innerHeight / 2;
-  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const vpH = window.innerHeight;
+  let y = targetDocY - vpH / 2;
+  // Keep the viewport inside this section, so no part of the section
+  // above or below is ever seen. The content midpoint can sit above the
+  // section top (Services: ~120px), which lets the marquee from above
+  // peek in. For a section taller than the viewport, clamp the scroll
+  // between the section top and the section bottom minus the viewport
+  // height. For a short section there is nothing to clamp.
+  const rect = el.getBoundingClientRect();
+  const sectionTop = rect.top + window.scrollY;
+  const sectionBottom = rect.bottom + window.scrollY;
+  if (sectionBottom - sectionTop >= vpH) {
+    y = Math.max(sectionTop, Math.min(y, sectionBottom - vpH));
+  }
+  const max = document.documentElement.scrollHeight - vpH;
   return Math.max(0, Math.min(y, Math.max(0, max)));
 }
 
