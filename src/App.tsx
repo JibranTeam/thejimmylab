@@ -1409,30 +1409,6 @@ const PageFallback = () => (
 // Shows what the restore logic sees: the section at the current scroll,
 // the stored return section, the recorded section, scroll Y and route.
 // Remove once the cause is found.
-function DebugRestore() {
-  const [info, setInfo] = useState('');
-  useEffect(() => {
-    const update = () => {
-      let store: string | null = null;
-      try { store = window.sessionStorage.getItem('thejimmylab:pendingSection'); } catch { /* ignore */ }
-      let sec: string | null = null;
-      try { sec = sectionAtScrollY(window.scrollY); } catch { /* ignore */ }
-      const rd = (window as any).__restoreDbg;
-      const rtxt = rd ? ` rst=${rd.sectionId ?? '-'} att=${rd.attempts ?? 0} ty=${rd.lastY === null || rd.lastY === undefined ? '-' : Math.round(rd.lastY)}` : '';
-      setInfo(`sec=${sec ?? '-'} store=${store ?? '-'} last=${getLastHomeSection() ?? '-'} y=${Math.round(window.scrollY)} route=${normalizePath(window.location.pathname)}${rtxt}`);
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    const t = window.setInterval(update, 500);
-    return () => { window.removeEventListener('scroll', update); window.clearInterval(t); };
-  }, []);
-  return (
-    <div style={{ position: 'fixed', left: 8, bottom: 8, zIndex: 99999, background: 'rgba(0,0,0,0.85)', color: '#7dff9e', font: '11px monospace', padding: '6px 8px', borderRadius: 4, pointerEvents: 'none', whiteSpace: 'nowrap' }}>
-      DBG {info}
-    </div>
-  );
-}
-
 function App() {
   const [route, setRoute] = useState<string>(() => normalizePath(window.location.pathname));
   // Warm the lazy page chunks shortly after mount, so the first click on a
@@ -1635,13 +1611,6 @@ function App() {
     }
     if (!sectionId) return;
     const mountMs = performance.now();
-    // Diagnostic: expose what the restore derives and does, so the next
-    // live check shows the truth instead of another hypothesis.
-    const dbg = (window as any).__restoreDbg ?? ((window as any).__restoreDbg = {});
-    dbg.sectionId = sectionId;
-    dbg.attempts = 0;
-    dbg.lastY = null;
-    dbg.lastScroll = window.scrollY;
     // Retry persistently until the heading is centred AND the layout is
     // stable. A measurement taken while images above the section are
     // still loading can be thousands of pixels off, and the wrong
@@ -1659,10 +1628,7 @@ function App() {
         window.setTimeout(() => attempt(1), 700 - (performance.now() - mountMs));
         return;
       }
-      dbg.attempts = n;
-      dbg.lastScroll = window.scrollY;
       const y = centerYForSectionRect(sectionId);
-      dbg.lastY = y;
       if (y === null) {
         if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
         return;
@@ -1861,7 +1827,6 @@ function App() {
   const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
-      <DebugRestore />
       <ComingSoonToast />
       <Analytics />
       <AnimatePresence mode="popLayout">
