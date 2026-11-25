@@ -121,6 +121,19 @@ export function centerYForSectionRect(sectionId: string): number | null {
 // heading's centre and the first content card's centre; sections without
 // cards fall back to the heading. Returns the scroll Y that puts that
 // midpoint at the viewport centre, clamped to the page.
+// First content card that is actually visible. Some sections render a
+// post twice (a mobile article and a desktop article); on desktop the
+// mobile one is display:none, and its bounding rect is all zeros, which
+// would drag the content midpoint thousands of pixels too high.
+function firstVisibleCard(el: HTMLElement): HTMLElement | null {
+  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, article');
+  for (const c of Array.from(cards)) {
+    const r = (c as HTMLElement).getBoundingClientRect();
+    if (r.width > 0 && r.height > 0) return c as HTMLElement;
+  }
+  return null;
+}
+
 export function sectionContentTargetY(sectionId: string): number | null {
   if (sectionId === 'top') return 0;
   const el = document.getElementById(sectionId);
@@ -128,7 +141,7 @@ export function sectionContentTargetY(sectionId: string): number | null {
   const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
   const hRect = heading.getBoundingClientRect();
   const headingCentreY = hRect.top + window.scrollY + hRect.height / 2;
-  const card = el.querySelector('.service-card, .portfolio-card, .about-card, article') as HTMLElement | null;
+  const card = firstVisibleCard(el);
   let targetDocY = headingCentreY;
   if (card) {
     const cRect = card.getBoundingClientRect();
@@ -159,7 +172,7 @@ export function sectionContentVisualOffset(sectionId: string): number | null {
   const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
   const hRect = heading.getBoundingClientRect();
   const headingCentre = hRect.top + hRect.height / 2;
-  const card = el.querySelector('.service-card, .portfolio-card, .about-card, article') as HTMLElement | null;
+  const card = firstVisibleCard(el);
   let targetCentre = headingCentre;
   if (card) {
     const cRect = card.getBoundingClientRect();
