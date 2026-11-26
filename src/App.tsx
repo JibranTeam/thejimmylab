@@ -837,7 +837,7 @@ const OurProcessSection = () => {
   ];
   const current = phases[active];
   return (
-    <section id="process" className="relative py-16 sm:py-20 lg:py-24 bg-[#070f1a] overflow-hidden" aria-labelledby="approach-heading">
+    <section id="process" className="relative py-16 sm:py-20 lg:py-24 bg-[#070f1a] overflow-hidden min-h-screen flex flex-col justify-center" aria-labelledby="approach-heading">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-40 pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[#ff6b35]/5 blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[700px] h-[400px] bg-[#00d4aa]/5 blur-[100px] rounded-full pointer-events-none" />
@@ -954,7 +954,7 @@ const FAQSection = () => {
     { question: 'Can you help with existing websites?', answer: 'Absolutely! We offer website redesigns, performance optimization, feature additions, and migration services for existing websites. We can work with most modern web technologies.' },
   ];
   return (
-    <section id="faq" className="relative py-32 bg-[#070f1a] overflow-hidden">
+    <section id="faq" className="relative py-32 bg-[#070f1a] overflow-hidden min-h-screen flex flex-col justify-center">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">FAQ</div>
@@ -1198,7 +1198,7 @@ const ConnectSection = () => {
     return () => window.removeEventListener('brief', onBrief);
   }, []);
   return (
-    <section id="connect" className="cv-auto relative bg-[#0a0a0a] py-24 md:py-28 overflow-hidden">
+    <section id="connect" className="cv-auto relative bg-[#0a0a0a] py-24 md:py-28 overflow-hidden min-h-screen flex flex-col justify-center">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
         <div className="inline-flex max-w-full flex-wrap items-center gap-x-7 gap-y-2 rounded-2xl border border-white/20 bg-[#3A373E]/40 backdrop-blur-xl px-5 py-3 mb-10">
             <p className="font-['Syne'] font-bold text-white text-[20px] leading-tight">THE JIMMY LA<span className="relative inline-block">B<span className="absolute -bottom-2 -right-5 flex w-6 h-6 items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#22c55e]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#22c55e] shadow-[0_0_10px_rgba(34,197,94,0.6)]"></span></span></span></p>
