@@ -435,7 +435,7 @@ const ModesSection = () => {
   const onDown = (x: number) => { dragX.current = x; };
   const onUp = (x: number) => { if (dragX.current === null) return; const d = x - dragX.current; if (Math.abs(d) > 45) go(d < 0 ? 1 : -1); dragX.current = null; };
   return (
-    <section id="modes" className="relative w-full overflow-hidden bg-[#070f1a] py-24 md:py-32 px-5">
+    <section id="modes" className="relative w-full overflow-hidden bg-[#070f1a] py-32 px-5">
       
       <div className="relative z-[2] mx-auto w-full max-w-4xl px-4 text-center mb-8 md:mb-10">
         <Words
@@ -837,7 +837,7 @@ const OurProcessSection = () => {
   ];
   const current = phases[active];
   return (
-    <section id="process" className="relative py-16 sm:py-20 lg:py-24 bg-[#070f1a] overflow-hidden min-h-screen flex flex-col justify-center" aria-labelledby="approach-heading">
+    <section id="process" className="relative py-32 bg-[#070f1a] overflow-hidden min-h-screen flex flex-col justify-center" aria-labelledby="approach-heading">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] opacity-40 pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[#ff6b35]/5 blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[700px] h-[400px] bg-[#00d4aa]/5 blur-[100px] rounded-full pointer-events-none" />
@@ -899,7 +899,7 @@ const TestimonialsSection = () => {
   const next = () => setActive((p) => (p + 1) % testimonials.length);
   const prev = () => setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
   return (
-    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#070f1a] overflow-hidden">
+    <section id="testimonials" className="relative py-32 bg-[#070f1a] overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-[0.35] pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[#ff6b35]/[0.04] blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[700px] h-[500px] bg-[#00d4aa]/[0.03] blur-[100px] rounded-full pointer-events-none" />
@@ -988,7 +988,7 @@ const JournalSection = () => {
   const journalPages = Array.from({ length: totalJournalPages }, (_, pg) => articles.slice(pg * ARTICLES_PER_PAGE, pg * ARTICLES_PER_PAGE + ARTICLES_PER_PAGE));
   const goToJournalPage = (page: number) => { if (page < 0 || page >= totalJournalPages || page === journalPage) return; setJournalPage(page); };
   return (
-    <section id="journal" className="relative py-24 md:py-32 lg:py-40 bg-[#3A373E] overflow-hidden border-t border-white/5">
+    <section id="journal" className="relative py-32 bg-[#3A373E] overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-[8%] w-64 h-64 bg-[#d4a574]/5 cardboard-cutout rounded-full rotate-12" />
         <div className="absolute bottom-20 right-[10%] w-48 h-48 bg-[#ff6b35]/5 cardboard-cutout rounded-full -rotate-6" />
@@ -1198,7 +1198,7 @@ const ConnectSection = () => {
     return () => window.removeEventListener('brief', onBrief);
   }, []);
   return (
-    <section id="connect" className="cv-auto relative bg-[#0a0a0a] py-24 md:py-28 overflow-hidden min-h-screen flex flex-col justify-center">
+    <section id="connect" className="cv-auto relative bg-[#0a0a0a] py-32 overflow-hidden min-h-screen flex flex-col justify-center">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
         <div className="inline-flex max-w-full flex-wrap items-center gap-x-7 gap-y-2 rounded-2xl border border-white/20 bg-[#3A373E]/40 backdrop-blur-xl px-5 py-3 mb-10">
             <p className="font-['Syne'] font-bold text-white text-[20px] leading-tight">THE JIMMY LA<span className="relative inline-block">B<span className="absolute -bottom-2 -right-5 flex w-6 h-6 items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#22c55e]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#22c55e] shadow-[0_0_10px_rgba(34,197,94,0.6)]"></span></span></span></p>

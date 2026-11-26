@@ -163,6 +163,22 @@ export function sectionContentTargetY(sectionId: string): number | null {
   }
   const vpH = window.innerHeight;
   let y = targetDocY - vpH / 2;
+  // The cards must never touch the floor, on any screen height. On a
+  // short screen the midpoint alone pushes the first card down near the
+  // bottom and the next row is cut off at the floor. So clamp the scroll
+  // so the first card's bottom stays at least 60px above the floor and
+  // the heading stays at least 90px below the top. If the heading plus
+  // first card group is taller than the viewport, the card wins, so the
+  // cards never touch the floor.
+  const headingTop = hRect.top + window.scrollY;
+  if (card) {
+    const cRect = card.getBoundingClientRect();
+    const cardBottom = cRect.top + window.scrollY + cRect.height;
+    const low = cardBottom - vpH + 60;
+    const high = headingTop - 90;
+    if (low <= high) y = Math.max(low, Math.min(y, high));
+    else y = Math.max(y, low);
+  }
   // Keep the viewport inside this section, so no part of the section
   // above or below is ever seen. The content midpoint can sit above the
   // section top (Services: ~120px), which lets the marquee from above
