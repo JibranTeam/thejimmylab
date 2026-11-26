@@ -1198,7 +1198,7 @@ const ConnectSection = () => {
     return () => window.removeEventListener('brief', onBrief);
   }, []);
   return (
-    <section id="connect" className="cv-auto relative bg-[#0a0a0a] py-32 overflow-hidden min-h-screen flex flex-col justify-center">
+    <section id="connect" className="cv-auto relative bg-[#0a0a0a] pt-32 pb-48 overflow-hidden min-h-screen flex flex-col justify-center">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
         <div className="inline-flex max-w-full flex-wrap items-center gap-x-7 gap-y-2 rounded-2xl border border-white/20 bg-[#3A373E]/40 backdrop-blur-xl px-5 py-3 mb-10">
             <p className="font-['Syne'] font-bold text-white text-[20px] leading-tight">THE JIMMY LA<span className="relative inline-block">B<span className="absolute -bottom-2 -right-5 flex w-6 h-6 items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#22c55e]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#22c55e] shadow-[0_0_10px_rgba(34,197,94,0.6)]"></span></span></span></p>
