@@ -142,7 +142,16 @@ function firstVisibleCard(el: HTMLElement): HTMLElement | null {
   const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, article, form');
   for (const c of Array.from(cards)) {
     const r = (c as HTMLElement).getBoundingClientRect();
-    if (r.width > 0 && r.height > 0) return c as HTMLElement;
+    if (r.width > 0 && r.height > 0) {
+      // A form is shorter than the card that holds it: the card adds a
+      // heading above the form and padding below it. Measure the whole
+      // card, or the floor clamp clears the form while the card itself
+      // still sits past the floor.
+      if ((c as HTMLElement).tagName === 'FORM' && (c as HTMLElement).parentElement) {
+        return (c as HTMLElement).parentElement as HTMLElement;
+      }
+      return c as HTMLElement;
+    }
   }
   return null;
 }
