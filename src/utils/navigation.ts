@@ -176,9 +176,13 @@ export function sectionContentTargetY(sectionId: string): number | null {
   // short screen the midpoint alone pushes the first card down near the
   // bottom and the next row is cut off at the floor. So clamp the scroll
   // so the first card's bottom stays at least 60px above the floor and
-  // the heading stays at least 90px below the top. If the heading plus
-  // first card group is taller than the viewport, the card wins, so the
-  // cards never touch the floor.
+  // the heading stays at least 90px below the top. When the heading plus
+  // first card group is taller than the viewport, both cannot hold at
+  // once, so the heading wins: align it 90px below the top and let the
+  // card extend below the fold, the standard responsive behaviour, so
+  // the section always starts cleanly and the heading is never cut off.
+  // The card itself is compacted for short screens (see index.css) so
+  // it fits within the viewport on a 16-inch laptop too.
   const headingTop = hRect.top + window.scrollY;
   if (card) {
     const cRect = card.getBoundingClientRect();
@@ -186,7 +190,7 @@ export function sectionContentTargetY(sectionId: string): number | null {
     const low = cardBottom - vpH + 60;
     const high = headingTop - 90;
     if (low <= high) y = Math.max(low, Math.min(y, high));
-    else y = Math.max(y, low);
+    else y = high;
   }
   // Keep the viewport inside this section, so no part of the section
   // above or below is ever seen. The content midpoint can sit above the

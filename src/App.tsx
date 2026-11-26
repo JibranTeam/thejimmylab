@@ -1229,7 +1229,7 @@ const ConnectSection = () => {
               <p className="text-xs text-white/70 leading-relaxed font-light">Working globally, USA, UK, Europe, the Gulf, Australia and Canada, with modern asynchronous processes.</p>
             </div>
           </div>
-          <div className="rounded-2xl bg-[#3A373E]/40 backdrop-blur-xl border border-white/[0.08] p-8 sm:p-10">
+          <div className="connect-card rounded-2xl bg-[#3A373E]/40 backdrop-blur-xl border border-white/[0.08] p-8 sm:p-10">
             <h3 className="font-['Syne'] text-[26px] font-bold text-white mb-8">Send a Project Inquiry</h3>
             <form className="space-y-6" onSubmit={submitInquiry}>
               <div className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
