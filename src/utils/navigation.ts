@@ -139,7 +139,7 @@ export function centerYForSectionRect(sectionId: string): number | null {
 // mobile one is display:none, and its bounding rect is all zeros, which
 // would drag the content midpoint thousands of pixels too high.
 function firstVisibleCard(el: HTMLElement): HTMLElement | null {
-  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, article');
+  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, article, form');
   for (const c of Array.from(cards)) {
     const r = (c as HTMLElement).getBoundingClientRect();
     if (r.width > 0 && r.height > 0) return c as HTMLElement;
