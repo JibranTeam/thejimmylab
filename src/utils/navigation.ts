@@ -175,7 +175,7 @@ export function sectionContentTargetY(sectionId: string): number | null {
   // The cards must never touch the floor, on any screen height. On a
   // short screen the midpoint alone pushes the first card down near the
   // bottom and the next row is cut off at the floor. So clamp the scroll
-  // so the first card's bottom stays at least 60px above the floor and
+  // so the first card's bottom stays at least 80px above the floor and
   // the heading stays at least 90px below the top. When the heading plus
   // first card group is taller than the viewport, both cannot hold at
   // once, so the heading wins: align it 90px below the top and let the
@@ -187,7 +187,7 @@ export function sectionContentTargetY(sectionId: string): number | null {
   if (card) {
     const cRect = card.getBoundingClientRect();
     const cardBottom = cRect.top + window.scrollY + cRect.height;
-    const low = cardBottom - vpH + 60;
+    const low = cardBottom - vpH + 80;
     const high = headingTop - 90;
     if (low <= high) y = Math.max(low, Math.min(y, high));
     else y = high;
