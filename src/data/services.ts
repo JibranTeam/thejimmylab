@@ -240,6 +240,13 @@ export const services: Service[] = [
     desc: "Scroll-driven, 2D & 3D motion that makes interfaces feel alive and unforgettable.",
     color: "#ec4899",
     tagline: "Motion that guides, delights and sets your brand apart.",
+    included: [
+      { title: "GSAP Animation", desc: "Scroll-driven scenes, timelines and parallax built with GSAP, smooth at 60fps and tied to how your visitors move through the page." },
+      { title: "Lottie Animation", desc: "Lightweight JSON animations for icons, illustrations and loading states, crisp at any size and fast on any device." },
+      { title: "Micro-Interactions", desc: "Small, purposeful motion on buttons, hovers and forms that makes your product feel premium and guides people to the next step." },
+      { title: "Framer Motion & Page Transitions", desc: "Fluid page transitions, layout animation and interactive scenes built with Framer Motion, so moving through your site feels seamless." },
+      { title: "SVG Animation", desc: "Animated icons, illustrations and line-draw effects that stay sharp at every size and load instantly." },
+    ],
     overview: [
       "We craft interactive, scroll-driven and 3D motion that turns static pages into memorable experiences. From micro-interactions to full product configurators, we use motion as a functional tool, not decoration.",
       "Every animation is optimized for 60fps, respects reduced-motion preferences and enhances usability rather than distracting from it.",
