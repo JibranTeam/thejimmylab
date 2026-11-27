@@ -1206,8 +1206,6 @@ const ConnectSection = () => {
             </div>
             <div className="w-full mt-12 p-6 rounded-2xl bg-white/5 border border-white/15 relative overflow-hidden group select-none">
               <div className="absolute right-6 top-6 flex items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#ff6b35]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#ff6b35] shadow-[0_0_10px_rgba(255,107,53,0.6)]"></span></div>
-              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Working worldwide</span>
-              <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Global Team</h3>
               <p className="text-xs text-white/70 leading-relaxed font-light">One in-house team, serving the USA, UK, Europe, the Gulf, Australia and Canada.</p>
             </div>
           </div>
