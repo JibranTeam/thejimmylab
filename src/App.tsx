@@ -69,6 +69,8 @@ const Navigation = () => {
     { name: 'Services', href: '#services' },
     { name: 'Work', href: '#portfolio' },
     { name: 'Process', href: '#process' },
+    { name: 'Reviews', href: '#testimonials' },
+    { name: 'FAQ', href: '#faq' },
     { name: 'Journal', href: '#journal' },
   ];
   return (
@@ -1424,7 +1426,7 @@ function App() {
       setRoute(path);
     } else if (hash) {
       const section = hash.slice(1);
-      if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
+      if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(section)) {
         try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
         setRoute('/');
       }
@@ -1448,7 +1450,7 @@ function App() {
       }
       if (hash) {
         const section = hash.slice(1);
-        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
+        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
           try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
           setRoute('/');
         }
@@ -1645,7 +1647,7 @@ function App() {
         const backSection = stateSection ?? (next === '/' ? getLastHomeSection() : null);
         if (backSection) {
           pendingRestoreRef.current = { section: backSection };
-        } else if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
+        } else if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
           pendingRestoreRef.current = { section: hash };
         } else if (typeof savedY === 'number') {
           pendingRestoreRef.current = { y: savedY };
@@ -1687,7 +1689,7 @@ function App() {
       }
       if (href.startsWith('#')) {
         const section = href.slice(1);
-        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
+        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(section)) {
           e.preventDefault();
           navigateHomeToSection(section);
         }
