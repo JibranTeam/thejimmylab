@@ -1,6 +1,6 @@
 # THE JIMMY LAB
 
-THE JIMMY LAB is a digital agency crafting immersive websites, web applications and interactive experiences. A global remote team. Founded in 2013. Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
+THE JIMMY LAB is a digital agency crafting immersive websites, web applications and interactive experiences. An in-house team. Founded in 2013. Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
 
 ## Services
 
@@ -25,13 +25,13 @@ THE JIMMY LAB is a digital agency crafting immersive websites, web applications 
 
 ## Locations
 
-Remote web development from a global team, no local office is claimed in any market.
+Web development from an in-house team, no local office is claimed in any market.
 
-- [Web Development Agency for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
-- [Bespoke Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
-- [Web Development Agency for UAE & Dubai Businesses](https://thejimmylab.vercel.app/locations/uae): A global remote team, working Gulf hours.
-- [Web Development Agency for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): A global remote team, handing over work every day.
-- [Web Development Agency for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): A global remote team, working on Canadian hours.
+- [Web Development Agency for USA Businesses](https://thejimmylab.vercel.app/locations/usa): An in-house team, working on US hours.
+- [Bespoke Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): An in-house team, working UK hours.
+- [Web Development Agency for UAE & Dubai Businesses](https://thejimmylab.vercel.app/locations/uae): An in-house team, working Gulf hours.
+- [Web Development Agency for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): An in-house team, handing over work every day.
+- [Web Development Agency for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): An in-house team, working on Canadian hours.
 
 ## Industries
 

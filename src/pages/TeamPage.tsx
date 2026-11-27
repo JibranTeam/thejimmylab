@@ -77,7 +77,7 @@ export default function TeamPage() {
             <div className="max-w-xl">
               <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">// Operators</div>
               <h1 className="font-['Syne'] text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]">The <span className="gradient-text">collective</span></h1>
-              <p className="text-white/70 mt-5 max-w-md leading-relaxed text-[15px]">A senior team of strategists, designers, engineers and AI operators, working remotely across time zones.</p>
+              <p className="text-white/70 mt-5 max-w-md leading-relaxed text-[15px]">A senior in-house team of strategists, designers, engineers and AI operators, carrying every project from first sketch to shipped product.</p>
             </div>
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 font-mono text-[11px] text-white font-bold uppercase tracking-[0.2em] shrink-0">Roster: 06 Confirmed</div>
           </motion.div>

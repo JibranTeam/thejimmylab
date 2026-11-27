@@ -595,7 +595,7 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "How much does a Next.js website cost?", a: "It depends on scope, pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly." },
-      { q: "Do you work with startups in the USA and UK?", a: "Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time." },
+      { q: "Do you work with startups in the USA and UK?", a: "Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as an in-house team with daily overlap and a one-hour average response time." },
       { q: "Can you rebuild our existing site in Next.js?", a: "Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact, see our redesign and migration service." },
     ],
   },

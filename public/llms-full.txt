@@ -1,11 +1,11 @@
 # THE JIMMY LAB
 
-THE JIMMY LAB is a digital agency crafting immersive websites, web applications and interactive experiences. A global remote team. Founded in 2013. Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
+THE JIMMY LAB is a digital agency crafting immersive websites, web applications and interactive experiences. An in-house team. Founded in 2013. Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
 
 ## Facts
 
 - Founded in 2013.
-- A global remote team of six operators.
+- An in-house team of six operators.
 - Serving clients in the USA, UK, Europe, the Gulf, Australia and Canada.
 - Pricing is project-based with custom quotes.
 - Average response time: one hour.
@@ -35,13 +35,13 @@ THE JIMMY LAB is a digital agency crafting immersive websites, web applications 
 
 ## Locations
 
-Remote web development from a global team, no local office is claimed in any market.
+Web development from an in-house team, no local office is claimed in any market.
 
-- [Web Development Agency for USA Businesses](https://thejimmylab.vercel.app/locations/usa): A global remote team, working on US hours.
-- [Bespoke Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): A global remote team, working UK hours.
-- [Web Development Agency for UAE & Dubai Businesses](https://thejimmylab.vercel.app/locations/uae): A global remote team, working Gulf hours.
-- [Web Development Agency for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): A global remote team, handing over work every day.
-- [Web Development Agency for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): A global remote team, working on Canadian hours.
+- [Web Development Agency for USA Businesses](https://thejimmylab.vercel.app/locations/usa): An in-house team, working on US hours.
+- [Bespoke Web Development for UK Businesses](https://thejimmylab.vercel.app/locations/uk): An in-house team, working UK hours.
+- [Web Development Agency for UAE & Dubai Businesses](https://thejimmylab.vercel.app/locations/uae): An in-house team, working Gulf hours.
+- [Web Development Agency for Australian Businesses](https://thejimmylab.vercel.app/locations/australia): An in-house team, handing over work every day.
+- [Web Development Agency for Canadian Businesses](https://thejimmylab.vercel.app/locations/canada): An in-house team, working on Canadian hours.
 
 ## Industries
 
@@ -267,7 +267,7 @@ Q: How much does a Next.js website cost?
 A: It depends on scope, pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly.
 
 Q: Do you work with startups in the USA and UK?
-A: Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time.
+A: Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as an in-house team with daily overlap and a one-hour average response time.
 
 Q: Can you rebuild our existing site in Next.js?
 A: Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact, see our redesign and migration service.
@@ -316,7 +316,7 @@ A: Yes, modelling, texturing and rendering are in-house, delivered as optimized 
 ### Web Development Agency for USA Businesses
 
 Q: Do you have an office in the USA?
-A: No, we are a global remote team and work with US clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
+A: No, we are an in-house team and work with US clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
 
 Q: What hours do you work with US clients?
 A: Our working day overlaps with US mornings and midday. Your morning is our evening, so calls happen in your morning and progress lands in your inbox overnight.
@@ -328,7 +328,7 @@ A: It depends on scope, pages, design, integrations and content. We price per pr
 ### Bespoke Web Development for UK Businesses
 
 Q: Do you have an office in the UK?
-A: No, we are a global remote team and work with UK clients remotely. Our process is built for it: daily overlap, weekly demos and a staging link from day one.
+A: No, we are an in-house team and work with UK clients remotely. Our process is built for it: daily overlap, weekly demos and a staging link from day one.
 
 Q: What hours do you work with UK clients?
 A: Your afternoon is our evening. Calls, demos and reviews happen in your working afternoon, every working day.
@@ -340,7 +340,7 @@ A: Bespoke. Every site is designed and built for the client, no bought templates
 ### Web Development Agency for UAE & Dubai Businesses
 
 Q: Do you have an office in Dubai or the UAE?
-A: No, we are a global remote team and work with UAE clients remotely. We do not claim a local office; the working relationship feels local anyway.
+A: No, we are an in-house team and work with UAE clients remotely. We do not claim a local office; the working relationship feels local anyway.
 
 Q: What kind of UAE projects do you take on?
 A: Corporate websites, e-commerce storefronts, mobile apps and web applications, mostly for SMEs and growing businesses across the Emirates.
@@ -352,7 +352,7 @@ A: Same working day, same hours. Kick-off call, weekly demos on a staging link, 
 ### Web Development Agency for Australian Businesses
 
 Q: Do you have an office in Australia?
-A: No, we are a global remote team and work with Australian clients remotely. The time difference is the advantage: your afternoon is our morning, so work moves every day.
+A: No, we are an in-house team and work with Australian clients remotely. The time difference is the advantage: your afternoon is our morning, so work moves every day.
 
 Q: How do we communicate across the time difference?
 A: Mostly async, written updates and a staging link you can check any time, with live calls in the overlap whenever a decision needs one.
@@ -364,7 +364,7 @@ A: Yes, redesigns, optimizations and migrations on existing sites are a large pa
 ### Web Development Agency for Canadian Businesses
 
 Q: Do you have an office in Canada?
-A: No, we are a global remote team and work with Canadian clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
+A: No, we are an in-house team and work with Canadian clients remotely. Our process is built around it: daily overlap, weekly demos and a staging link from day one.
 
 Q: What hours do you work with Canadian clients?
 A: Our working day overlaps with Canadian mornings and midday. Your morning is our evening, so calls happen in your morning and progress lands in your inbox overnight.
