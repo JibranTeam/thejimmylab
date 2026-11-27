@@ -557,8 +557,8 @@ const AboutSection = () => {
   useEffect(() => {
     if (homeEntrancesPlayed) return;
     const ctx = gsap.context(() => {
-      gsap.from('.about-content', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, y: 60, opacity: 0, duration: 1, ease: 'power3.out' });
-      gsap.from('.about-card', { scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' }, y: 80, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
+      gsap.from('.about-content', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, opacity: 0, duration: 1, ease: 'power3.out' });
+      gsap.from('.about-card', { scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' }, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -670,8 +670,8 @@ const ServicesSection = () => {
   useEffect(() => {
     if (homeEntrancesPlayed) return;
     const ctx = gsap.context(() => {
-      gsap.from('.service-title', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' });
-      gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }, y: 100, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
+      gsap.from('.service-title', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, opacity: 0, duration: 0.5, ease: 'power3.out' });
+      gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -786,7 +786,7 @@ const PortfolioSection = () => {
   useEffect(() => {
     if (homeEntrancesPlayed) return;
     const ctx = gsap.context(() => {
-      gsap.from('.portfolio-card', { scrollTrigger: { trigger: '.portfolio-grid', start: 'top 80%' }, y: 80, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
+      gsap.from('.portfolio-card', { scrollTrigger: { trigger: '.portfolio-grid', start: 'top 80%' }, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
