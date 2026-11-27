@@ -555,14 +555,7 @@ const PartnersSection = () => {
 /* ================= About ================= */
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (homeEntrancesPlayed) return;
-    const ctx = gsap.context(() => {
-      gsap.from('.about-content', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, opacity: 0, duration: 1, ease: 'power3.out' });
-      gsap.from('.about-card', { scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' }, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const values = [
     { icon: Rocket, title: 'Innovation', desc: 'Pushing boundaries with cutting-edge technologies' },
     { icon: Users, title: 'Collaboration', desc: 'Working closely with clients at every step' },
@@ -668,14 +661,7 @@ const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [servicePage, setServicePage] = useState(0);
-  useEffect(() => {
-    if (homeEntrancesPlayed) return;
-    const ctx = gsap.context(() => {
-      gsap.from('.service-title', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, opacity: 0, duration: 0.5, ease: 'power3.out' });
-      gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
   const SERVICES_PER_PAGE = 9;
   const totalServicePages = Math.ceil(services.length / SERVICES_PER_PAGE);
@@ -784,13 +770,7 @@ const ServicesSection = () => {
 /* ================= Portfolio ================= */
 const PortfolioSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (homeEntrancesPlayed) return;
-    const ctx = gsap.context(() => {
-      gsap.from('.portfolio-card', { scrollTrigger: { trigger: '.portfolio-grid', start: 'top 80%' }, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   return (
     <section id="portfolio" ref={sectionRef} className="relative py-20 lg:py-24 bg-[#3A373E] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
