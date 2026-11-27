@@ -192,7 +192,7 @@ export default function ServicePage({ service }: { service: Service }) {
             >
               <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#ff6b35]">Included</span>
               <h2 className="font-['Syne'] text-3xl md:text-4xl font-bold text-white mt-3">Inside this service</h2>
-              <p className="text-white/60 text-lg mt-4">These are part of Web Development, not separate engagements.</p>
+              <p className="text-white/60 text-lg mt-4">These are part of {service.title}, not separate engagements.</p>
             </motion.div>
             <div className="grid sm:grid-cols-3 gap-5">
               {service.included.map((inc, i) => {
