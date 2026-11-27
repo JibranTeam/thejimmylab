@@ -69,8 +69,6 @@ const Navigation = () => {
     { name: 'Services', href: '#services' },
     { name: 'Work', href: '#portfolio' },
     { name: 'Process', href: '#process' },
-    { name: 'Reviews', href: '#testimonials' },
-    { name: 'FAQ', href: '#faq' },
     { name: 'Journal', href: '#journal' },
   ];
   return (
@@ -83,7 +81,7 @@ const Navigation = () => {
           </svg>
           <span className="text-[14px] font-medium tracking-[0.22em] text-white whitespace-nowrap">THE&nbsp;JIMMY&nbsp;LAB</span>
         </a>
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-9">
           {navItems.map((item) => (
             <a key={item.name} href={item.href} className="text-[15px] text-white/75 hover:text-white transition-colors">{item.name}</a>
           ))}
@@ -915,7 +913,7 @@ const TestimonialsSection = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {testimonials.slice(0, 3).map((t, idx) => (
-            <button key={t.name} onClick={() => setActive(idx)} className={cn('text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer group', active === idx ? 'bg-white/[0.06] border-[#ff6b35]/30 shadow-[0_8px_32px_rgba(0,0,0,0.3)]' : 'glass hover:bg-white/[0.05] hover:border-white/10')}>
+            <button key={t.name} onClick={() => setActive(idx)} className={cn('testimonial-card text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer group', active === idx ? 'bg-white/[0.06] border-[#ff6b35]/30 shadow-[0_8px_32px_rgba(0,0,0,0.3)]' : 'glass hover:bg-white/[0.05] hover:border-white/10')}>
               <div className="flex items-center gap-3 mb-4"><div className={cn('w-10 h-10 rounded-full bg-gradient-to-br flex items-center justify-center text-white font-bold text-xs shrink-0', t.gradient)}>{t.initials}</div><div className="min-w-0"><div className="text-sm font-semibold text-white truncate">{t.name}</div><div className="text-xs text-white/50 truncate">{t.role}</div></div></div>
               <p className="text-sm text-white/60 leading-relaxed line-clamp-4 group-hover:text-white/80 transition-colors">"{t.quote}"</p>
               <div className="flex gap-0.5 mt-3">{[...Array(5)].map((_, i) => (<Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />))}</div>
@@ -1268,6 +1266,8 @@ const Footer = () => (
               { name: 'Services', href: '#services' },
               { name: 'Work', href: '#portfolio' },
               { name: 'Process', href: '#process' },
+              { name: 'Reviews', href: '#testimonials' },
+              { name: 'FAQ', href: '#faq' },
               { name: 'Team', href: '/team' },
               { name: 'Journal', href: '#journal' },
               { name: 'Contact', href: '#connect' },
