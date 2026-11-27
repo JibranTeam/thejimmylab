@@ -18,7 +18,7 @@ export function sectionOfElement(el: HTMLElement | null): string | null {
   const sec = el?.closest?.('section[id], footer [id], div[id]') as HTMLElement | null;
   if (!sec) return null;
   const id = sec.id;
-  if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(id)) return id;
+  if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(id)) return id;
   return null;
 }
 
@@ -62,7 +62,7 @@ export function getLastHomeSection(): string | null {
   return lastHomeSection;
 }
 
-const HOME_SECTIONS = ['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'];
+const HOME_SECTIONS = ['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'];
 // Which home section the viewport centre sits in when the page is scrolled
 // to y. The saved scroll pixel is the precise record of where the user was
 // when they left home, so browser Back derives its section from it instead

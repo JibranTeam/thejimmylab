@@ -64,6 +64,7 @@ const Navigation = () => {
   }, []);
   const navItems = [
     { name: 'Home', href: '#home' },
+    { name: 'Modes', href: '#modes' },
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Work', href: '#portfolio' },
@@ -325,8 +326,8 @@ const Words = ({
         return (
           <span key={i} aria-hidden="true" className="inline-block whitespace-pre">
             <motion.span
-              initial={homeEntrancesPlayed ? false : { opacity: 0, y: '0.55em' }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={homeEntrancesPlayed ? false : { opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: '-12% 0px' }}
               transition={{ delay: baseDelay + i * 0.05, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className={cn('inline-block [will-change:transform,opacity]', outlineLast && last && 'gradient-text')}
@@ -1443,7 +1444,7 @@ function App() {
       setRoute(path);
     } else if (hash) {
       const section = hash.slice(1);
-      if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
+      if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
         try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
         setRoute('/');
       }
@@ -1467,7 +1468,7 @@ function App() {
       }
       if (hash) {
         const section = hash.slice(1);
-        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
+        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
           try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
           setRoute('/');
         }
@@ -1664,7 +1665,7 @@ function App() {
         const backSection = stateSection ?? (next === '/' ? getLastHomeSection() : null);
         if (backSection) {
           pendingRestoreRef.current = { section: backSection };
-        } else if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
+        } else if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
           pendingRestoreRef.current = { section: hash };
         } else if (typeof savedY === 'number') {
           pendingRestoreRef.current = { y: savedY };
@@ -1706,7 +1707,7 @@ function App() {
       }
       if (href.startsWith('#')) {
         const section = href.slice(1);
-        if (['home', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
+        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
           e.preventDefault();
           navigateHomeToSection(section);
         }
