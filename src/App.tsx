@@ -1610,86 +1610,32 @@ function App() {
       }
     }
     if (!sectionId) return;
-    const mountMs = performance.now();
-    // Retry persistently until the heading is centred AND the layout is
-    // stable. A measurement taken while images above the section are
-    // still loading can be thousands of pixels off, and the wrong
-    // landing then "confirms" itself, so the retry stops early. Only
-    // stop when the measured target is unchanged across consecutive
-    // checks and the scroll is within 4px of it.
-    let lastY: number | null = null;
-    let stableCount = 0;
-    const attempt = (n: number) => {
-      // Do not measure until the exit transition has finished. While the
-      // exiting service page is still in the DOM (0.45s), it pushes the
-      // home page ~3500px down, so the measured target is ~3500px too
-      // large and the wrong landing "confirms" itself.
-      if (n === 1 && performance.now() - mountMs < 700) {
-        window.setTimeout(() => attempt(1), 700 - (performance.now() - mountMs));
-        return;
-      }
+    // ONE smooth scroll after the layout settles. The old retry loop
+    // scrolled instantly up to 20 times and the watchdog re-centred
+    // every 250ms for 10s, so the landing jumped after it arrived.
+    // Wait for the exit transition (0.45s, it pushes home ~3500px down
+    // while the old page is still in the DOM) and for the fonts, then
+    // measure once and glide once smoothly to the target. Nothing
+    // corrects after it, so nothing jumps. The floor clamp carries a
+    // 100px buffer, so a few pixels of late settle drift is fine.
+    const settleMs = 700;
+    const go = () => {
       const y = sectionContentTargetY(sectionId);
-      if (y === null) {
-        if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
-        return;
-      }
-      scrollSectionContentToCenter(sectionId);
-      const y2 = sectionContentTargetY(sectionId);
-      const off = sectionContentVisualOffset(sectionId);
-      const targetStable = y2 !== null && Math.abs(y2 - y) <= 4;
-      const scrollCentred = y2 !== null && Math.abs(window.scrollY - y2) <= 4 && off !== null && Math.abs(off) <= 4;
-      if (targetStable && scrollCentred) {
-        stableCount += 1;
-        if (stableCount >= 2) return;
-      } else {
-        stableCount = 0;
-      }
-      lastY = y2;
-      if (n < 20) window.setTimeout(() => attempt(n + 1), 300);
+      if (y === null) return;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     };
-    attempt(1);
-    // SECOND METHOD (watchdog): for 10s after a Back restore, keep
-    // watching the heading's actual on-screen position and re-centre it
-    // whenever it is off-centre. This is independent of the retry above:
-    // it measures what the eye actually sees (the heading's bounding
-    // rect against the viewport centre), so a landing that is downward,
-    // at the top, or drifted by a late layout shift gets corrected even
-    // after the retry window has closed. It stops itself after 10s and
-    // stops early once the heading has held centre for a full second.
-    // It never runs on a deliberate scroll: it only re-centres when the
-    // heading is off-centre AND no scroll has happened in the last
-    // 400ms (so a user scrolling away is left alone).
-    // Watchdog on the section's CONTENT midpoint (heading + first card
-    // row), the same target the restore centres, so a landing that leaves
-    // the cards at the bottom gets corrected even after the retry closes.
-    if (document.getElementById(sectionId)) {
-      const startedAt = performance.now();
-      let lastUserScrollAt = 0;
-      let centredSince: number | null = null;
-      const onScroll = () => { lastUserScrollAt = performance.now(); };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      const watch = window.setInterval(() => {
-        const now = performance.now();
-        if (now - startedAt > 10000) {
-          window.clearInterval(watch);
-          window.removeEventListener('scroll', onScroll);
-          return;
-        }
-        if (now - lastUserScrollAt < 400) return;
-        const off = sectionContentVisualOffset(sectionId);
-        if (off === null) return;
-        if (Math.abs(off) <= 4) {
-          if (centredSince === null) centredSince = now;
-          if (now - centredSince >= 1000) {
-            window.clearInterval(watch);
-            window.removeEventListener('scroll', onScroll);
-          }
-          return;
-        }
-        centredSince = null;
-        scrollSectionContentToCenter(sectionId);
-      }, 250);
-    }
+    const waitForFonts: Promise<void> = (() => {
+      try {
+        const fonts = (document as Document & { fonts?: { ready?: Promise<unknown> } }).fonts;
+        if (fonts && fonts.ready) return fonts.ready.then(() => undefined);
+      } catch { /* fonts API unavailable */ }
+      return Promise.resolve();
+    })();
+    window.setTimeout(() => {
+      void waitForFonts.then(() => {
+        window.setTimeout(go, 50);
+      });
+    }, settleMs);
   }, [route]);
   // Own the scroll position: the browser's automatic restore on back/forward
   // is unreliable in this SPA (it fights the app's own scroll and lands in

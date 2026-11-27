@@ -304,27 +304,11 @@ export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehav
   } else {
     scrollToInstant(y);
   }
-  if (behavior === 'smooth') {
-    // Re-check once the smooth scroll and the layout have settled. A long
-    // scroll from a fresh load can overshoot by ~800px while sections
-    // above it (content-visibility estimates) are still settling, and the
-    // same click from a settled page centres. Measure with the docTop
-    // helper (ignores transforms and estimates) and correct instantly so
-    // the CSS smooth scroll-behavior does not turn the correction into
-    // another glide.
-    // Re-check until the heading is centred. A single check can run
-    // while the layout above is still settling, so retry a few times.
-    const recheck = (attempt: number) => {
-      const y = sectionContentTargetY(sectionId);
-      if (y !== null && Math.abs(window.scrollY - y) > 4) {
-        scrollToInstant(y);
-      }
-      if (attempt < 3) {
-        window.setTimeout(() => recheck(attempt + 1), 800);
-      }
-    };
-    window.setTimeout(() => recheck(1), 800);
-  }
+  // One smooth scroll and nothing after it. The old re-check did an
+  // instant correction up to 3 times after the smooth scroll, so the
+  // landing jumped after it arrived. The floor clamp already carries a
+  // 100px buffer, so a few pixels of settle drift is acceptable, and a
+  // single smooth glide is what the eye reads as smooth, not a jump.
   return true;
 }
 
