@@ -195,16 +195,32 @@ export function sectionContentTargetY(sectionId: string): number | null {
   }
   const vpH = window.innerHeight;
   let y = targetDocY - vpH / 2;
+  // Keep the viewport inside this section, so no part of the section
+  // above or below is ever seen. The content midpoint can sit above the
+  // section top (Services: ~120px), which lets the marquee from above
+  // peek in. For a section taller than the viewport, clamp the scroll
+  // between the section top and the section bottom minus the viewport
+  // height. For a short section there is nothing to clamp.
+  // This runs FIRST: the heading/floor clamp below has the final say,
+  // so a section clamp can never push the heading behind the nav.
+  const rect = el.getBoundingClientRect();
+  const sectionTop = rect.top + window.scrollY;
+  const sectionBottom = rect.bottom + window.scrollY;
+  if (sectionBottom - sectionTop >= vpH) {
+    y = Math.max(sectionTop, Math.min(y, sectionBottom - vpH));
+  }
   // The cards must never touch the floor, on any screen height. The
-  // target is now the whole heading-through-last-card block, so clamp
-  // the scroll so the LAST card's bottom stays at least 100px above
-  // the floor and the heading stays at least 90px below the top. When
-  // the whole block is taller than the viewport, both cannot hold at
-  // once, so the heading wins: align it 90px below the top and let the
-  // cards extend below the fold, the standard responsive behaviour, so
-  // the section always starts cleanly and the heading is never cut off.
+  // target is the whole heading-through-last-card block, so clamp the
+  // scroll so the LAST card's bottom stays at least 100px above the
+  // floor and the heading stays at least 90px below the top. When the
+  // whole block is taller than the viewport, both cannot hold at once,
+  // so the heading wins: align it 90px below the top and let the cards
+  // extend below the fold, the standard responsive behaviour, so the
+  // section always starts cleanly and the heading is never cut off.
   // The card itself is compacted for short screens (see index.css) so
   // it fits within the viewport on a 16-inch laptop too.
+  // This clamp is LAST, so it cannot be overridden: the heading is
+  // never clipped behind the sticky nav, on any load or origin.
   const headingTop = hRect.top + window.scrollY;
   if (card) {
     const cRect = card.getBoundingClientRect();
@@ -213,18 +229,9 @@ export function sectionContentTargetY(sectionId: string): number | null {
     const high = headingTop - 90;
     if (low <= high) y = Math.max(low, Math.min(y, high));
     else y = high;
-  }
-  // Keep the viewport inside this section, so no part of the section
-  // above or below is ever seen. The content midpoint can sit above the
-  // section top (Services: ~120px), which lets the marquee from above
-  // peek in. For a section taller than the viewport, clamp the scroll
-  // between the section top and the section bottom minus the viewport
-  // height. For a short section there is nothing to clamp.
-  const rect = el.getBoundingClientRect();
-  const sectionTop = rect.top + window.scrollY;
-  const sectionBottom = rect.bottom + window.scrollY;
-  if (sectionBottom - sectionTop >= vpH) {
-    y = Math.max(sectionTop, Math.min(y, sectionBottom - vpH));
+  } else {
+    // No card: still keep the heading below the top.
+    y = Math.min(y, headingTop - 90);
   }
   const max = document.documentElement.scrollHeight - vpH;
   return Math.max(0, Math.min(y, Math.max(0, max)));
@@ -326,11 +333,21 @@ export function scrollToSectionCentered(sectionId: string, behavior: ScrollBehav
   } else {
     scrollToInstant(y);
   }
-  // One smooth scroll and nothing after it. The old re-check did an
-  // instant correction up to 3 times after the smooth scroll, so the
-  // landing jumped after it arrived. The floor clamp already carries a
-  // 100px buffer, so a few pixels of settle drift is acceptable, and a
-  // single smooth glide is what the eye reads as smooth, not a jump.
+  // One smooth settle correction. A nav click measures immediately,
+  // but on a fresh load the layout is not settled yet, so the first
+  // target can be off (the heading ended clipped behind the nav on a
+  // fresh load while the same click from a settled page landed
+  // correctly). After 800ms, re-measure once and glide smoothly to
+  // the corrected target if it moved. Smooth, not instant, so it reads
+  // as one gentle glide to the final position, not a jump. Only once.
+  if (behavior === 'smooth') {
+    window.setTimeout(() => {
+      const y2 = sectionContentTargetY(sectionId);
+      if (y2 !== null && Math.abs(window.scrollY - y2) > 4) {
+        window.scrollTo({ top: y2, behavior: 'smooth' });
+      }
+    }, 800);
+  }
   return true;
 }
 
