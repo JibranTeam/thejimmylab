@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, Code2, Rocket, Zap, Users, ArrowRight, ArrowUpRight, Check, Star,
-  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy
+  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy, Palette, Bot
 } from 'lucide-react';
 import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
@@ -33,6 +33,7 @@ const ComingSoonPage = lazyRetry(() => import('./pages/ComingSoonPage'));
 const TopicPage = lazyRetry(() => import('./pages/TopicPage'));
 const PrivacyPage = lazyRetry(() => import('./pages/PrivacyPage'));
 const TermsPage = lazyRetry(() => import('./pages/TermsPage'));
+const IntegrationsPage = lazyRetry(() => import('./pages/IntegrationsPage'));
 import { PageTransition } from './components/PageTransition';
 import { CornerTicks } from './components/CornerTicks';
 import { services as serviceData, getServiceBySlug } from './data/services';
@@ -573,6 +574,7 @@ const AboutSection = () => {
             <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-6">We're a Team of <span className="gradient-text">Digital Craftsmen</span></h2>
             <p className="text-white/70 text-base leading-relaxed mb-4">Founded in 2013, THE JIMMY LAB is a digital agency specializing in web development, web design, interactive experiences, animation, and custom digital solutions.</p>
             <p className="text-white/70 text-base leading-relaxed mb-4">One team, end to end, in-house. From first sketch to shipped product, the same people carry your project all the way.</p>
+            <p className="text-white/70 text-base leading-relaxed mb-4">Our in-house AI team builds chatbots, agents and automations that work inside your product, not bolted on after it.</p>
             <p className="text-white/70 text-base leading-relaxed mb-4">We help businesses, startups, entrepreneurs, and brands in the USA, UK, Europe and the Gulf turn ideas into modern digital experiences that combine creative design, advanced technology, performance, and usability.</p>
             <p className="text-white/70 text-base leading-relaxed mb-4">Our expertise spans custom website development, full-stack web applications, interactive websites, 2D and 3D animation, product configurators, SaaS platforms, and AI-powered web solutions. Every project is designed around the client's goals, audience, and business requirements.</p>
             <p className="text-white/70 text-base leading-relaxed mb-8">With a focus on creative innovation and technical excellence, we create digital products that look exceptional, work seamlessly, and provide a strong foundation for business growth.</p>
@@ -662,8 +664,16 @@ const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [servicePage, setServicePage] = useState(0);
+  const [showAllServices, setShowAllServices] = useState(false);
   // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
+  const serviceBySlug = (slug: string) => services.find((x) => x.link === '/services/' + slug)!;
+  const serviceGroups = [
+    { name: 'Web Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites and web apps, built to scale from day one.', slugs: ['web-development', 'nextjs-development', 'react-website-redesign', 'e-commerce', 'mobile-development'] },
+    { name: 'Design', icon: Palette, color: '#00d4aa', desc: 'Interfaces, brands and motion that make products feel premium.', slugs: ['ui-ux-design', 'logo-design-branding', 'graphic-design-2d-3d', 'web-animation', 'threejs-3d-websites'] },
+    { name: 'AI and Automation', icon: Bot, color: '#3b82f6', desc: 'Chatbots, agents and workflows that run your operations.', slugs: ['ai-solutions', 'ai-chatbot-integration', 'integration-automation'] },
+    { name: 'Growth and Support', icon: Rocket, color: '#ffd700', desc: 'SEO, performance, maintenance and training that keep you growing.', slugs: ['seo-website-optimization', 'maintenance-support', 'consultation-training', 'website-redesign-migration', 'code-review-technical-audit'] },
+  ];
   const SERVICES_PER_PAGE = 9;
   const totalServicePages = Math.ceil(services.length / SERVICES_PER_PAGE);
   const servicePages = Array.from({ length: totalServicePages }, (_, pg) => services.slice(pg * SERVICES_PER_PAGE, pg * SERVICES_PER_PAGE + SERVICES_PER_PAGE));
@@ -680,6 +690,53 @@ const ServicesSection = () => {
           <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-4">Solutions for Every <span className="gradient-text">Digital Need</span></h2>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada that drive results.</p>
         </div>
+        <div className="services-grid grid sm:grid-cols-2 gap-5 lg:gap-6 pt-4">
+          {serviceGroups.map((group) => (
+            <div key={group.name} className="service-group-card relative group block">
+              <div
+                className="relative flex h-full flex-col overflow-hidden rounded-[6px] px-5 py-6 sm:px-6 sm:py-7"
+                style={{ background: 'rgba(7, 11, 14, 0.72)', border: '1px solid rgba(255,255,255,0.09)' }}
+              >
+                <CornerTicks color="rgba(255,255,255,0.28)" />
+                <div className="flex items-center gap-3.5 mb-4">
+                  <span
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-full"
+                    style={{ border: '1px solid ' + group.color + 'aa', background: group.color + '14' }}
+                  >
+                    <group.icon className="h-5 w-5" style={{ color: group.color }} />
+                  </span>
+                  <h3 className="text-[20px] font-semibold tracking-[-0.01em] text-white leading-snug">{group.name}</h3>
+                </div>
+                <p className="text-[13.5px] leading-[1.6] text-white/50 mb-5">{group.desc}</p>
+                <ul className="space-y-2.5 mt-auto">
+                  {group.slugs.map((slug) => {
+                    const svc = serviceBySlug(slug);
+                    return (
+                      <li key={slug}>
+                        <a
+                          href={svc.link}
+                          onClick={(e) => { e.preventDefault(); navigateTo(svc.link, 'services'); }}
+                          className="inline-flex items-center gap-2 text-[14px] text-white/80 hover:text-white transition-colors group/link"
+                        >
+                          <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover/link:text-[#ff6b35] transition-colors" />
+                          {svc.title}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-10">
+          <button type="button" onClick={() => setShowAllServices((v) => !v)} aria-expanded={showAllServices} className="btn-ghost inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold cursor-pointer">
+            {showAllServices ? 'Hide all services' : 'View all 18 services'}
+            <ChevronDown className={cn('w-4 h-4 transition-transform', showAllServices && 'rotate-180')} />
+          </button>
+        </div>
+        {showAllServices && (
+          <div className="mt-10">
         <div className="flex items-center justify-end gap-3 mb-6">
           <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {servicePage + 1} of {totalServicePages}</span>
           <div className="flex items-center gap-2">
@@ -763,6 +820,8 @@ const ServicesSection = () => {
           ))}
         </div>
         </div>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -827,6 +886,7 @@ const OurProcessSection = () => {
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 mb-10 lg:mb-14">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Process</div>
           <h2 id="approach-heading" className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.05]">Architect<span className="text-white/60">.</span> Build<span className="text-white/60">.</span> <span className="gradient-text">Accelerate.</span></h2>
+          <p className="mt-5 font-['Syne'] text-xl sm:text-2xl font-bold tracking-tight text-white">Plan<span className="text-[#ff6b35]">.</span> Develop<span className="text-[#ff6b35]">.</span> Launch<span className="text-[#ff6b35]">.</span> Maintain<span className="text-[#ff6b35]">.</span></p>
           <p className="mt-4 max-w-2xl text-white/55 text-lg leading-relaxed">A proven three-phase system that takes you from idea to launch, without chaos, delays, or guesswork.</p>
         </div>
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-8 xl:gap-10">
@@ -1264,6 +1324,7 @@ const Footer = () => (
               { name: 'Home', href: '#home' },
               { name: 'About', href: '#about' },
               { name: 'Services', href: '#services' },
+              { name: 'Integrations', href: '/integrations' },
               { name: 'Work', href: '#portfolio' },
               { name: 'Process', href: '#process' },
               { name: 'Reviews', href: '#testimonials' },
@@ -1412,6 +1473,7 @@ function App() {
       void import('./pages/TopicPage');
       void import('./pages/PrivacyPage');
       void import('./pages/TermsPage');
+      void import('./pages/IntegrationsPage');
     };
     const t = window.setTimeout(warm, 300);
     return () => window.clearTimeout(t);
@@ -1676,7 +1738,7 @@ function App() {
       if (!anchor) return;
       const href = anchor.getAttribute('href');
       if (!href) return;
-      if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/') {
+      if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/integrations' || href === '/') {
         e.preventDefault();
         if (href === '/') {
           // Going home on purpose (logo): the top, not the section left
@@ -1712,13 +1774,14 @@ function App() {
   const isComingSoonPage = route === '/coming-soon';
   const isPrivacyPage = route === '/privacy';
   const isTermsPage = route === '/terms';
-  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry && !isPrivacyPage && !isTermsPage;
+  const isIntegrationsPage = route === '/integrations';
+  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry && !isPrivacyPage && !isTermsPage && !isIntegrationsPage;
   // Per-page title + canonical + description + structured data.
   useEffect(() => {
-    document.title = service ? (service.seoTitle || service.title + ' Services | THE JIMMY LAB') : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isPrivacyPage ? 'Privacy Policy | THE JIMMY LAB' : isTermsPage ? 'Terms of Service | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB - Web Development & Design Agency';
+    document.title = service ? (service.seoTitle || service.title + ' Services | THE JIMMY LAB') : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isPrivacyPage ? 'Privacy Policy | THE JIMMY LAB' : isTermsPage ? 'Terms of Service | THE JIMMY LAB' : isIntegrationsPage ? 'Integrations | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB - Web Development & Design Agency';
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route));
-    const description = service ? (service.seoDescription || service.tagline + ' | THE JIMMY LAB - an in-house web development and design studio, serving clients in the USA, UK, Europe and the Gulf.') : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB, six operators covering design, engineering, SEO and automation, serving clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isPrivacyPage ? 'Privacy Policy for THE JIMMY LAB: what information this website collects and how it is used.' : isTermsPage ? 'Terms of Service for THE JIMMY LAB: the terms for working with the studio and using this website.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'In-house web development and design studio, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
+    const description = service ? (service.seoDescription || service.tagline + ' | THE JIMMY LAB - an in-house web development and design studio, serving clients in the USA, UK, Europe and the Gulf.') : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB, six operators covering design, engineering, SEO and automation, serving clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isPrivacyPage ? 'Privacy Policy for THE JIMMY LAB: what information this website collects and how it is used.' : isTermsPage ? 'Terms of Service for THE JIMMY LAB: the terms for working with the studio and using this website.' : isIntegrationsPage ? 'Integrations by THE JIMMY LAB: CRMs, payments, marketing, AI and the tools your business already runs on, connected to your website and apps.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'In-house web development and design studio, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
     const robotsMeta = document.querySelector('meta[name="robots"]');
     if (isComingSoonPage) { if (!robotsMeta) { const m = document.createElement('meta'); m.setAttribute('name', 'robots'); m.setAttribute('content', 'noindex'); document.head.appendChild(m); } else robotsMeta.setAttribute('content', 'noindex'); } else if (robotsMeta) robotsMeta.remove();
     const meta = document.querySelector('meta[name="description"]');
@@ -1796,14 +1859,14 @@ function App() {
     if (g) g('event', 'page_view', { page_path: route });
   }, [route]);
 
-  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
+  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isIntegrationsPage ? 'integrations' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
       <ComingSoonToast />
       <Analytics />
       <AnimatePresence mode="popLayout">
         <PageTransition key={routeKey}>
-          {service ? <Suspense fallback={<PageFallback />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<PageFallback />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<PageFallback />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<PageFallback />}><TeamPage /></Suspense> : isPrivacyPage ? <Suspense fallback={<PageFallback />}><PrivacyPage /></Suspense> : isTermsPage ? <Suspense fallback={<PageFallback />}><TermsPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<PageFallback />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
+          {service ? <Suspense fallback={<PageFallback />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<PageFallback />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<PageFallback />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<PageFallback />}><TeamPage /></Suspense> : isPrivacyPage ? <Suspense fallback={<PageFallback />}><PrivacyPage /></Suspense> : isTermsPage ? <Suspense fallback={<PageFallback />}><TermsPage /></Suspense> : isIntegrationsPage ? <Suspense fallback={<PageFallback />}><IntegrationsPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<PageFallback />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
         </PageTransition>
       </AnimatePresence>
     </>

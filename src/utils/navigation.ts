@@ -142,7 +142,7 @@ export function centerYForSectionRect(sectionId: string): number | null {
 // mobile one is display:none, and its bounding rect is all zeros, which
 // would drag the content midpoint thousands of pixels too high.
 function firstVisibleCard(el: HTMLElement): HTMLElement | null {
-  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, .testimonial-card, article, form');
+  const cards = el.querySelectorAll('.service-card, .service-group-card, .portfolio-card, .about-card, .testimonial-card, article, form');
   for (const c of Array.from(cards)) {
     const r = (c as HTMLElement).getBoundingClientRect();
     if (r.width > 0 && r.height > 0) {
@@ -164,7 +164,7 @@ function firstVisibleCard(el: HTMLElement): HTMLElement | null {
 // the first card, or the bottom rows run off the floor while the top
 // neighbour still shows. Same visibility and form rules as the first.
 function lastVisibleCard(el: HTMLElement): HTMLElement | null {
-  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, .testimonial-card, article, form');
+  const cards = el.querySelectorAll('.service-card, .service-group-card, .portfolio-card, .about-card, .testimonial-card, article, form');
   let last: HTMLElement | null = null;
   for (const c of Array.from(cards)) {
     const r = (c as HTMLElement).getBoundingClientRect();
