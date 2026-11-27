@@ -128,12 +128,15 @@ export function centerYForSectionRect(sectionId: string): number | null {
 }
 
 // Centre a section's CONTENT as a group, not just its heading. The
-// user's screenshot showed the heading at the viewport centre while the
-// first row of service cards sat near the bottom, cut off, so the
-// section read as "downward". The target is the midpoint between the
-// heading's centre and the first content card's centre; sections without
-// cards fall back to the heading. Returns the scroll Y that puts that
-// midpoint at the viewport centre, clamped to the page.
+// user's screenshot showed the heading in the upper third while the
+// first row of cards sat below centre and the bottom row ran off the
+// floor, with the marquee from above still showing, so the section read
+// as "downward" even though the heading-to-first-card midpoint was
+// centred. The target is the midpoint between the heading's centre and
+// the LAST content card's centre, so the whole heading-through-last-
+// card block is centred as a group; sections without cards fall back
+// to the heading. Returns the scroll Y that puts that midpoint at the
+// viewport centre, clamped to the page.
 // First content card that is actually visible. Some sections render a
 // post twice (a mobile article and a desktop article); on desktop the
 // mobile one is display:none, and its bounding rect is all zeros, which
@@ -156,6 +159,26 @@ function firstVisibleCard(el: HTMLElement): HTMLElement | null {
   return null;
 }
 
+// Last content card that is actually visible. The landing must centre
+// the whole heading-through-last-card block, not just the heading and
+// the first card, or the bottom rows run off the floor while the top
+// neighbour still shows. Same visibility and form rules as the first.
+function lastVisibleCard(el: HTMLElement): HTMLElement | null {
+  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, article, form');
+  let last: HTMLElement | null = null;
+  for (const c of Array.from(cards)) {
+    const r = (c as HTMLElement).getBoundingClientRect();
+    if (r.width > 0 && r.height > 0) {
+      if ((c as HTMLElement).tagName === 'FORM' && (c as HTMLElement).parentElement) {
+        last = (c as HTMLElement).parentElement as HTMLElement;
+      } else {
+        last = c as HTMLElement;
+      }
+    }
+  }
+  return last;
+}
+
 export function sectionContentTargetY(sectionId: string): number | null {
   if (sectionId === 'top') return 0;
   const el = document.getElementById(sectionId);
@@ -163,7 +186,7 @@ export function sectionContentTargetY(sectionId: string): number | null {
   const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
   const hRect = heading.getBoundingClientRect();
   const headingCentreY = hRect.top + window.scrollY + hRect.height / 2;
-  const card = firstVisibleCard(el);
+  const card = lastVisibleCard(el);
   let targetDocY = headingCentreY;
   if (card) {
     const cRect = card.getBoundingClientRect();
@@ -172,14 +195,13 @@ export function sectionContentTargetY(sectionId: string): number | null {
   }
   const vpH = window.innerHeight;
   let y = targetDocY - vpH / 2;
-  // The cards must never touch the floor, on any screen height. On a
-  // short screen the midpoint alone pushes the first card down near the
-  // bottom and the next row is cut off at the floor. So clamp the scroll
-  // so the first card's bottom stays at least 100px above the floor and
-  // the heading stays at least 90px below the top. When the heading plus
-  // first card group is taller than the viewport, both cannot hold at
+  // The cards must never touch the floor, on any screen height. The
+  // target is now the whole heading-through-last-card block, so clamp
+  // the scroll so the LAST card's bottom stays at least 100px above
+  // the floor and the heading stays at least 90px below the top. When
+  // the whole block is taller than the viewport, both cannot hold at
   // once, so the heading wins: align it 90px below the top and let the
-  // card extend below the fold, the standard responsive behaviour, so
+  // cards extend below the fold, the standard responsive behaviour, so
   // the section always starts cleanly and the heading is never cut off.
   // The card itself is compacted for short screens (see index.css) so
   // it fits within the viewport on a 16-inch laptop too.
@@ -227,7 +249,7 @@ export function sectionContentVisualOffset(sectionId: string): number | null {
   const heading = (el.querySelector('h1, h2') ?? el.querySelector('h3') ?? el) as HTMLElement;
   const hRect = heading.getBoundingClientRect();
   const headingCentre = hRect.top + hRect.height / 2;
-  const card = firstVisibleCard(el);
+  const card = lastVisibleCard(el);
   let targetCentre = headingCentre;
   if (card) {
     const cRect = card.getBoundingClientRect();
