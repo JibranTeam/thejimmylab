@@ -669,10 +669,16 @@ const ServicesSection = () => {
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
   const serviceBySlug = (slug: string) => services.find((x) => x.link === '/services/' + slug)!;
   const serviceGroups = [
-    { name: 'Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites, web apps and interactive experiences, built to scale from day one.', slugs: ['web-development', 'nextjs-development', 'react-website-redesign', 'e-commerce', 'mobile-development', 'web-animation', 'threejs-3d-websites'] },
-    { name: 'Design', icon: Palette, color: '#00d4aa', desc: 'Interfaces and brands that make products feel premium.', slugs: ['ui-ux-design', 'logo-design-branding', 'graphic-design-2d-3d'] },
-    { name: 'AI and Automation', icon: Bot, color: '#3b82f6', desc: 'Chatbots, agents and workflows that run your operations.', slugs: ['ai-solutions', 'ai-chatbot-integration', 'integration-automation'] },
-    { name: 'Growth and Support', icon: Rocket, color: '#ffd700', desc: 'SEO, performance, maintenance and training that keep you growing.', slugs: ['seo-website-optimization', 'maintenance-support', 'consultation-training', 'website-redesign-migration', 'code-review-technical-audit'] },
+    { name: 'Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites, web apps and interactive experiences, built to scale from day one.', items: [
+      { slug: 'web-development', children: [{ slug: 'nextjs-development' }, { slug: 'react-website-redesign' }, { label: 'WordPress & CMS', link: '/services/web-development' }] },
+      { slug: 'e-commerce' },
+      { slug: 'mobile-development' },
+      { slug: 'web-animation' },
+      { slug: 'threejs-3d-websites' },
+    ] },
+    { name: 'Design', icon: Palette, color: '#00d4aa', desc: 'Interfaces and brands that make products feel premium.', items: [{ slug: 'ui-ux-design' }, { slug: 'logo-design-branding' }, { slug: 'graphic-design-2d-3d' }] },
+    { name: 'AI and Automation', icon: Bot, color: '#3b82f6', desc: 'Chatbots, agents and workflows that run your operations.', items: [{ slug: 'ai-solutions' }, { slug: 'ai-chatbot-integration' }, { slug: 'integration-automation' }] },
+    { name: 'Growth and Support', icon: Rocket, color: '#ffd700', desc: 'SEO, performance, maintenance and training that keep you growing.', items: [{ slug: 'seo-website-optimization' }, { slug: 'maintenance-support' }, { slug: 'consultation-training' }, { slug: 'website-redesign-migration' }, { slug: 'code-review-technical-audit' }] },
   ];
   const SERVICES_PER_PAGE = 9;
   const totalServicePages = Math.ceil(services.length / SERVICES_PER_PAGE);
@@ -709,10 +715,10 @@ const ServicesSection = () => {
                 </div>
                 <p className="text-[13.5px] leading-[1.6] text-white/50 mb-5">{group.desc}</p>
                 <ul className="space-y-2.5 mt-auto">
-                  {group.slugs.map((slug) => {
-                    const svc = serviceBySlug(slug);
+                  {group.items.map((item) => {
+                    const svc = serviceBySlug(item.slug);
                     return (
-                      <li key={slug}>
+                      <li key={item.slug}>
                         <a
                           href={svc.link}
                           onClick={(e) => { e.preventDefault(); navigateTo(svc.link, 'services'); }}
@@ -721,6 +727,27 @@ const ServicesSection = () => {
                           <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover/link:text-[#ff6b35] transition-colors" />
                           {svc.title}
                         </a>
+                        {item.children && (
+                          <ul className="mt-2.5 ml-[7px] space-y-2.5 border-l border-white/10 pl-4">
+                            {item.children.map((child) => {
+                              const childSvc = child.slug ? serviceBySlug(child.slug) : null;
+                              const label = child.label || childSvc!.title;
+                              const link = child.link || childSvc!.link;
+                              return (
+                                <li key={label}>
+                                  <a
+                                    href={link}
+                                    onClick={(e) => { e.preventDefault(); navigateTo(link, 'services'); }}
+                                    className="inline-flex items-center gap-2 text-[13px] text-white/60 hover:text-white transition-colors group/link"
+                                  >
+                                    <ArrowRight className="w-3 h-3 text-white/30 group-hover/link:text-[#ff6b35] transition-colors" />
+                                    {label}
+                                  </a>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
                       </li>
                     );
                   })}
