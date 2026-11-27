@@ -83,7 +83,7 @@ const Navigation = () => {
           </svg>
           <span className="text-[14px] font-medium tracking-[0.22em] text-white whitespace-nowrap">THE&nbsp;JIMMY&nbsp;LAB</span>
         </a>
-        <div className="hidden md:flex items-center gap-9">
+        <div className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
             <a key={item.name} href={item.href} className="text-[15px] text-white/75 hover:text-white transition-colors">{item.name}</a>
           ))}
