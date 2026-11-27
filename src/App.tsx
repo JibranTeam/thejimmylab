@@ -1210,7 +1210,7 @@ const ConnectSection = () => {
           <div className="flex flex-col">
             <p className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-[#ff6b35] mb-5">Connect</p>
             <h2 className="font-['Syne'] font-bold text-white leading-[0.98] tracking-tight text-[clamp(3rem,5.5vw,4.75rem)]">Let's start<br />something<br /><span className="gradient-text block">remarkable.</span></h2>
-            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Hire our web development team. We work with clients in the USA, UK, Europe and the Gulf. Send us an email, hire us on Fiverr, or use the form.</p>
+            <p className="text-white/60 text-[15px] leading-[1.7] mt-7 max-w-[400px]">Have an idea or a project? Send us an email, hire us on Fiverr, or use the form. One team, end to end. From first sketch to shipped product, the same people carry your project all the way.</p>
             <div className="mt-7 self-start inline-flex items-center gap-2.5 rounded-full border border-[#ff6b35]/30 bg-[#ff6b35]/[0.07] px-4 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b35] animate-pulse shrink-0" />
               <span className="font-mono text-[12px] text-[#ff6b35] tracking-tight whitespace-nowrap">Accepting projects</span>
@@ -1225,9 +1225,8 @@ const ConnectSection = () => {
             </div>
             <div className="w-full mt-12 p-6 rounded-2xl bg-white/5 border border-white/15 relative overflow-hidden group select-none">
               <div className="absolute right-6 top-6 flex items-center justify-center"><span className="absolute w-6 h-6 rounded-full bg-[#ff6b35]/20 animate-ping"></span><span className="relative w-2.5 h-2.5 rounded-full bg-[#ff6b35] shadow-[0_0_10px_rgba(255,107,53,0.6)]"></span></div>
-              <span className="text-[9px] font-mono uppercase tracking-[0.25em] text-white/60 block mb-2">Working worldwide</span>
-              <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Global Remote Team</h3>
-              <p className="text-xs text-white/70 leading-relaxed font-light">Working globally, USA, UK, Europe, the Gulf, Australia and Canada, with modern asynchronous processes.</p>
+              <h3 className="text-lg font-['Syne'] font-bold text-white mb-2">Working Globally</h3>
+              <p className="text-xs text-white/70 leading-relaxed font-light">Includes USA, UK, Europe, the Gulf, Australia, Canada, Russia, China and Japan, and more.</p>
             </div>
           </div>
           <div className="connect-card rounded-2xl bg-[#3A373E]/40 backdrop-blur-xl border border-white/[0.08] p-8 sm:p-10">
@@ -1286,6 +1285,8 @@ const Footer = () => (
               { name: 'Services', href: '#services' },
               { name: 'Work', href: '#portfolio' },
               { name: 'Process', href: '#process' },
+              { name: 'Reviews', href: '#testimonials' },
+              { name: 'FAQ', href: '#faq' },
               { name: 'Team', href: '/team' },
               { name: 'Journal', href: '#journal' },
               { name: 'Contact', href: '#connect' },
