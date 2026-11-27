@@ -36,6 +36,14 @@ body {
   scroll-margin-top: 96px;
 }
 
+/* Below-fold sections: skip rendering until they approach the viewport,
+   so the initial load spends less time on style & layout. The generous
+   intrinsic size keeps the scrollbar steady. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 1200px;
+}
+
 ::selection {
   background: #ff6b35;
   color: #ffffff;
@@ -169,7 +177,7 @@ select option:disabled {
     transform: scaleY(1);
   }
 
-  /* ── Fiverr CTA — same rising-fill hover as btn-ghost, in Fiverr green ── */
+  /* ── Fiverr CTA - same rising-fill hover as btn-ghost, in Fiverr green ── */
   .btn-fiverr {
     position: relative;
     display: inline-flex;
@@ -574,7 +582,7 @@ select option:disabled {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   MONOCHROME SYSTEM  —  every legacy accent resolves to greyscale
+   MONOCHROME SYSTEM  -  every legacy accent resolves to greyscale
    ══════════════════════════════════════════════════════════════ */
 [class*="#ff6b35"],
 [class*="#ff3c2f"],
@@ -671,7 +679,7 @@ footer.bg-\[\#070f1a\] {
   z-index: -2;
   pointer-events: none;
   /* molten-liquid texture generated natively: fractal turbulence lit by a
-     distant specular source — self-contained, no external asset */
+     distant specular source - self-contained, no external asset */
   background-color: #05070a;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1000'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.009' numOctaves='5' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeSpecularLighting surfaceScale='7' specularConstant='1.05' specularExponent='21' lighting-color='%23a8bed4'%3E%3CfeDistantLight azimuth='238' elevation='57'/%3E%3C/feSpecularLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
   background-size: cover;
@@ -738,4 +746,31 @@ section h3 {
 [class*="blur-\[100px\]"],
 [class*="blur-\[120px\]"] {
   opacity: 0.25 !important;
+}
+
+/* Short screens (a 16-inch laptop): compact the Connect card so the
+   whole card can sit inside the viewport with the heading above it
+   and 60px clear of the floor. The full card is ~808px tall, taller
+   than a short viewport, so without this it can never fit. Tighten
+   the card padding, the gaps between fields, the brief box and the
+   input heights. Only the height changes; the layout and the fields
+   themselves are untouched. */
+@media (max-height: 960px) {
+  .connect-card {
+    padding: 20px !important;
+  }
+  .connect-card h3 {
+    margin-bottom: 12px !important;
+  }
+  .connect-card form > * + * {
+    margin-top: 12px !important;
+  }
+  .connect-card textarea {
+    height: 84px !important;
+    min-height: 84px !important;
+  }
+  .connect-card input,
+  .connect-card select {
+    height: 40px !important;
+  }
 }

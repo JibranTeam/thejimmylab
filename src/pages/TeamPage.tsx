@@ -3,16 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Code2, Globe2, MoonStar, Users2 } from "lucide-react";
 import { cn } from "../utils/cn";
 import { goToConnect } from "../utils/goToConnect";
-
-/* ================= Team data ================= */
-const team = [
-  { n: '01', name: 'Jibran', role: 'Founder & CEO', initials: 'J', color: 'from-[#ff6b35] to-[#ff9a5c]', link: 'https://www.linkedin.com/in/saadmalikceo/' },
-  { n: '02', name: 'Jawad Malik', role: 'GHL - N8N - Make.com Expert, SEO', initials: 'JM', color: 'from-[#00d4aa] to-[#38bdf8]', link: 'https://www.linkedin.com/in/jawad-malik-9631b0250/' },
-  { n: '03', name: 'Arsalan', role: 'UI/UX Developer / Graphic Designer', initials: 'A', color: 'from-[#a855f7] to-[#ec4899]', link: 'https://www.linkedin.com/in/aimen-sajjad-3b6854298/' },
-  { n: '04', name: 'Irfan', role: 'Sr Frontend Developer', initials: 'I', color: 'from-[#f59e0b] to-[#ff6b35]', link: 'https://www.linkedin.com/in/laibasheikh04/' },
-  { n: '05', name: 'M.Ali', role: 'WordPress Developer', initials: 'MA', color: 'from-[#3b82f6] to-[#06b6d4]', link: 'https://www.linkedin.com/in/muhammad-ali-4aa95515b/' },
-  { n: '06', name: 'Sadeed', role: 'Sr Backend Developer', initials: 'S', color: 'from-[#ec4899] to-[#8b5cf6]', link: 'https://www.linkedin.com/in/alizey-tariq/' },
-];
+import { team } from "../data/team";
 
 /* ================= Avatar Icon ================= */
 const AvatarIcon = ({ variant = 1, className = '' }: { variant?: number; className?: string }) => {
@@ -64,8 +55,8 @@ export default function TeamPage() {
               THE JIMMY LAB<span className="text-[#ff3c2f]">.</span>
             </span>
           </a>
-          <a href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-[#ff6b35] transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Back to home
+          <a href="#about" className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-[#ff6b35] transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Back to About
           </a>
         </div>
       </header>
@@ -162,7 +153,7 @@ export default function TeamPage() {
           <p className="mt-5 text-white/60 text-lg max-w-2xl mx-auto">Tell us what you're building and we'll match you with the right operators within one business day.</p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
             <a href="#connect" onClick={(e) => { e.preventDefault(); goToConnect(); }} className="btn-primary">Start a project <ArrowRight className="w-4 h-4" /></a>
-            <a href="/" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-white/15 rounded-lg text-white hover:border-[#ff6b35] hover:text-[#ff6b35] transition-all">Back to home</a>
+            <a href="#about" className="inline-flex items-center gap-2 px-6 py-4 border-2 border-white/15 rounded-lg text-white hover:border-[#ff6b35] hover:text-[#ff6b35] transition-all">Back to About</a>
           </div>
         </div>
       </section>
