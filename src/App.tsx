@@ -687,7 +687,7 @@ const ServicesSection = () => {
         <div className="absolute bottom-20 right-10 w-48 h-48 bg-[#ff6b35]/5 cardboard-cutout rounded-full -rotate-6" />
       </div>
       <div className="max-w-7xl mx-auto px-6">
-        <div className="service-title text-center mb-16">
+        <div className="service-title text-center mb-8">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Services</div>
           <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-4">Solutions for Every <span className="gradient-text">Digital Need</span></h2>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada that drive results.</p>
@@ -706,7 +706,7 @@ const ServicesSection = () => {
         <div className="flex will-change-transform" style={{ transform: 'translateX(-' + servicePage * 100 + '%)', transition: 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' }}>
           {servicePages.map((pageServices, pg) => (
           <div key={pg} className="w-full shrink-0">
-        <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-6">
+        <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
           {pageServices.map((service, i) => {
             const globalIndex = pg * SERVICES_PER_PAGE + i;
             const hot = hoveredCard === globalIndex;

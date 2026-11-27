@@ -212,9 +212,9 @@ export function sectionContentTargetY(sectionId: string): number | null {
   // The cards must never touch the floor, on any screen height. The
   // target is the whole heading-through-last-card block, so clamp the
   // scroll so the LAST card's bottom stays at least 100px above the
-  // floor and the heading stays at least 90px below the top. When the
+  // floor and the heading stays at least 125px below the top, so the small label above it clears the 72px sticky nav. When the
   // whole block is taller than the viewport, both cannot hold at once,
-  // so the heading wins: align it 90px below the top and let the cards
+  // so the heading wins: align it 125px below the top and let the cards
   // extend below the fold, the standard responsive behaviour, so the
   // section always starts cleanly and the heading is never cut off.
   // The card itself is compacted for short screens (see index.css) so
@@ -226,12 +226,12 @@ export function sectionContentTargetY(sectionId: string): number | null {
     const cRect = card.getBoundingClientRect();
     const cardBottom = cRect.top + window.scrollY + cRect.height;
     const low = cardBottom - vpH + 100;
-    const high = headingTop - 90;
+    const high = headingTop - 125;
     if (low <= high) y = Math.max(low, Math.min(y, high));
     else y = high;
   } else {
     // No card: still keep the heading below the top.
-    y = Math.min(y, headingTop - 90);
+    y = Math.min(y, headingTop - 125);
   }
   const max = document.documentElement.scrollHeight - vpH;
   return Math.max(0, Math.min(y, Math.max(0, max)));
