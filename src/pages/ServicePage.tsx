@@ -180,6 +180,64 @@ export default function ServicePage({ service }: { service: Service }) {
         </div>
       </section>
 
+      {service.included && service.included.length > 0 && (
+        <section className="relative py-20 bg-[#070f1a] border-y border-white/5">
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.55 }}
+              className="text-center max-w-2xl mx-auto mb-14"
+            >
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#ff6b35]">Included</span>
+              <h2 className="font-['Syne'] text-3xl md:text-4xl font-bold text-white mt-3">Inside this service</h2>
+              <p className="text-white/60 text-lg mt-4">These are part of Web Development, not separate engagements.</p>
+            </motion.div>
+            <div className="grid sm:grid-cols-3 gap-5">
+              {service.included.map((inc, i) => {
+                const inner = (
+                  <>
+                    <h3 className="font-['Syne'] text-xl font-bold text-white mb-2.5">{inc.title}</h3>
+                    <p className="text-white/60 text-[15px] leading-relaxed">{inc.desc}</p>
+                    {inc.link && (
+                      <span className="mt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-white/50">
+                        Learn more <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    )}
+                  </>
+                );
+                const cls = "group rounded-2xl p-7 border border-white/10 bg-[#3A373E] hover:border-white/20 transition-all duration-300 hover:-translate-y-1 block";
+                return inc.link ? (
+                  <motion.a
+                    key={inc.title}
+                    href={inc.link}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.5, delay: i * 0.06 }}
+                    className={cls}
+                  >
+                    {inner}
+                  </motion.a>
+                ) : (
+                  <motion.div
+                    key={inc.title}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.5, delay: i * 0.06 }}
+                    className={cls}
+                  >
+                    {inner}
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="relative py-20">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div

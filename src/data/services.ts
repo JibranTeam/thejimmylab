@@ -35,6 +35,7 @@ export interface Service {
   stack: string[];
   stats: { value: string; label: string }[];
   faq: { q: string; a: string }[];
+  included?: { title: string; desc: string; link?: string }[];
 }
 
 export const services: Service[] = [
@@ -46,6 +47,11 @@ export const services: Service[] = [
     desc: "Production-grade websites and web applications engineered to scale from day one.",
     color: "#ff6b35",
     tagline: "Fast, secure and scalable web applications built around your business.",
+    included: [
+      { title: "Next.js Development", desc: "Next.js builds for growing businesses: fast pages, clean code, and a launch in weeks, not months.", link: "/services/nextjs-development" },
+      { title: "React Website Redesign", desc: "A React redesign for your SaaS product, new design, same traffic, better conversions.", link: "/services/react-website-redesign" },
+      { title: "WordPress & CMS", desc: "WordPress and headless CMS builds, so your team can update content without touching code." },
+    ],
     overview: [
       "We design and build high-performance websites and full-stack web applications using modern, battle-tested technologies. From marketing sites and SaaS platforms to complex internal tools, every build is engineered for speed, security and long-term maintainability.",
       "Our process combines clean architecture, component-driven design and rigorous testing so your product launches on time and grows without friction.",
