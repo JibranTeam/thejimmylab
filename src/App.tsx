@@ -670,7 +670,7 @@ const ServicesSection = () => {
   const serviceBySlug = (slug: string) => services.find((x) => x.link === '/services/' + slug)!;
   const serviceGroups = [
     { name: 'Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites, web apps and interactive experiences, built to scale from day one.', items: [
-      { slug: 'web-development', children: [{ slug: 'nextjs-development' }, { slug: 'react-website-redesign' }, { label: 'WordPress & CMS', link: '/services/web-development' }] },
+      { slug: 'web-development' },
       { slug: 'e-commerce' },
       { slug: 'mobile-development' },
       { slug: 'web-animation' },
