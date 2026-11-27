@@ -669,8 +669,8 @@ const ServicesSection = () => {
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
   const serviceBySlug = (slug: string) => services.find((x) => x.link === '/services/' + slug)!;
   const serviceGroups = [
-    { name: 'Web Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites and web apps, built to scale from day one.', slugs: ['web-development', 'nextjs-development', 'react-website-redesign', 'e-commerce', 'mobile-development'] },
-    { name: 'Design', icon: Palette, color: '#00d4aa', desc: 'Interfaces, brands and motion that make products feel premium.', slugs: ['ui-ux-design', 'logo-design-branding', 'graphic-design-2d-3d', 'web-animation', 'threejs-3d-websites'] },
+    { name: 'Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites, web apps and interactive experiences, built to scale from day one.', slugs: ['web-development', 'nextjs-development', 'react-website-redesign', 'e-commerce', 'mobile-development', 'web-animation', 'threejs-3d-websites'] },
+    { name: 'Design', icon: Palette, color: '#00d4aa', desc: 'Interfaces and brands that make products feel premium.', slugs: ['ui-ux-design', 'logo-design-branding', 'graphic-design-2d-3d'] },
     { name: 'AI and Automation', icon: Bot, color: '#3b82f6', desc: 'Chatbots, agents and workflows that run your operations.', slugs: ['ai-solutions', 'ai-chatbot-integration', 'integration-automation'] },
     { name: 'Growth and Support', icon: Rocket, color: '#ffd700', desc: 'SEO, performance, maintenance and training that keep you growing.', slugs: ['seo-website-optimization', 'maintenance-support', 'consultation-training', 'website-redesign-migration', 'code-review-technical-audit'] },
   ];
