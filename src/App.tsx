@@ -782,7 +782,7 @@ const ServicesSection = () => {
                   href={firstLink}
                   onClick={(e) => { e.preventDefault(); navigateTo(firstLink, 'services'); }}
                   className="mt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] transition-colors duration-300"
-                  style={{ color: hot ? group.color : 'rgba(255,255,255,0.38)' }}
+                  style={{ color: hot ? group.color : 'rgba(255,255,255,0.75)' }}
                 >
                   Learn more
                   <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
