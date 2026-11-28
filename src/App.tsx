@@ -711,6 +711,9 @@ const ServicesSection = () => {
         <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
           {serviceGroups.map((group, gi) => {
             const hot = hoveredGroup === gi;
+            const firstItem = group.items[0];
+            const firstSvc = firstItem.slug ? serviceBySlug(firstItem.slug) : null;
+            const firstLink = firstItem.link || firstSvc!.link;
             return (
             <div key={group.name} className="service-group-card relative group block" onMouseEnter={() => setHoveredGroup(gi)} onMouseLeave={() => setHoveredGroup(null)}>
               <div
@@ -775,6 +778,15 @@ const ServicesSection = () => {
                     );
                   })}
                 </ul>
+                <a
+                  href={firstLink}
+                  onClick={(e) => { e.preventDefault(); navigateTo(firstLink, 'services'); }}
+                  className="mt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] transition-colors duration-300"
+                  style={{ color: hot ? group.color : 'rgba(255,255,255,0.38)' }}
+                >
+                  Learn more
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
               </div>
             </div>
             );
