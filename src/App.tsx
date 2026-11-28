@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, Code2, Rocket, Zap, Users, ArrowRight, ArrowUpRight, Check, Star,
-  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy, Palette, Bot, Sparkles
+  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy, Palette, Bot, Sparkles, ShoppingBag
 } from 'lucide-react';
 import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
@@ -671,7 +671,6 @@ const ServicesSection = () => {
   const serviceGroups = [
     { name: 'Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites, web apps and interactive experiences, built to scale from day one.', items: [
       { slug: 'web-development' },
-      { slug: 'e-commerce' },
       { slug: 'mobile-development' },
       { slug: 'threejs-3d-websites' },
     ] },
@@ -684,6 +683,12 @@ const ServicesSection = () => {
       { label: 'Micro-Interactions', link: '/services/web-animation' },
       { label: 'Framer Motion & Page Transitions', link: '/services/web-animation' },
       { label: 'SVG Animation', link: '/services/web-animation' },
+    ] },
+    { name: 'E-Commerce', icon: ShoppingBag, color: '#22c55e', desc: 'Storefronts built to convert, fast, flexible and beautiful at every step.', items: [
+      { label: 'Shopify Development', link: '/services/e-commerce' },
+      { label: 'Headless Commerce', link: '/services/e-commerce' },
+      { label: 'Payments & Subscriptions', link: '/services/e-commerce' },
+      { label: 'Conversion Optimization', link: '/services/e-commerce' },
     ] },
   ];
   const SERVICES_PER_PAGE = 9;
