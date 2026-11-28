@@ -663,6 +663,7 @@ const CollaborationBandsSection = () => {
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [groupPage, setGroupPage] = useState(0);
   // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
@@ -763,9 +764,11 @@ const ServicesSection = () => {
                         <a
                           href={link}
                           onClick={(e) => { e.preventDefault(); navigateTo(link, 'services'); }}
+                          onMouseEnter={() => setHoveredLink(group.name + ':' + label)}
+                          onMouseLeave={() => setHoveredLink(null)}
                           className="inline-flex items-center gap-2 text-[14px] text-white/80 hover:text-white transition-colors group/link"
                         >
-                          <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover/link:text-[#ff6b35] transition-colors" />
+                          <ArrowRight className="w-3.5 h-3.5 transition-colors" style={{ color: hoveredLink === group.name + ':' + label ? group.color : 'rgba(255,255,255,0.4)' }} />
                           {label}
                         </a>
                         {item.children && (
@@ -779,9 +782,11 @@ const ServicesSection = () => {
                                   <a
                                     href={link}
                                     onClick={(e) => { e.preventDefault(); navigateTo(link, 'services'); }}
+                                    onMouseEnter={() => setHoveredLink(group.name + ':' + label)}
+                                    onMouseLeave={() => setHoveredLink(null)}
                                     className="inline-flex items-center gap-2 text-[13px] text-white/60 hover:text-white transition-colors group/link"
                                   >
-                                    <ArrowRight className="w-3 h-3 text-white/30 group-hover/link:text-[#ff6b35] transition-colors" />
+                                    <ArrowRight className="w-3 h-3 transition-colors" style={{ color: hoveredLink === group.name + ':' + label ? group.color : 'rgba(255,255,255,0.3)' }} />
                                     {label}
                                   </a>
                                 </li>
