@@ -665,6 +665,7 @@ const ServicesSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [servicePage, setServicePage] = useState(0);
+  const [groupPage, setGroupPage] = useState(0);
   const [showAllServices, setShowAllServices] = useState(false);
   // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
@@ -696,6 +697,10 @@ const ServicesSection = () => {
   const totalServicePages = Math.ceil(services.length / SERVICES_PER_PAGE);
   const servicePages = Array.from({ length: totalServicePages }, (_, pg) => services.slice(pg * SERVICES_PER_PAGE, pg * SERVICES_PER_PAGE + SERVICES_PER_PAGE));
   const goToServicePage = (page: number) => { if (page < 0 || page >= totalServicePages || page === servicePage) return; setHoveredCard(null); setServicePage(page); };
+  const GROUPS_PER_PAGE = 6;
+  const totalGroupPages = Math.ceil(serviceGroups.length / GROUPS_PER_PAGE);
+  const groupPages = Array.from({ length: totalGroupPages }, (_, pg) => serviceGroups.slice(pg * GROUPS_PER_PAGE, pg * GROUPS_PER_PAGE + GROUPS_PER_PAGE));
+  const goToGroupPage = (page: number) => { if (page < 0 || page >= totalGroupPages || page === groupPage) return; setHoveredGroup(null); setGroupPage(page); };
   return (
     <section id="services" ref={sectionRef} className="relative py-20 lg:py-24 bg-[#070f1a] overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -708,14 +713,29 @@ const ServicesSection = () => {
           <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-4">Solutions for Every <span className="gradient-text">Digital Need</span></h2>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada that drive results.</p>
         </div>
+        <div className="flex items-center justify-end gap-3 mb-6">
+          <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {groupPage + 1} of {totalGroupPages}</span>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalGroupPages }).map((_, d) => (
+              <button key={d} type="button" onClick={() => goToGroupPage(d)} aria-label={'Go to group cards page ' + (d + 1)} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: d === groupPage ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: d === groupPage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} /></button>
+            ))}
+          </div>
+          <button type="button" onClick={() => goToGroupPage(groupPage - 1)} disabled={groupPage === 0} aria-label="Previous group cards page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
+          <button type="button" onClick={() => goToGroupPage(groupPage + 1)} disabled={groupPage === totalGroupPages - 1} aria-label="Next group cards page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
+        </div>
+        <div className="overflow-hidden">
+        <div className="flex will-change-transform" style={{ transform: 'translateX(-' + groupPage * 100 + '%)', transition: 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+          {groupPages.map((pageGroups, pg) => (
+          <div key={pg} className="w-full shrink-0">
         <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
-          {serviceGroups.map((group, gi) => {
-            const hot = hoveredGroup === gi;
+          {pageGroups.map((group, i) => {
+            const globalIndex = pg * GROUPS_PER_PAGE + i;
+            const hot = hoveredGroup === globalIndex;
             const firstItem = group.items[0];
             const firstSvc = firstItem.slug ? serviceBySlug(firstItem.slug) : null;
             const firstLink = firstItem.link || firstSvc!.link;
             return (
-            <div key={group.name} className="service-group-card relative group block" onMouseEnter={() => setHoveredGroup(gi)} onMouseLeave={() => setHoveredGroup(null)}>
+            <div key={group.name} className="service-group-card relative group block" onMouseEnter={() => setHoveredGroup(globalIndex)} onMouseLeave={() => setHoveredGroup(null)}>
               <div
                 className={cn(
                   'relative flex h-full flex-col overflow-hidden rounded-[6px] px-5 py-6 transition-all duration-500 sm:px-6 sm:py-7',
@@ -791,6 +811,10 @@ const ServicesSection = () => {
             </div>
             );
           })}
+        </div>
+          </div>
+          ))}
+        </div>
         </div>
         <div className="text-center mt-10">
           <button type="button" onClick={() => setShowAllServices((v) => !v)} aria-expanded={showAllServices} className="btn-ghost inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold cursor-pointer">
