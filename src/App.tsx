@@ -707,7 +707,7 @@ const ServicesSection = () => {
           <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-4">Solutions for Every <span className="gradient-text">Digital Need</span></h2>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada that drive results.</p>
         </div>
-        <div className="services-grid grid sm:grid-cols-2 gap-5 lg:gap-6 pt-4">
+        <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
           {serviceGroups.map((group) => (
             <div key={group.name} className="service-group-card relative group block">
               <div
