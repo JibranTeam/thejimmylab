@@ -673,6 +673,8 @@ const ServicesSection = () => {
   const serviceGroups = [
     { name: 'Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites, web apps and interactive experiences, built to scale from day one.', items: [
       { slug: 'web-development' },
+      { slug: 'nextjs-development' },
+      { slug: 'react-website-redesign' },
       { slug: 'mobile-development' },
       { slug: 'threejs-3d-websites' },
     ] },
