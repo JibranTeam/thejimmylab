@@ -753,7 +753,7 @@ const ServicesSection = () => {
                   <h3 className="text-[20px] font-semibold tracking-[-0.01em] text-white leading-snug">{group.name}</h3>
                 </div>
                 <p className="text-[13.5px] leading-[1.6] text-white/50 mb-5">{group.desc}</p>
-                <ul className="space-y-2.5 mt-auto">
+                <ul className="space-y-2.5">
                   {group.items.map((item) => {
                     const svc = item.slug ? serviceBySlug(item.slug) : null;
                     const label = item.label || svc!.title;
@@ -796,7 +796,7 @@ const ServicesSection = () => {
                 <a
                   href={firstLink}
                   onClick={(e) => { e.preventDefault(); navigateTo(firstLink, 'services'); }}
-                  className="mt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] transition-colors duration-300"
+                  className="mt-auto pt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] transition-colors duration-300"
                   style={{ color: hot ? group.color : 'rgba(255,255,255,0.75)' }}
                 >
                   Learn more
