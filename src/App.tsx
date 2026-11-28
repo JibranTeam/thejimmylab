@@ -663,6 +663,7 @@ const CollaborationBandsSection = () => {
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [servicePage, setServicePage] = useState(0);
   const [showAllServices, setShowAllServices] = useState(false);
   // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
@@ -708,19 +709,28 @@ const ServicesSection = () => {
           <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada that drive results.</p>
         </div>
         <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
-          {serviceGroups.map((group) => (
-            <div key={group.name} className="service-group-card relative group block">
+          {serviceGroups.map((group, gi) => {
+            const hot = hoveredGroup === gi;
+            return (
+            <div key={group.name} className="service-group-card relative group block" onMouseEnter={() => setHoveredGroup(gi)} onMouseLeave={() => setHoveredGroup(null)}>
               <div
-                className="relative flex h-full flex-col overflow-hidden rounded-[6px] px-5 py-6 sm:px-6 sm:py-7"
-                style={{ background: 'rgba(7, 11, 14, 0.72)', border: '1px solid rgba(255,255,255,0.09)' }}
+                className={cn(
+                  'relative flex h-full flex-col overflow-hidden rounded-[6px] px-5 py-6 transition-all duration-500 sm:px-6 sm:py-7',
+                  hot ? '-translate-y-1' : 'translate-y-0'
+                )}
+                style={{
+                  background: hot ? group.color + '0d' : 'rgba(7, 11, 14, 0.72)',
+                  border: '1px solid ' + (hot ? group.color + '66' : 'rgba(255,255,255,0.09)'),
+                  boxShadow: hot ? '0 18px 40px -20px ' + group.color + '55' : 'none',
+                }}
               >
-                <CornerTicks color="rgba(255,255,255,0.28)" />
+                <CornerTicks color={hot ? group.color : 'rgba(255,255,255,0.28)'} />
                 <div className="flex items-center gap-3.5 mb-4">
                   <span
-                    className="grid h-11 w-11 shrink-0 place-items-center rounded-full"
-                    style={{ border: '1px solid ' + group.color + 'aa', background: group.color + '14' }}
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-full transition-all duration-500"
+                    style={{ border: '1px solid ' + (hot ? group.color + 'aa' : 'rgba(255,255,255,0.16)'), background: hot ? group.color + '14' : 'transparent' }}
                   >
-                    <group.icon className="h-5 w-5" style={{ color: group.color }} />
+                    <group.icon className="h-5 w-5 transition-transform duration-500 group-hover:scale-110" style={{ color: hot ? group.color : 'rgba(255,255,255,0.92)' }} />
                   </span>
                   <h3 className="text-[20px] font-semibold tracking-[-0.01em] text-white leading-snug">{group.name}</h3>
                 </div>
@@ -767,7 +777,8 @@ const ServicesSection = () => {
                 </ul>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
         <div className="text-center mt-10">
           <button type="button" onClick={() => setShowAllServices((v) => !v)} aria-expanded={showAllServices} className="btn-ghost inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold cursor-pointer">
