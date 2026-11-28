@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, Code2, Rocket, Zap, Users, ArrowRight, ArrowUpRight, Check, Star,
-  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy, Palette, Bot
+  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy, Palette, Bot, Sparkles
 } from 'lucide-react';
 import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
@@ -673,12 +673,18 @@ const ServicesSection = () => {
       { slug: 'web-development' },
       { slug: 'e-commerce' },
       { slug: 'mobile-development' },
-      { slug: 'web-animation' },
       { slug: 'threejs-3d-websites' },
     ] },
     { name: 'Design', icon: Palette, color: '#00d4aa', desc: 'Interfaces and brands that make products feel premium.', items: [{ slug: 'ui-ux-design' }, { slug: 'logo-design-branding' }, { slug: 'graphic-design-2d-3d' }] },
     { name: 'AI and Automation', icon: Bot, color: '#3b82f6', desc: 'Chatbots, agents and workflows that run your operations.', items: [{ slug: 'ai-solutions' }, { slug: 'ai-chatbot-integration' }, { slug: 'integration-automation' }] },
     { name: 'Growth and Support', icon: Rocket, color: '#ffd700', desc: 'SEO, performance, maintenance and training that keep you growing.', items: [{ slug: 'seo-website-optimization' }, { slug: 'maintenance-support' }, { slug: 'consultation-training' }, { slug: 'website-redesign-migration' }, { slug: 'code-review-technical-audit' }] },
+    { name: 'Web Animation', icon: Sparkles, color: '#a855f7', desc: 'Motion that guides, delights and sets your brand apart.', items: [
+      { label: 'GSAP Animation', link: '/services/web-animation' },
+      { label: 'Lottie Animation', link: '/services/web-animation' },
+      { label: 'Micro-Interactions', link: '/services/web-animation' },
+      { label: 'Framer Motion & Page Transitions', link: '/services/web-animation' },
+      { label: 'SVG Animation', link: '/services/web-animation' },
+    ] },
   ];
   const SERVICES_PER_PAGE = 9;
   const totalServicePages = Math.ceil(services.length / SERVICES_PER_PAGE);
@@ -716,16 +722,18 @@ const ServicesSection = () => {
                 <p className="text-[13.5px] leading-[1.6] text-white/50 mb-5">{group.desc}</p>
                 <ul className="space-y-2.5 mt-auto">
                   {group.items.map((item) => {
-                    const svc = serviceBySlug(item.slug);
+                    const svc = item.slug ? serviceBySlug(item.slug) : null;
+                    const label = item.label || svc!.title;
+                    const link = item.link || svc!.link;
                     return (
-                      <li key={item.slug}>
+                      <li key={label}>
                         <a
-                          href={svc.link}
-                          onClick={(e) => { e.preventDefault(); navigateTo(svc.link, 'services'); }}
+                          href={link}
+                          onClick={(e) => { e.preventDefault(); navigateTo(link, 'services'); }}
                           className="inline-flex items-center gap-2 text-[14px] text-white/80 hover:text-white transition-colors group/link"
                         >
                           <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover/link:text-[#ff6b35] transition-colors" />
-                          {svc.title}
+                          {label}
                         </a>
                         {item.children && (
                           <ul className="mt-2.5 ml-[7px] space-y-2.5 border-l border-white/10 pl-4">
