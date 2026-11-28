@@ -35,6 +35,7 @@ export interface Service {
   stack: string[];
   stats: { value: string; label: string }[];
   faq: { q: string; a: string }[];
+  included?: { title: string; desc: string; link?: string }[];
 }
 
 export const services: Service[] = [
@@ -46,6 +47,11 @@ export const services: Service[] = [
     desc: "Production-grade websites and web applications engineered to scale from day one.",
     color: "#ff6b35",
     tagline: "Fast, secure and scalable web applications built around your business.",
+    included: [
+      { title: "Next.js Development", desc: "Next.js builds for growing businesses: fast pages, clean code, and a launch in weeks, not months.", link: "/services/nextjs-development" },
+      { title: "React Website Redesign", desc: "A React redesign for your SaaS product, new design, same traffic, better conversions.", link: "/services/react-website-redesign" },
+      { title: "WordPress & CMS", desc: "WordPress and headless CMS builds, so your team can update content without touching code." },
+    ],
     overview: [
       "We design and build high-performance websites and full-stack web applications using modern, battle-tested technologies. From marketing sites and SaaS platforms to complex internal tools, every build is engineered for speed, security and long-term maintainability.",
       "Our process combines clean architecture, component-driven design and rigorous testing so your product launches on time and grows without friction.",
@@ -234,6 +240,13 @@ export const services: Service[] = [
     desc: "Scroll-driven, 2D & 3D motion that makes interfaces feel alive and unforgettable.",
     color: "#ec4899",
     tagline: "Motion that guides, delights and sets your brand apart.",
+    included: [
+      { title: "GSAP Animation", desc: "Scroll-driven scenes, timelines and parallax built with GSAP, smooth at 60fps and tied to how your visitors move through the page." },
+      { title: "Lottie Animation", desc: "Lightweight JSON animations for icons, illustrations and loading states, crisp at any size and fast on any device." },
+      { title: "Micro-Interactions", desc: "Small, purposeful motion on buttons, hovers and forms that makes your product feel premium and guides people to the next step." },
+      { title: "Framer Motion & Page Transitions", desc: "Fluid page transitions, layout animation and interactive scenes built with Framer Motion, so moving through your site feels seamless." },
+      { title: "SVG Animation", desc: "Animated icons, illustrations and line-draw effects that stay sharp at every size and load instantly." },
+    ],
     overview: [
       "We craft interactive, scroll-driven and 3D motion that turns static pages into memorable experiences. From micro-interactions to full product configurators, we use motion as a functional tool, not decoration.",
       "Every animation is optimized for 60fps, respects reduced-motion preferences and enhances usability rather than distracting from it.",
@@ -565,7 +578,7 @@ export const services: Service[] = [
     slug: "nextjs-development",
     icon: Rocket,
     title: "Next.js Development",
-    seoDescription: "Next.js websites and web apps, fast, server-rendered, built to scale. Custom quote. Serving the USA, UK, Europe & the Gulf.",
+    seoDescription: "Next.js development services: fast, server-rendered websites and web apps, built to scale. Custom quote. Serving the USA, UK, Europe & the Gulf.",
     desc: "Next.js websites and web apps, fast, server-rendered and built to scale from day one.",
     color: "#38bdf8",
     tagline: "Next.js builds for growing businesses: fast pages, clean code, and a launch in weeks, not months.",
@@ -595,7 +608,7 @@ export const services: Service[] = [
     ],
     faq: [
       { q: "How much does a Next.js website cost?", a: "It depends on scope, pages, design, integrations and content. We price per project with a custom quote, so you pay for what you actually need and nothing you do not. Tell us the scope and we will quote it plainly." },
-      { q: "Do you work with startups in the USA and UK?", a: "Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as a global remote team with daily overlap and a one-hour average response time." },
+      { q: "Do you work with startups in the USA and UK?", a: "Yes, we build Next.js websites for businesses in the USA and UK, from startups to established companies, as an in-house team with daily overlap and a one-hour average response time." },
       { q: "Can you rebuild our existing site in Next.js?", a: "Yes. We migrate content, preserve your URLs with redirect mapping, and keep your search rankings intact, see our redesign and migration service." },
     ],
   },
@@ -603,7 +616,7 @@ export const services: Service[] = [
     slug: "react-website-redesign",
     icon: Layers,
     title: "React Website Redesign",
-    seoDescription: "React redesigns for SaaS, a faster, clearer product site without losing traffic. Custom quote. USA, UK, Europe & the Gulf.",
+    seoDescription: "React website redesign services for SaaS: a faster, clearer product site without losing traffic. Custom quote. USA, UK, Europe & the Gulf.",
     desc: "React redesigns for SaaS companies, a faster, clearer product site without losing traffic or users.",
     color: "#fb7185",
     tagline: "A React redesign for your SaaS product, new design, same traffic, better conversions.",

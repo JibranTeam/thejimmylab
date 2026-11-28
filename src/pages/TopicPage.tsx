@@ -74,7 +74,7 @@ export default function TopicPage({ topic }: { topic: Topic }) {
                   <topic.icon className="w-7 h-7" style={{ color: topic.color }} />
                 </div>
                 <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: topic.color }}>
-                  {crumb} / {topic.kind === "location" ? "Global remote team" : "Industry"}
+                  {crumb} / {topic.kind === "location" ? "In-house team" : "Industry"}
                 </span>
               </motion.div>
               <motion.h1

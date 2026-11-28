@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu, X, Code2, Rocket, Zap, Users, ArrowRight, ArrowUpRight, Check, Star,
-  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy
+  Shield, ChevronDown, ChevronLeft, ChevronRight, Quote, Copy, Palette, Bot, Sparkles, ShoppingBag
 } from 'lucide-react';
 import { cn } from './utils/cn';
 import { unsplashSrcSet } from './utils/images';
@@ -33,6 +33,7 @@ const ComingSoonPage = lazyRetry(() => import('./pages/ComingSoonPage'));
 const TopicPage = lazyRetry(() => import('./pages/TopicPage'));
 const PrivacyPage = lazyRetry(() => import('./pages/PrivacyPage'));
 const TermsPage = lazyRetry(() => import('./pages/TermsPage'));
+const IntegrationsPage = lazyRetry(() => import('./pages/IntegrationsPage'));
 import { PageTransition } from './components/PageTransition';
 import { CornerTicks } from './components/CornerTicks';
 import { services as serviceData, getServiceBySlug } from './data/services';
@@ -555,14 +556,7 @@ const PartnersSection = () => {
 /* ================= About ================= */
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (homeEntrancesPlayed) return;
-    const ctx = gsap.context(() => {
-      gsap.from('.about-content', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, opacity: 0, duration: 1, ease: 'power3.out' });
-      gsap.from('.about-card', { scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' }, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const values = [
     { icon: Rocket, title: 'Innovation', desc: 'Pushing boundaries with cutting-edge technologies' },
     { icon: Users, title: 'Collaboration', desc: 'Working closely with clients at every step' },
@@ -579,6 +573,8 @@ const AboutSection = () => {
             <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">About Us</div>
             <h2 className="font-['Syne'] text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-white mb-6">We're a Team of <span className="gradient-text">Digital Craftsmen</span></h2>
             <p className="text-white/70 text-base leading-relaxed mb-4">Founded in 2013, THE JIMMY LAB is a digital agency specializing in web development, web design, interactive experiences, animation, and custom digital solutions.</p>
+            <p className="text-white/70 text-base leading-relaxed mb-4">One team, end to end, in-house. From first sketch to shipped product, the same people carry your project all the way.</p>
+            <p className="text-white/70 text-base leading-relaxed mb-4">Our in-house AI team builds chatbots, agents and automations that work inside your product, not bolted on after it.</p>
             <p className="text-white/70 text-base leading-relaxed mb-4">We help businesses, startups, entrepreneurs, and brands in the USA, UK, Europe and the Gulf turn ideas into modern digital experiences that combine creative design, advanced technology, performance, and usability.</p>
             <p className="text-white/70 text-base leading-relaxed mb-4">Our expertise spans custom website development, full-stack web applications, interactive websites, 2D and 3D animation, product configurators, SaaS platforms, and AI-powered web solutions. Every project is designed around the client's goals, audience, and business requirements.</p>
             <p className="text-white/70 text-base leading-relaxed mb-8">With a focus on creative innovation and technical excellence, we create digital products that look exceptional, work seamlessly, and provide a strong foundation for business growth.</p>
@@ -666,21 +662,41 @@ const CollaborationBandsSection = () => {
 /* ================= Services ================= */
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [servicePage, setServicePage] = useState(0);
-  useEffect(() => {
-    if (homeEntrancesPlayed) return;
-    const ctx = gsap.context(() => {
-      gsap.from('.service-title', { scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }, opacity: 0, duration: 0.5, ease: 'power3.out' });
-      gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [groupPage, setGroupPage] = useState(0);
+  // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
-  const SERVICES_PER_PAGE = 9;
-  const totalServicePages = Math.ceil(services.length / SERVICES_PER_PAGE);
-  const servicePages = Array.from({ length: totalServicePages }, (_, pg) => services.slice(pg * SERVICES_PER_PAGE, pg * SERVICES_PER_PAGE + SERVICES_PER_PAGE));
-  const goToServicePage = (page: number) => { if (page < 0 || page >= totalServicePages || page === servicePage) return; setHoveredCard(null); setServicePage(page); };
+  const serviceBySlug = (slug: string) => services.find((x) => x.link === '/services/' + slug)!;
+  const serviceGroups = [
+    { name: 'Development', icon: Code2, color: '#ff6b35', desc: 'Fast, secure websites, web apps and interactive experiences, built to scale from day one.', items: [
+      { slug: 'web-development' },
+      { slug: 'nextjs-development' },
+      { slug: 'react-website-redesign' },
+      { slug: 'mobile-development' },
+      { slug: 'threejs-3d-websites' },
+    ] },
+    { name: 'Design', icon: Palette, color: '#00d4aa', desc: 'Interfaces and brands that make products feel premium.', items: [{ slug: 'ui-ux-design' }, { slug: 'logo-design-branding' }, { slug: 'graphic-design-2d-3d' }] },
+    { name: 'AI and Automation', icon: Bot, color: '#3b82f6', desc: 'Chatbots, agents and workflows that run your operations.', items: [{ slug: 'ai-solutions' }, { slug: 'ai-chatbot-integration' }, { slug: 'integration-automation' }] },
+    { name: 'Growth and Support', icon: Rocket, color: '#ffd700', desc: 'SEO, performance, maintenance and training that keep you growing.', items: [{ slug: 'seo-website-optimization' }, { slug: 'maintenance-support' }, { slug: 'consultation-training' }, { slug: 'website-redesign-migration' }, { slug: 'code-review-technical-audit' }] },
+    { name: 'Web Animation', icon: Sparkles, color: '#a855f7', desc: 'Motion that guides, delights and sets your brand apart.', items: [
+      { label: 'GSAP Animation', link: '/services/web-animation' },
+      { label: 'Lottie Animation', link: '/services/web-animation' },
+      { label: 'Micro-Interactions', link: '/services/web-animation' },
+      { label: 'Framer Motion & Page Transitions', link: '/services/web-animation' },
+      { label: 'SVG Animation', link: '/services/web-animation' },
+    ] },
+    { name: 'E-Commerce', icon: ShoppingBag, color: '#22c55e', desc: 'Storefronts built to convert, fast, flexible and beautiful at every step.', items: [
+      { label: 'Shopify Development', link: '/services/e-commerce' },
+      { label: 'Headless Commerce', link: '/services/e-commerce' },
+      { label: 'Payments & Subscriptions', link: '/services/e-commerce' },
+      { label: 'Conversion Optimization', link: '/services/e-commerce' },
+    ] },
+  ];
+  const GROUPS_PER_PAGE = 6;
+  const totalGroupPages = Math.ceil(serviceGroups.length / GROUPS_PER_PAGE);
+  const groupPages = Array.from({ length: totalGroupPages }, (_, pg) => serviceGroups.slice(pg * GROUPS_PER_PAGE, pg * GROUPS_PER_PAGE + GROUPS_PER_PAGE));
+  const goToGroupPage = (page: number) => { if (page < 0 || page >= totalGroupPages || page === groupPage) return; setHoveredGroup(null); setGroupPage(page); };
   return (
     <section id="services" ref={sectionRef} className="relative py-20 lg:py-24 bg-[#070f1a] overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -694,83 +710,107 @@ const ServicesSection = () => {
           <p className="text-white/60 text-lg max-w-2xl mx-auto">From concept to launch, we provide web development, design, mobile app, e-commerce and SEO services for businesses in the USA, UK, Europe, the Gulf, Australia and Canada that drive results.</p>
         </div>
         <div className="flex items-center justify-end gap-3 mb-6">
-          <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {servicePage + 1} of {totalServicePages}</span>
+          <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {groupPage + 1} of {totalGroupPages}</span>
           <div className="flex items-center gap-2">
-            {Array.from({ length: totalServicePages }).map((_, d) => (
-              <button key={d} type="button" onClick={() => goToServicePage(d)} aria-label={'Go to services page ' + (d + 1)} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: d === servicePage ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: d === servicePage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} /></button>
+            {Array.from({ length: totalGroupPages }).map((_, d) => (
+              <button key={d} type="button" onClick={() => goToGroupPage(d)} aria-label={'Go to group cards page ' + (d + 1)} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: d === groupPage ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: d === groupPage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} /></button>
             ))}
           </div>
-          <button type="button" onClick={() => goToServicePage(servicePage - 1)} disabled={servicePage === 0} aria-label="Previous services page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
-          <button type="button" onClick={() => goToServicePage(servicePage + 1)} disabled={servicePage === totalServicePages - 1} aria-label="Next services page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
+          <button type="button" onClick={() => goToGroupPage(groupPage - 1)} disabled={groupPage === 0} aria-label="Previous group cards page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
+          <button type="button" onClick={() => goToGroupPage(groupPage + 1)} disabled={groupPage === totalGroupPages - 1} aria-label="Next group cards page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
         </div>
         <div className="overflow-hidden">
-        <div className="flex will-change-transform" style={{ transform: 'translateX(-' + servicePage * 100 + '%)', transition: 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' }}>
-          {servicePages.map((pageServices, pg) => (
+        <div className="flex will-change-transform" style={{ transform: 'translateX(-' + groupPage * 100 + '%)', transition: 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' }}>
+          {groupPages.map((pageGroups, pg) => (
           <div key={pg} className="w-full shrink-0">
         <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
-          {pageServices.map((service, i) => {
-            const globalIndex = pg * SERVICES_PER_PAGE + i;
-            const hot = hoveredCard === globalIndex;
+          {pageGroups.map((group, i) => {
+            const globalIndex = pg * GROUPS_PER_PAGE + i;
+            const hot = hoveredGroup === globalIndex;
+            const firstItem = group.items[0];
+            const firstSvc = firstItem.slug ? serviceBySlug(firstItem.slug) : null;
+            const firstLink = firstItem.link || firstSvc!.link;
             return (
-              <a
-                key={globalIndex}
-                href={service.link ?? '#services'}
-                className="service-card relative group block"
-                onMouseEnter={() => setHoveredCard(globalIndex)}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={(e) => { if (service.link) { e.preventDefault(); navigateTo(service.link, 'services'); } }}
+            <div key={group.name} className="service-group-card relative group block" onMouseEnter={() => setHoveredGroup(globalIndex)} onMouseLeave={() => setHoveredGroup(null)}>
+              <div
+                className={cn(
+                  'relative flex h-full flex-col overflow-hidden rounded-[6px] px-5 py-6 transition-all duration-500 sm:px-6 sm:py-7',
+                  hot ? '-translate-y-1' : 'translate-y-0'
+                )}
+                style={{
+                  background: hot ? group.color + '0d' : 'rgba(7, 11, 14, 0.72)',
+                  border: '1px solid ' + (hot ? group.color + '66' : 'rgba(255,255,255,0.09)'),
+                  boxShadow: hot ? '0 18px 40px -20px ' + group.color + '55' : 'none',
+                }}
               >
-                <div
-                  className={cn(
-                    'relative flex h-full flex-col overflow-hidden rounded-[6px] px-5 py-6 transition-all duration-500 sm:px-6 sm:py-7',
-                    hot ? '-translate-y-1' : 'translate-y-0'
-                  )}
-                  style={{
-                    background: hot ? service.color + '0d' : 'rgba(7, 11, 14, 0.72)',
-                    border: '1px solid ' + (hot ? service.color + '66' : 'rgba(255,255,255,0.09)'),
-                    boxShadow: hot ? '0 18px 40px -20px ' + service.color + '55' : 'none',
-                  }}
-                >
-                  <CornerTicks color={hot ? service.color : 'rgba(255,255,255,0.28)'} />
-
-                  <div className="flex flex-1 gap-3.5 sm:gap-4">
-                    {/* circular hairline icon badge */}
-                    <span
-                      className="mt-0.5 grid h-11 w-11 shrink-0 place-items-center rounded-full transition-all duration-500"
-                      style={{
-                        border: '1px solid ' + (hot ? service.color + 'aa' : 'rgba(255,255,255,0.16)'),
-                        background: hot ? service.color + '14' : 'transparent',
-                      }}
-                    >
-                      <service.icon
-                        className="h-5 w-5 transition-transform duration-500 group-hover:scale-110"
-                        style={{ color: hot ? service.color : 'rgba(255,255,255,0.92)' }}
-                      />
-                    </span>
-
-                    <span className="flex min-w-0 flex-1 flex-col">
-                      <h3 className="text-[18px] font-semibold tracking-[-0.01em] text-white leading-snug">
-                        {service.title}
-                      </h3>
-                      <p className="mt-2.5 text-[13.5px] leading-[1.6] text-white/50">
-                        {service.desc}
-                      </p>
-                      <span
-                        className="mt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] transition-colors duration-300"
-                        style={{ color: hot ? service.color : 'rgba(255,255,255,0.38)' }}
-                      >
-                        Learn more
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                      </span>
-                    </span>
-                  </div>
+                <CornerTicks color={hot ? group.color : 'rgba(255,255,255,0.28)'} />
+                <div className="flex items-center gap-3.5 mb-4">
+                  <span
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-full transition-all duration-500"
+                    style={{ border: '1px solid ' + (hot ? group.color + 'aa' : 'rgba(255,255,255,0.16)'), background: hot ? group.color + '14' : 'transparent' }}
+                  >
+                    <group.icon className="h-5 w-5 transition-transform duration-500 group-hover:scale-110" style={{ color: hot ? group.color : 'rgba(255,255,255,0.92)' }} />
+                  </span>
+                  <h3 className="text-[20px] font-semibold tracking-[-0.01em] text-white leading-snug">{group.name}</h3>
                 </div>
-              </a>
+                <p className="text-[13.5px] leading-[1.6] text-white/50 mb-5">{group.desc}</p>
+                <ul className="space-y-2.5">
+                  {group.items.map((item) => {
+                    const svc = item.slug ? serviceBySlug(item.slug) : null;
+                    const label = item.label || svc!.title;
+                    const link = item.link || svc!.link;
+                    return (
+                      <li key={label}>
+                        <a
+                          href={link}
+                          onClick={(e) => { e.preventDefault(); navigateTo(link, 'services'); }}
+                          onMouseEnter={() => setHoveredLink(group.name + ':' + label)}
+                          onMouseLeave={() => setHoveredLink(null)}
+                          className="inline-flex items-center gap-2 text-[14px] text-white/80 hover:text-white transition-colors group/link"
+                        >
+                          <ArrowRight className="w-3.5 h-3.5 transition-colors" style={{ color: hoveredLink === group.name + ':' + label ? group.color : 'rgba(255,255,255,0.4)' }} />
+                          {label}
+                        </a>
+                        {item.children && (
+                          <ul className="mt-2.5 ml-[7px] space-y-2.5 border-l border-white/10 pl-4">
+                            {item.children.map((child) => {
+                              const childSvc = child.slug ? serviceBySlug(child.slug) : null;
+                              const label = child.label || childSvc!.title;
+                              const link = child.link || childSvc!.link;
+                              return (
+                                <li key={label}>
+                                  <a
+                                    href={link}
+                                    onClick={(e) => { e.preventDefault(); navigateTo(link, 'services'); }}
+                                    onMouseEnter={() => setHoveredLink(group.name + ':' + label)}
+                                    onMouseLeave={() => setHoveredLink(null)}
+                                    className="inline-flex items-center gap-2 text-[13px] text-white/60 hover:text-white transition-colors group/link"
+                                  >
+                                    <ArrowRight className="w-3 h-3 transition-colors" style={{ color: hoveredLink === group.name + ':' + label ? group.color : 'rgba(255,255,255,0.3)' }} />
+                                    {label}
+                                  </a>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+                <a
+                  href={firstLink}
+                  onClick={(e) => { e.preventDefault(); navigateTo(firstLink, 'services'); }}
+                  className="mt-auto pt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] transition-colors duration-300"
+                  style={{ color: hot ? group.color : 'rgba(255,255,255,0.75)' }}
+                >
+                  Learn more
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </div>
+            </div>
             );
           })}
-          {Array.from({ length: SERVICES_PER_PAGE - pageServices.length }).map((_, b) => (
-            <div key={'blank-' + pg + '-' + b} aria-hidden="true" className="relative rounded-[6px] border border-dashed border-white/10 bg-[rgba(7,11,14,0.72)] px-5 py-6 sm:px-6 sm:py-7 min-h-[200px]" />
-          ))}
         </div>
           </div>
           ))}
@@ -784,13 +824,7 @@ const ServicesSection = () => {
 /* ================= Portfolio ================= */
 const PortfolioSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (homeEntrancesPlayed) return;
-    const ctx = gsap.context(() => {
-      gsap.from('.portfolio-card', { scrollTrigger: { trigger: '.portfolio-grid', start: 'top 80%' }, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   return (
     <section id="portfolio" ref={sectionRef} className="relative py-20 lg:py-24 bg-[#3A373E] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
@@ -846,6 +880,7 @@ const OurProcessSection = () => {
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 mb-10 lg:mb-14">
           <div className="inline-block px-4 sm:px-6 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold text-white mb-4 sm:mb-6 tracking-widest uppercase backdrop-blur-sm bg-white/5">Our Process</div>
           <h2 id="approach-heading" className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.05]">Architect<span className="text-white/60">.</span> Build<span className="text-white/60">.</span> <span className="gradient-text">Accelerate.</span></h2>
+          <p className="mt-5 font-['Syne'] text-xl sm:text-2xl font-bold tracking-tight text-white">Plan<span className="text-[#ff6b35]">.</span> Develop<span className="text-[#ff6b35]">.</span> Launch<span className="text-[#ff6b35]">.</span> Maintain<span className="text-[#ff6b35]">.</span></p>
           <p className="mt-4 max-w-2xl text-white/55 text-lg leading-relaxed">A proven three-phase system that takes you from idea to launch, without chaos, delays, or guesswork.</p>
         </div>
         <div className="mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-14 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-8 xl:gap-10">
@@ -932,7 +967,7 @@ const TestimonialsSection = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {testimonials.slice(0, 3).map((t, idx) => (
-            <button key={t.name} onClick={() => setActive(idx)} className={cn('text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer group', active === idx ? 'bg-white/[0.06] border-[#ff6b35]/30 shadow-[0_8px_32px_rgba(0,0,0,0.3)]' : 'glass hover:bg-white/[0.05] hover:border-white/10')}>
+            <button key={t.name} onClick={() => setActive(idx)} className={cn('testimonial-card text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer group', active === idx ? 'bg-white/[0.06] border-[#ff6b35]/30 shadow-[0_8px_32px_rgba(0,0,0,0.3)]' : 'glass hover:bg-white/[0.05] hover:border-white/10')}>
               <div className="flex items-center gap-3 mb-4"><div className={cn('w-10 h-10 rounded-full bg-gradient-to-br flex items-center justify-center text-white font-bold text-xs shrink-0', t.gradient)}>{t.initials}</div><div className="min-w-0"><div className="text-sm font-semibold text-white truncate">{t.name}</div><div className="text-xs text-white/50 truncate">{t.role}</div></div></div>
               <p className="text-sm text-white/60 leading-relaxed line-clamp-4 group-hover:text-white/80 transition-colors">"{t.quote}"</p>
               <div className="flex gap-0.5 mt-3">{[...Array(5)].map((_, i) => (<Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />))}</div>
@@ -1283,6 +1318,7 @@ const Footer = () => (
               { name: 'Home', href: '#home' },
               { name: 'About', href: '#about' },
               { name: 'Services', href: '#services' },
+              { name: 'Integrations', href: '/integrations' },
               { name: 'Work', href: '#portfolio' },
               { name: 'Process', href: '#process' },
               { name: 'Reviews', href: '#testimonials' },
@@ -1431,6 +1467,7 @@ function App() {
       void import('./pages/TopicPage');
       void import('./pages/PrivacyPage');
       void import('./pages/TermsPage');
+      void import('./pages/IntegrationsPage');
     };
     const t = window.setTimeout(warm, 300);
     return () => window.clearTimeout(t);
@@ -1445,7 +1482,7 @@ function App() {
       setRoute(path);
     } else if (hash) {
       const section = hash.slice(1);
-      if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
+      if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(section)) {
         try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
         setRoute('/');
       }
@@ -1469,7 +1506,7 @@ function App() {
       }
       if (hash) {
         const section = hash.slice(1);
-        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
+        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(section) && normalizePath(window.location.pathname) !== '/') {
           try { window.sessionStorage.setItem('thejimmylab:pendingSection', section); } catch { /* storage may be blocked */ }
           setRoute('/');
         }
@@ -1666,7 +1703,7 @@ function App() {
         const backSection = stateSection ?? (next === '/' ? getLastHomeSection() : null);
         if (backSection) {
           pendingRestoreRef.current = { section: backSection };
-        } else if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
+        } else if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(hash)) {
           pendingRestoreRef.current = { section: hash };
         } else if (typeof savedY === 'number') {
           pendingRestoreRef.current = { y: savedY };
@@ -1695,7 +1732,7 @@ function App() {
       if (!anchor) return;
       const href = anchor.getAttribute('href');
       if (!href) return;
-      if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/') {
+      if (href.startsWith('/services/') || href.startsWith('/journal/') || href.startsWith('/locations/') || href.startsWith('/industries/') || href === '/team' || href === '/coming-soon' || href === '/privacy' || href === '/terms' || href === '/integrations' || href === '/') {
         e.preventDefault();
         if (href === '/') {
           // Going home on purpose (logo): the top, not the section left
@@ -1708,7 +1745,7 @@ function App() {
       }
       if (href.startsWith('#')) {
         const section = href.slice(1);
-        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(section)) {
+        if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(section)) {
           e.preventDefault();
           navigateHomeToSection(section);
         }
@@ -1731,13 +1768,14 @@ function App() {
   const isComingSoonPage = route === '/coming-soon';
   const isPrivacyPage = route === '/privacy';
   const isTermsPage = route === '/terms';
-  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry && !isPrivacyPage && !isTermsPage;
+  const isIntegrationsPage = route === '/integrations';
+  const isNotFound = route !== '/' && !service && !journalPost && !isTeamPage && !location && !industry && !isPrivacyPage && !isTermsPage && !isIntegrationsPage;
   // Per-page title + canonical + description + structured data.
   useEffect(() => {
-    document.title = service ? (service.seoTitle || service.title + ' Services | THE JIMMY LAB') : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isPrivacyPage ? 'Privacy Policy | THE JIMMY LAB' : isTermsPage ? 'Terms of Service | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB - Web Development & Design Agency';
+    document.title = service ? (service.seoTitle || service.title + ' Services | THE JIMMY LAB') : journalPost ? journalPost.title + ' | THE JIMMY LAB' : topic ? topic.title + ' | THE JIMMY LAB' : isTeamPage ? 'Our Web Development & Design Team | THE JIMMY LAB' : isComingSoonPage ? 'Coming Soon | THE JIMMY LAB' : isPrivacyPage ? 'Privacy Policy | THE JIMMY LAB' : isTermsPage ? 'Terms of Service | THE JIMMY LAB' : isIntegrationsPage ? 'Integrations | THE JIMMY LAB' : isNotFound ? 'Page Not Found | THE JIMMY LAB' : 'THE JIMMY LAB - Web Development & Design Agency';
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://thejimmylab.vercel.app' + (route === '/' ? '/' : route));
-    const description = service ? (service.seoDescription || service.tagline + ' | THE JIMMY LAB - a global remote web development and design agency, serving clients in the USA, UK, Europe and the Gulf.') : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB, six operators covering design, engineering, SEO and automation, working remotely with clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isPrivacyPage ? 'Privacy Policy for THE JIMMY LAB: what information this website collects and how it is used.' : isTermsPage ? 'Terms of Service for THE JIMMY LAB: the terms for working with the studio and using this website.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'Global remote web development and design agency, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
+    const description = service ? (service.seoDescription || service.tagline + ' | THE JIMMY LAB - an in-house web development and design studio, serving clients in the USA, UK, Europe and the Gulf.') : journalPost ? journalPost.excerpt : topic ? topic.description : isTeamPage ? 'Meet the team behind THE JIMMY LAB, six operators covering design, engineering, SEO and automation, serving clients in the USA, UK, Europe and the Gulf.' : isComingSoonPage ? 'This section of THE JIMMY LAB is coming soon.' : isPrivacyPage ? 'Privacy Policy for THE JIMMY LAB: what information this website collects and how it is used.' : isTermsPage ? 'Terms of Service for THE JIMMY LAB: the terms for working with the studio and using this website.' : isIntegrationsPage ? 'Integrations by THE JIMMY LAB: CRMs, payments, marketing, AI and the tools your business already runs on, connected to your website and apps.' : isNotFound ? 'This page does not exist on THE JIMMY LAB.' : 'In-house web development and design studio, building websites, web apps and mobile apps for clients in the USA, UK, Europe and the Gulf. Founded in 2013.';
     const robotsMeta = document.querySelector('meta[name="robots"]');
     if (isComingSoonPage) { if (!robotsMeta) { const m = document.createElement('meta'); m.setAttribute('name', 'robots'); m.setAttribute('content', 'noindex'); document.head.appendChild(m); } else robotsMeta.setAttribute('content', 'noindex'); } else if (robotsMeta) robotsMeta.remove();
     const meta = document.querySelector('meta[name="description"]');
@@ -1815,14 +1853,14 @@ function App() {
     if (g) g('event', 'page_view', { page_path: route });
   }, [route]);
 
-  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
+  const routeKey = service ? 'service-' + service.slug : journalPost ? 'journal-' + journalPost.id : topic ? 'topic-' + topic.kind + '-' + topic.slug : isTeamPage ? 'team' : isPrivacyPage ? 'privacy' : isTermsPage ? 'terms' : isIntegrationsPage ? 'integrations' : isComingSoonPage ? 'comingsoon' : isNotFound ? 'notfound' : 'home';
   return (
     <>
       <ComingSoonToast />
       <Analytics />
       <AnimatePresence mode="popLayout">
         <PageTransition key={routeKey}>
-          {service ? <Suspense fallback={<PageFallback />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<PageFallback />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<PageFallback />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<PageFallback />}><TeamPage /></Suspense> : isPrivacyPage ? <Suspense fallback={<PageFallback />}><PrivacyPage /></Suspense> : isTermsPage ? <Suspense fallback={<PageFallback />}><TermsPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<PageFallback />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
+          {service ? <Suspense fallback={<PageFallback />}><ServicePage service={service} /></Suspense> : journalPost ? <Suspense fallback={<PageFallback />}><JournalPostPage post={journalPost} /></Suspense> : topic ? <Suspense fallback={<PageFallback />}><TopicPage topic={topic} /></Suspense> : isTeamPage ? <Suspense fallback={<PageFallback />}><TeamPage /></Suspense> : isPrivacyPage ? <Suspense fallback={<PageFallback />}><PrivacyPage /></Suspense> : isTermsPage ? <Suspense fallback={<PageFallback />}><TermsPage /></Suspense> : isIntegrationsPage ? <Suspense fallback={<PageFallback />}><IntegrationsPage /></Suspense> : isComingSoonPage ? <Suspense fallback={<PageFallback />}><ComingSoonPage /></Suspense> : isNotFound ? <NotFoundPage /> : <HomePage />}
         </PageTransition>
       </AnimatePresence>
     </>

@@ -18,7 +18,7 @@ export function sectionOfElement(el: HTMLElement | null): string | null {
   const sec = el?.closest?.('section[id], footer [id], div[id]') as HTMLElement | null;
   if (!sec) return null;
   const id = sec.id;
-  if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'].includes(id)) return id;
+  if (['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'].includes(id)) return id;
   return null;
 }
 
@@ -62,7 +62,7 @@ export function getLastHomeSection(): string | null {
   return lastHomeSection;
 }
 
-const HOME_SECTIONS = ['home', 'modes', 'about', 'services', 'portfolio', 'process', 'journal', 'connect', 'top', 'locations'];
+const HOME_SECTIONS = ['home', 'modes', 'about', 'services', 'portfolio', 'process', 'testimonials', 'faq', 'journal', 'connect', 'top', 'locations'];
 // Which home section the viewport centre sits in when the page is scrolled
 // to y. The saved scroll pixel is the precise record of where the user was
 // when they left home, so browser Back derives its section from it instead
@@ -142,7 +142,7 @@ export function centerYForSectionRect(sectionId: string): number | null {
 // mobile one is display:none, and its bounding rect is all zeros, which
 // would drag the content midpoint thousands of pixels too high.
 function firstVisibleCard(el: HTMLElement): HTMLElement | null {
-  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, article, form');
+  const cards = el.querySelectorAll('.service-card, .service-group-card, .portfolio-card, .about-card, .testimonial-card, article, form');
   for (const c of Array.from(cards)) {
     const r = (c as HTMLElement).getBoundingClientRect();
     if (r.width > 0 && r.height > 0) {
@@ -164,7 +164,7 @@ function firstVisibleCard(el: HTMLElement): HTMLElement | null {
 // the first card, or the bottom rows run off the floor while the top
 // neighbour still shows. Same visibility and form rules as the first.
 function lastVisibleCard(el: HTMLElement): HTMLElement | null {
-  const cards = el.querySelectorAll('.service-card, .portfolio-card, .about-card, article, form');
+  const cards = el.querySelectorAll('.service-card, .service-group-card, .portfolio-card, .about-card, .testimonial-card, article, form');
   let last: HTMLElement | null = null;
   for (const c of Array.from(cards)) {
     const r = (c as HTMLElement).getBoundingClientRect();
