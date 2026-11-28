@@ -662,11 +662,8 @@ const CollaborationBandsSection = () => {
 /* ================= Services ================= */
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
-  const [servicePage, setServicePage] = useState(0);
   const [groupPage, setGroupPage] = useState(0);
-  const [showAllServices, setShowAllServices] = useState(false);
   // No scroll-reveal: a GSAP ScrollTrigger fade left the section blank after Back from a detail page (revert left opacity 0 and the once-per-visit guard never re-ran it). Sections render visible.
   const services = serviceData.map((s) => ({ icon: s.icon, title: s.title, desc: s.desc, color: s.color, link: '/services/' + s.slug }));
   const serviceBySlug = (slug: string) => services.find((x) => x.link === '/services/' + slug)!;
@@ -695,10 +692,6 @@ const ServicesSection = () => {
       { label: 'Conversion Optimization', link: '/services/e-commerce' },
     ] },
   ];
-  const SERVICES_PER_PAGE = 9;
-  const totalServicePages = Math.ceil(services.length / SERVICES_PER_PAGE);
-  const servicePages = Array.from({ length: totalServicePages }, (_, pg) => services.slice(pg * SERVICES_PER_PAGE, pg * SERVICES_PER_PAGE + SERVICES_PER_PAGE));
-  const goToServicePage = (page: number) => { if (page < 0 || page >= totalServicePages || page === servicePage) return; setHoveredCard(null); setServicePage(page); };
   const GROUPS_PER_PAGE = 6;
   const totalGroupPages = Math.ceil(serviceGroups.length / GROUPS_PER_PAGE);
   const groupPages = Array.from({ length: totalGroupPages }, (_, pg) => serviceGroups.slice(pg * GROUPS_PER_PAGE, pg * GROUPS_PER_PAGE + GROUPS_PER_PAGE));
@@ -818,99 +811,6 @@ const ServicesSection = () => {
           ))}
         </div>
         </div>
-        <div className="text-center mt-10">
-          <button type="button" onClick={() => setShowAllServices((v) => !v)} aria-expanded={showAllServices} className="btn-ghost inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold cursor-pointer">
-            {showAllServices ? 'Hide all services' : 'View all 18 services'}
-            <ChevronDown className={cn('w-4 h-4 transition-transform', showAllServices && 'rotate-180')} />
-          </button>
-        </div>
-        {showAllServices && (
-          <div className="mt-10">
-        <div className="flex items-center justify-end gap-3 mb-6">
-          <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/50">Page {servicePage + 1} of {totalServicePages}</span>
-          <div className="flex items-center gap-2">
-            {Array.from({ length: totalServicePages }).map((_, d) => (
-              <button key={d} type="button" onClick={() => goToServicePage(d)} aria-label={'Go to services page ' + (d + 1)} className="flex h-6 items-center justify-center cursor-pointer" style={{ width: d === servicePage ? 30 : 18 }}><span className="block h-[3px] w-full transition-all duration-300" style={{ background: d === servicePage ? '#ff6b35' : 'rgba(255,255,255,0.25)' }} /></button>
-            ))}
-          </div>
-          <button type="button" onClick={() => goToServicePage(servicePage - 1)} disabled={servicePage === 0} aria-label="Previous services page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronLeft className="h-5 w-5" /></button>
-          <button type="button" onClick={() => goToServicePage(servicePage + 1)} disabled={servicePage === totalServicePages - 1} aria-label="Next services page" className="grid h-11 w-11 place-items-center rounded-[6px] border border-white/20 text-white transition-all hover:border-white hover:bg-white hover:text-[#05070a] disabled:opacity-40 disabled:hover:border-white/20 disabled:hover:bg-transparent disabled:hover:text-white disabled:cursor-not-allowed"><ChevronRight className="h-5 w-5" /></button>
-        </div>
-        <div className="overflow-hidden">
-        <div className="flex will-change-transform" style={{ transform: 'translateX(-' + servicePage * 100 + '%)', transition: 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' }}>
-          {servicePages.map((pageServices, pg) => (
-          <div key={pg} className="w-full shrink-0">
-        <div className="services-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 pt-4">
-          {pageServices.map((service, i) => {
-            const globalIndex = pg * SERVICES_PER_PAGE + i;
-            const hot = hoveredCard === globalIndex;
-            return (
-              <a
-                key={globalIndex}
-                href={service.link ?? '#services'}
-                className="service-card relative group block"
-                onMouseEnter={() => setHoveredCard(globalIndex)}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={(e) => { if (service.link) { e.preventDefault(); navigateTo(service.link, 'services'); } }}
-              >
-                <div
-                  className={cn(
-                    'relative flex h-full flex-col overflow-hidden rounded-[6px] px-5 py-6 transition-all duration-500 sm:px-6 sm:py-7',
-                    hot ? '-translate-y-1' : 'translate-y-0'
-                  )}
-                  style={{
-                    background: hot ? service.color + '0d' : 'rgba(7, 11, 14, 0.72)',
-                    border: '1px solid ' + (hot ? service.color + '66' : 'rgba(255,255,255,0.09)'),
-                    boxShadow: hot ? '0 18px 40px -20px ' + service.color + '55' : 'none',
-                  }}
-                >
-                  <CornerTicks color={hot ? service.color : 'rgba(255,255,255,0.28)'} />
-
-                  <div className="flex flex-1 gap-3.5 sm:gap-4">
-                    {/* circular hairline icon badge */}
-                    <span
-                      className="mt-0.5 grid h-11 w-11 shrink-0 place-items-center rounded-full transition-all duration-500"
-                      style={{
-                        border: '1px solid ' + (hot ? service.color + 'aa' : 'rgba(255,255,255,0.16)'),
-                        background: hot ? service.color + '14' : 'transparent',
-                      }}
-                    >
-                      <service.icon
-                        className="h-5 w-5 transition-transform duration-500 group-hover:scale-110"
-                        style={{ color: hot ? service.color : 'rgba(255,255,255,0.92)' }}
-                      />
-                    </span>
-
-                    <span className="flex min-w-0 flex-1 flex-col">
-                      <h3 className="text-[18px] font-semibold tracking-[-0.01em] text-white leading-snug">
-                        {service.title}
-                      </h3>
-                      <p className="mt-2.5 text-[13.5px] leading-[1.6] text-white/50">
-                        {service.desc}
-                      </p>
-                      <span
-                        className="mt-5 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] transition-colors duration-300"
-                        style={{ color: hot ? service.color : 'rgba(255,255,255,0.38)' }}
-                      >
-                        Learn more
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            );
-          })}
-          {Array.from({ length: SERVICES_PER_PAGE - pageServices.length }).map((_, b) => (
-            <div key={'blank-' + pg + '-' + b} aria-hidden="true" className="relative rounded-[6px] border border-dashed border-white/10 bg-[rgba(7,11,14,0.72)] px-5 py-6 sm:px-6 sm:py-7 min-h-[200px]" />
-          ))}
-        </div>
-          </div>
-          ))}
-        </div>
-        </div>
-          </div>
-        )}
       </div>
     </section>
   );
